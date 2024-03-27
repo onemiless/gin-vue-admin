@@ -2,7 +2,6 @@ package initialize
 
 import (
 	"fmt"
-
 	"github.com/flipped-aurora/gin-vue-admin/server/global"
 	"github.com/flipped-aurora/gin-vue-admin/server/middleware"
 	"github.com/flipped-aurora/gin-vue-admin/server/plugin/email"
@@ -33,4 +32,12 @@ func InstallPlugin(Router *gin.Engine) {
 		global.GVA_CONFIG.Email.Port,
 		global.GVA_CONFIG.Email.IsSSL,
 	))
+
+	//PluginInit(PublicGroup, wxlogin.CreateWxLoginPlug(
+	//	AppID,
+	//	Appsecret,
+	//	Token,
+	//	AuthorityID))
+	// 前端已有对应调用逻辑，无需任何改动，只要填充配置皆可使用
+
 }

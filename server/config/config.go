@@ -29,4 +29,10 @@ type Server struct {
 
 	// 跨域配置
 	Cors CORS `mapstructure:"cors" json:"cors" yaml:"cors"`
+
+	Wecom Wecom `mapstructure:"wecom" json:"wecom" yaml:"wecom"`
+}
+type Wecom struct {
+	CorpId    string `mapstructure:"corp-id" json:"corpId" yaml:"corp-id"`
+	AppSecret string `mapstructure:"app-secret" json:"appssecret" yaml:"app-secret"`
 }

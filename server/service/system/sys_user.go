@@ -3,14 +3,14 @@ package system
 import (
 	"errors"
 	"fmt"
-	"time"
-
 	"github.com/flipped-aurora/gin-vue-admin/server/global"
 	"github.com/flipped-aurora/gin-vue-admin/server/model/common/request"
 	"github.com/flipped-aurora/gin-vue-admin/server/model/system"
 	"github.com/flipped-aurora/gin-vue-admin/server/utils"
 	"github.com/gofrs/uuid/v5"
 	"gorm.io/gorm"
+	"strconv"
+	"time"
 )
 
 //@author: [piexlmax](https://github.com/piexlmax)
@@ -31,6 +31,82 @@ func (userService *UserService) Register(u system.SysUser) (userInter system.Sys
 	u.UUID = uuid.Must(uuid.NewV4())
 	err = global.GVA_DB.Create(&u).Error
 	return u, err
+}
+
+func (userService *UserService) RegisterUserList(u []system.SysUser) (num int, err error) {
+	var user system.SysUser
+	var userList []system.SysUser
+	//organizationService := organization.OrganizationService{}
+	//organizationServic
+	err = global.GVA_DB.Find(&userList).Error
+	if err != nil {
+		return 0, errors.New("查询错误" + err.Error())
+	}
+	//对比用户字段
+	var addUser []system.SysUser
+	var updateUser []system.SysUser
+
+	var usernames []string
+	for _, sysUser := range u {
+		username := sysUser.Username
+		enable := sysUser.Enable
+		nickName := sysUser.NickName
+		headerImg := sysUser.HeaderImg
+		phone := sysUser.Phone
+		email := sysUser.Email
+		deptid := sysUser.DeptId
+		for _, s := range userList {
+			if s.Username == username {
+				if s.Enable == enable && s.NickName == nickName && s.HeaderImg == headerImg && s.Phone == phone && s.Email == email && s.DeptId == deptid {
+					continue
+				} else {
+					s.Enable = enable
+					updateUser = append(updateUser, sysUser)
+				}
+
+			}
+		}
+	}
+
+	for _, s := range userList {
+		usernames = append(usernames, s.Username)
+	}
+	usernamesMap := utils.ConvertStrSlice2Map(usernames)
+	for _, sysUser := range u {
+		if utils.InMap(usernamesMap, sysUser.Username) {
+			continue
+		} else {
+			addUser = append(addUser, sysUser)
+		}
+	}
+	countAdd := 0
+	countUpdate := 0
+	for _, u := range addUser {
+		if !errors.Is(global.GVA_DB.Where("username = ?", u.Username).First(&user).Error, gorm.ErrRecordNotFound) { // 判断用户名是否注册
+			continue
+		}
+		// 否则 附加uuid 密码hash加密 注册
+		u.Password = utils.BcryptHash(u.Password)
+		u.UUID = uuid.Must(uuid.NewV4())
+		global.GVA_DB.Create(&u)
+
+		countAdd++
+	}
+	for _, u := range updateUser {
+		//global.GVA_DB.Updates("enable", u.Enable, "dept_id", u.DeptId).Where("username", u.Username)
+		updateFields := map[string]interface{}{
+			"enable":     u.Enable,
+			"dept_id":    u.DeptId,
+			"nick_name":  u.NickName,
+			"header_img": u.HeaderImg,
+			"phone":      u.Phone,
+		}
+		global.GVA_DB.Model(&u).Where("username", u.Username).Updates(updateFields)
+
+		countUpdate++
+	}
+
+	return countAdd, errors.New("增加用户：" + strconv.Itoa(countAdd) + ",更新用户：" + strconv.Itoa(countUpdate))
 }
 
 //@author: [piexlmax](https://github.com/piexlmax)

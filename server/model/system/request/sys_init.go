@@ -40,15 +40,22 @@ func (i *InitDB) PgsqlEmptyDsn() string {
 	return "host=" + i.Host + " user=" + i.UserName + " password=" + i.Password + " port=" + i.Port + " dbname=" + "postgres" + " " + "sslmode=disable TimeZone=Asia/Shanghai"
 }
 
+func (i *InitDB) MssqlEmptyDsn() string {
+	if i.Host == "" {
+		i.Host = "127.0.0.1"
+	}
+	if i.Port == "" {
+		i.Port = "1433"
+	}
+	return fmt.Sprintf("sqlserver://%s:%s@%s:%s?database=gva", i.UserName, i.Password, i.Host, i.Port)
+	//return "host=" + i.Host + " user=" + i.UserName + " password=" + i.Password + " port=" + i.Port + " dbname=" + "postgres" + " " + "sslmode=disable TimeZone=Asia/Shanghai"
+}
+
 // SqliteEmptyDsn sqlite 空数据库 建库链接
 // Author Kafumio
 func (i *InitDB) SqliteEmptyDsn() string {
 	separator := string(os.PathSeparator)
 	return i.DBPath + separator + i.DBName + ".db"
-}
-
-func (i *InitDB) MssqlEmptyDsn() string {
-	return "sqlserver://" + i.UserName + ":" + i.Password + "@" + i.Host + ":" + i.Port + "?database=" + i.DBName + "&encrypt=disable"
 }
 
 // ToMysqlConfig 转换 config.Mysql
@@ -87,12 +94,10 @@ func (i *InitDB) ToPgsqlConfig() config.Pgsql {
 	}
 }
 
-// ToSqliteConfig 转换 config.Sqlite
-// Author [Kafumio](https://github.com/Kafumio)
-func (i *InitDB) ToSqliteConfig() config.Sqlite {
-	return config.Sqlite{
+func (i *InitDB) ToMssqlConfig() config.Mssql {
+	return config.Mssql{
 		GeneralDB: config.GeneralDB{
-			Path:         i.DBPath,
+			Path:         i.Host,
 			Port:         i.Port,
 			Dbname:       i.DBName,
 			Username:     i.UserName,
@@ -100,13 +105,15 @@ func (i *InitDB) ToSqliteConfig() config.Sqlite {
 			MaxIdleConns: 10,
 			MaxOpenConns: 100,
 			LogMode:      "error",
-			Config:       "",
+			//Config:       "sslmode=disable TimeZone=Asia/Shanghai",
 		},
 	}
 }
 
-func (i *InitDB) ToMssqlConfig() config.Mssql {
-	return config.Mssql{
+// ToSqliteConfig 转换 config.Sqlite
+// Author [Kafumio](https://github.com/Kafumio)
+func (i *InitDB) ToSqliteConfig() config.Sqlite {
+	return config.Sqlite{
 		GeneralDB: config.GeneralDB{
 			Path:         i.DBPath,
 			Port:         i.Port,

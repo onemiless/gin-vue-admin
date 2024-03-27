@@ -15,10 +15,11 @@ export const login = (data) => {
 // @Produce  application/json
 // @Param data body {username:"string",password:"string"}
 // @Router /base/captcha [post]
-export const captcha = () => {
+export const captcha = (data) => {
   return service({
     url: '/base/captcha',
-    method: 'post'
+    method: 'post',
+    data: data
   })
 }
 
@@ -159,6 +160,14 @@ export const getUserInfo = () => {
 export const resetPassword = (data) => {
   return service({
     url: '/user/resetPassword',
+    method: 'post',
+    data: data
+  })
+}
+
+export const syncWecomUser = (data) => {
+  return service({
+    url: '/user/syncWecomUser',
     method: 'post',
     data: data
   })

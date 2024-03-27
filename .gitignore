@@ -1,7 +1,8 @@
 .idea/
 /web/node_modules
 /web/dist
-
+/server/cache.db
+/rm_file
 .DS_Store
 
 # local env files
@@ -25,7 +26,6 @@ yarn-error.log*
 /server/log/
 /server/gva
 /server/latest_log
-/server/__debug_bin*
 
 *.iml
 web/.pnpm-debug.log

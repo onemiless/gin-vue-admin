@@ -1,15 +1,17 @@
 package initialize
 
 import (
+	"github.com/flipped-aurora/gin-vue-admin/server/plugin/organization"
+	swaggerFiles "github.com/swaggo/files"
+	"net/http"
+	"os"
+
 	"github.com/flipped-aurora/gin-vue-admin/server/docs"
 	"github.com/flipped-aurora/gin-vue-admin/server/global"
 	"github.com/flipped-aurora/gin-vue-admin/server/middleware"
 	"github.com/flipped-aurora/gin-vue-admin/server/router"
 	"github.com/gin-gonic/gin"
-	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-	"net/http"
-	"os"
 )
 
 type justFilesFilesystem struct {
@@ -29,10 +31,8 @@ func (fs justFilesFilesystem) Open(name string) (http.File, error) {
 
 	return f, nil
 }
-
-// 初始化总路由
-
 func Routers() *gin.Engine {
+
 	Router := gin.New()
 	Router.Use(gin.Recovery())
 	if gin.Mode() == gin.DebugMode {
@@ -90,6 +90,23 @@ func Routers() *gin.Engine {
 		systemRouter.InitSysExportTemplateRouter(PrivateGroup)      // 导出模板
 		exampleRouter.InitCustomerRouter(PrivateGroup)              // 客户路由
 		exampleRouter.InitFileUploadAndDownloadRouter(PrivateGroup) // 文件上传下载功能路由
+
+	}
+
+	//global.GVA_LOG.Info("router register success")
+	PluginInit(PublicGroup, organization.CreateOrganizationPlug())
+	//{
+	//
+	//}
+
+	{
+		alphaRouter := router.RouterGroupApp.Alpha
+		alphaRouter.InitMdUnitMeasureRouter(PrivateGroup)
+		alphaRouter.InitMdClientRouter(PrivateGroup)
+		alphaRouter.InitCMSMERouter(PrivateGroup)
+		alphaRouter.InitCMSXCRouter(PrivateGroup)
+		alphaRouter.InitItemTypeRouter(PrivateGroup)
+		alphaRouter.InitMutiSelectRouter(PrivateGroup)
 
 	}
 

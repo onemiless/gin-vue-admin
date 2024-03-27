@@ -33,4 +33,5 @@ func DBList() {
 		global.GVA_DB = sysDB
 	}
 	global.GVA_DBList = dbMap
+	//global.GVA_DBList[sys] = global.GVA_DB
 }

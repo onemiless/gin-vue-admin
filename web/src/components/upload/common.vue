@@ -1,12 +1,12 @@
 <template>
   <div>
     <el-upload
-      :action="`${path}/fileUploadAndDownload/upload`"
-      :before-upload="checkFile"
-      :on-error="uploadError"
-      :on-success="uploadSuccess"
-      :show-file-list="false"
-      class="upload-btn"
+        :action="`${path}/fileUploadAndDownload/upload`"
+        :before-upload="checkFile"
+        :on-error="uploadError"
+        :on-success="uploadSuccess"
+        :show-file-list="false"
+        class="upload-btn"
     >
       <el-button type="primary">普通上传</el-button>
     </el-upload>
@@ -15,9 +15,9 @@
 
 <script setup>
 
-import { ref } from 'vue'
-import { ElMessage } from 'element-plus'
-import { isVideoMime, isImageMime } from '@/utils/image'
+import {ref} from 'vue'
+import {ElMessage} from 'element-plus'
+import {isVideoMime, isImageMime} from '@/utils/image'
 
 defineOptions({
   name: 'UploadCommon',
@@ -57,7 +57,7 @@ const checkFile = (file) => {
 }
 
 const uploadSuccess = (res) => {
-  const { data } = res
+  const {data} = res
   if (data.file) {
     emit('on-success', data.file.url)
   }
@@ -72,4 +72,3 @@ const uploadError = () => {
 }
 
 </script>
-

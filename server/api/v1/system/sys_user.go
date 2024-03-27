@@ -170,6 +170,54 @@ func (b *BaseApi) Register(c *gin.Context) {
 	response.OkWithDetailed(systemRes.SysUserResponse{User: userReturn}, "注册成功", c)
 }
 
+// SyncWecomUser
+// @Tags     SysUser
+// @Summary  同步企业微信账号
+// @Produce   application/json
+// @Param    data  body      systemReq.Register                                            true  "用户名, 昵称, 密码, 角色ID"
+// @Success  200   {object}  response.Response{data=systemRes.SysUserResponse,msg=string}  "同步企业微信账号,返回同步的信息"
+// @Router   /user/admin_register [post]
+func (b *BaseApi) SyncWecomUser(c *gin.Context) {
+	var r systemReq.Register
+	//获取企业微信用户
+	resp := global.GVA_wecomSdk.UserList(1, 1, 1)
+	wecomUserlist := resp.UserList
+	//循环取出 wecomUserlist并穿件 user 数组
+
+	//err := c.ShouldBindJSON(&r)
+	//if err != nil {
+	//	response.FailWithMessage(err.Error(), c)
+	//	return
+	//}
+	//err = utils.Verify(r, utils.RegisterVerify)
+	//if err != nil {
+	//	response.FailWithMessage(err.Error(), c)
+	//	return
+	//}
+	var authorities []system.SysAuthority
+	for _, v := range r.AuthorityIds {
+		authorities = append(authorities, system.SysAuthority{
+			AuthorityId: v,
+		})
+	}
+	var sysusers []system.SysUser
+	for i := range wecomUserlist {
+		user := &system.SysUser{Username: wecomUserlist[i].Userid, NickName: wecomUserlist[i].Name, Password: "Magni.mes.2023",
+			HeaderImg: wecomUserlist[i].Avatar, AuthorityId: 888, Authorities: authorities, Enable: wecomUserlist[i].Status, Phone: wecomUserlist[i].Mobile,
+			Email: wecomUserlist[i].Email, DeptId: uint(wecomUserlist[i].Department[0])}
+
+		sysusers = append(sysusers, *user)
+	}
+
+	_, err := userService.RegisterUserList(sysusers)
+	if err != nil {
+		global.GVA_LOG.Error("同步!", zap.Error(err))
+		response.FailWithDetailed(nil, "注册失败", c)
+		return
+	}
+	response.OkWithDetailed(nil, "注册成功", c)
+}
+
 // ChangePassword
 // @Tags      SysUser
 // @Summary   用户修改密码
