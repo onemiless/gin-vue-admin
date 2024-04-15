@@ -12,8 +12,7 @@
           <p class="text-gray-600 mb-2">1.您需有用一定的VUE和GOLANG基础</p>
           <p class="text-gray-600 mb-2">2.请您确认是否已经阅读过<a
             class="text-blue-600 font-bold"
-            href="https://www.gin-vue-admin.com"
-            target="_blank"
+
           >官方文档</a> <a
             class="text-blue-600 font-bold"
             href="https://www.bilibili.com/video/BV1kv4y1g7nT?p=2"
@@ -182,7 +181,7 @@ const showNext = () => {
 }
 
 const goDoc = () => {
-  window.open('https://www.gin-vue-admin.com/guide/start-quickly/env.html')
+  // window.open('https://www.gin-vue-admin.com/guide/start-quickly/env.html')
 }
 
 const out = ref(false)

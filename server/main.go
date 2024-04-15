@@ -1,11 +1,10 @@
 package main
 
 import (
-	"go.uber.org/zap"
-
 	"github.com/flipped-aurora/gin-vue-admin/server/core"
 	"github.com/flipped-aurora/gin-vue-admin/server/global"
 	"github.com/flipped-aurora/gin-vue-admin/server/initialize"
+	"go.uber.org/zap"
 )
 
 //go:generate go env -w GO111MODULE=on
@@ -34,6 +33,8 @@ func main() {
 		db, _ := global.GVA_DB.DB()
 		defer db.Close()
 	}
+
+	//}
 	global.GVA_wecomSdk = initialize.Wecom() //初始化 wecom
 	core.RunWindowsServer()
 }

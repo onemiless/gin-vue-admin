@@ -442,7 +442,7 @@
           </el-button>
           <el-icon
             class="cursor-pointer"
-            @click="toDoc('https://www.gin-vue-admin.com/guide/web/button-auth.html')"
+
           ><QuestionFilled /></el-icon>
           <el-icon
             class="cursor-pointer"

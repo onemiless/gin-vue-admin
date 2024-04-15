@@ -1,43 +1,43 @@
 <template>
-  <div>
+  <div >
     <warning-bar
-      title="获取字典且缓存方法已在前端utils/dictionary 已经封装完成 不必自己书写 使用方法查看文件内注释"
+        title="获取字典且缓存方法已在前端utils/dictionary 已经封装完成 不必自己书写 使用方法查看文件内注释"
     />
     <div class="dict-box flex gap-4">
       <div class="w-64 bg-white p-4">
         <div class="flex justify-between items-center">
           <span class="text font-bold">字典列表</span>
           <el-button
-            type="primary"
-            @click="openDialog"
+              type="primary"
+              @click="openDialog"
           >
             新增
           </el-button>
         </div>
         <el-scrollbar
-          class="mt-4"
-          style="height: calc(100vh - 300px)"
+            class="mt-4"
+            style="height: calc(100vh - 300px)"
         >
           <div
-            v-for="dictionary in dictionaryData"
-            :key="dictionary.ID"
-            class="rounded flex justify-between items-center px-2 py-4 cursor-pointer mt-2 hover:bg-blue-50 hover:text-gray-800 group bg-gray-50"
-            :class="selectID === dictionary.ID && 'active'"
-            @click="toDetail(dictionary)"
+              v-for="dictionary in dictionaryData"
+              :key="dictionary.ID"
+              class="rounded flex justify-between items-center px-2 py-4 cursor-pointer mt-2 hover:bg-blue-50 hover:text-gray-800 group bg-gray-50"
+              :class="selectID === dictionary.ID && 'active'"
+              @click="toDetail(dictionary)"
           >
             <span class="max-w-[160px] truncate">{{ dictionary.name }}</span>
             <div>
               <el-icon
-                class="group-hover:text-blue-500"
-                :class="selectID === dictionary.ID ? 'text-white-800':'text-blue-500'"
-                @click.stop="updateSysDictionaryFunc(dictionary)"
+                  class="group-hover:text-blue-500"
+                  :class="selectID === dictionary.ID ? 'text-white-800':'text-blue-500'"
+                  @click.stop="updateSysDictionaryFunc(dictionary)"
               >
                 <Edit />
               </el-icon>
               <el-icon
-                class="ml-2 group-hover:text-red-500"
-                :class="selectID === dictionary.ID ? 'text-white-800':'text-red-500'"
-                @click="deleteSysDictionaryFunc(dictionary)"
+                  class="ml-2 group-hover:text-red-500"
+                  :class="selectID === dictionary.ID ? 'text-white-800':'text-red-500'"
+                  @click="deleteSysDictionaryFunc(dictionary)"
               >
                 <Delete />
               </el-icon>
@@ -50,58 +50,58 @@
       </div>
     </div>
     <el-dialog
-      v-model="dialogFormVisible"
-      :before-close="closeDialog"
-      :title="type==='create'?'添加字典':'修改字典'"
+        v-model="dialogFormVisible"
+        :before-close="closeDialog"
+        :title="type==='create'?'添加字典':'修改字典'"
     >
       <el-form
-        ref="dialogForm"
-        :model="formData"
-        :rules="rules"
-        label-width="110px"
+          ref="dialogForm"
+          :model="formData"
+          :rules="rules"
+          label-width="110px"
       >
         <el-form-item
-          label="字典名（中）"
-          prop="name"
+            label="字典名（中）"
+            prop="name"
         >
           <el-input
-            v-model="formData.name"
-            placeholder="请输入字典名（中）"
-            clearable
-            :style="{ width: '100%' }"
+              v-model="formData.name"
+              placeholder="请输入字典名（中）"
+              clearable
+              :style="{ width: '100%' }"
           />
         </el-form-item>
         <el-form-item
-          label="字典名（英）"
-          prop="type"
+            label="字典名（英）"
+            prop="type"
         >
           <el-input
-            v-model="formData.type"
-            placeholder="请输入字典名（英）"
-            clearable
-            :style="{ width: '100%' }"
+              v-model="formData.type"
+              placeholder="请输入字典名（英）"
+              clearable
+              :style="{ width: '100%' }"
           />
         </el-form-item>
         <el-form-item
-          label="状态"
-          prop="status"
-          required
+            label="状态"
+            prop="status"
+            required
         >
           <el-switch
-            v-model="formData.status"
-            active-text="开启"
-            inactive-text="停用"
+              v-model="formData.status"
+              active-text="开启"
+              inactive-text="停用"
           />
         </el-form-item>
         <el-form-item
-          label="描述"
-          prop="desc"
+            label="描述"
+            prop="desc"
         >
           <el-input
-            v-model="formData.desc"
-            placeholder="请输入描述"
-            clearable
-            :style="{ width: '100%' }"
+              v-model="formData.desc"
+              placeholder="请输入描述"
+              clearable
+              :style="{ width: '100%' }"
           />
         </el-form-item>
       </el-form>
@@ -110,8 +110,8 @@
           <el-button @click="closeDialog">取 消</el-button>
           <el-button
 
-            type="primary"
-            @click="enterDialog"
+              type="primary"
+              @click="enterDialog"
           >确 定</el-button>
         </div>
       </template>

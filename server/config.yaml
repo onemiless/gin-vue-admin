@@ -12,7 +12,7 @@ autocode:
     server-api: /api/v1/%s
     server-plug: /plugin/%s
     server-initialize: /initialize
-    root: /Users/mile/Downloads/gin-vue-admin-main
+    root: /Users/mile/Desktop/alpha-mes/go-alpha-vue-mes-main-master
     web-table: /view
     web: /web/src
     server-service: /service/%s
@@ -50,25 +50,22 @@ cors:
           expose-headers: Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Content-Type
           allow-credentials: true
 db-list:
-    - type: "mssql"
-      alias-name: "A1111"
+    - type: mssql
+      alias-name: A1111
       prefix: ""
       port: "1433"
       config: ""
-      db-name: "A1111"
-      username: "sa"
-      password: "Magni.db.2020"
+      db-name: A1111
+      username: sa
+      password: Magni.db.2020
       path: 192.168.100.20
       engine: ""
-      log-mode: "error"
+      log-mode: error
       max-idle-conns: 10
       max-open-conns: 100
       singular: false
       log-zap: false
       disable: false
-
-
-
 email:
     to: xxx@qq.com
     from: xxx@163.com
@@ -86,7 +83,7 @@ hua-wei-obs:
     access-key: you-access-key
     secret-key: you-secret-key
 jwt:
-    signing-key: 65f756fe-e2a6-4dd0-b9d1-ea2f33b8a0e8
+    signing-key: 856052b7-1d95-4f88-817a-61afc6e8195f
     expires-time: 7d
     buffer-time: 1d
     issuer: qmPlus
@@ -124,16 +121,16 @@ mssql:
     log-zap: false
 mysql:
     prefix: ""
-    port: ""
+    port: "3306"
     config: ""
     db-name: ""
     username: ""
-    password: ""
-    path: ""
+    password: ''
+    path:
     engine: ""
-    log-mode: ""
-    max-idle-conns: 0
-    max-open-conns: 0
+    log-mode: error
+    max-idle-conns: 10
+    max-open-conns: 100
     singular: false
     log-zap: false
 oracle:
@@ -176,11 +173,8 @@ redis:
     addr: 127.0.0.1:6379
     password: ""
     db: 0
-
-wecom:
-    corp-id: "ww65b5df9bbacada13"
-    app-secret: "tpC8hDhxaqMbLbGIeHaauK0voGNvZV-H6pUC2pnBbps"
-
+    useCluster: false
+    clusterAddrs: []
 sqlite:
     prefix: ""
     port: ""
@@ -196,7 +190,6 @@ sqlite:
     singular: false
     log-zap: false
 system:
-    env: local
     db-type: mssql
     oss-type: local
     router-prefix: ""
@@ -213,6 +206,9 @@ tencent-cos:
     secret-key: your-secret-key
     base-url: https://gin.vue.admin
     path-prefix: github.com/flipped-aurora/gin-vue-admin/server
+wecom:
+    corp-id: ww65b5df9bbacada13
+    app-secret: tpC8hDhxaqMbLbGIeHaauK0voGNvZV-H6pUC2pnBbps
 zap:
     level: info
     prefix: '[github.com/flipped-aurora/gin-vue-admin/server]'

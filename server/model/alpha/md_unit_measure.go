@@ -10,7 +10,7 @@ type MdUnitMeasure struct {
 	global.GVA_MODEL
 	Measure_code string `json:"measureCode" form:"measureCode" gorm:"column:measure_code;comment:单位编码;size:64;"binding:"required"`  //单位
 	MeasureName  string `json:"measureName" form:"measureName" gorm:"column:measure_name;comment:单位名称;size:255;"binding:"required"` //单位名称
-	EnableFlag   *int   `json:"enableFlag" form:"enableFlag" gorm:"column:enable_flag;comment:是否启用;"binding:"required"`             //是否启用
+	EnableFlag   int    `json:"enableFlag" form:"enableFlag" gorm:"column:enable_flag;comment:是否启用;"binding:"required"`             //是否启用
 	Remark       string `json:"remark" form:"remark" gorm:"column:remark;comment:备注;size:500;"`                                     //备注
 	Attr1        string `json:"attr1" form:"attr1" gorm:"column:attr1;comment:;size:64;"`                                           //属性1
 	Attr2        string `json:"attr2" form:"attr2" gorm:"column:attr2;comment:;size:255;"`                                          //属性2

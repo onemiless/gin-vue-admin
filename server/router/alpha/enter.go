@@ -7,4 +7,8 @@ type RouterGroup struct {
 	CMSXCRouter
 	ItemTypeRouter
 	MutiSelectRouter
+	MdFirstLevelRouter
+	MdSecondLevelRouter
+	MdThirdLevelRouter
+	TecBaseInfoRouter
 }

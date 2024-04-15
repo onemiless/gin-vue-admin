@@ -55,7 +55,7 @@
         <el-table-column align="left" label="英文名称" prop="clientEn" width="120" />
         <el-table-column align="left" label="描述" prop="clientDes" width="120" />
         <el-table-column align="left" label="拼音首字母" prop="clientType" width="120" />
-        <el-table-column align="left" label="地址" prop="address" width="120" />
+        <el-table-column align="left" label="区域" prop="address" width="120" />
         <el-table-column align="left" label="邮箱" prop="email" width="120" />
         <el-table-column align="left" label="客户电话" prop="tel" width="120" />
         <el-table-column align="left" label="启用" prop="enableFlag" width="120" >
@@ -119,8 +119,8 @@
             <el-form-item label="拼音首字母:"  prop="clientType" >
               <el-input v-model="formData.clientType" :clearable="true"  placeholder="请输入拼音首字母" />
             </el-form-item>
-            <el-form-item label="地址:"  prop="address" >
-              <el-input v-model="formData.address" :clearable="true"  placeholder="请输入地址" />
+            <el-form-item label="区域:"  prop="address" >
+              <el-input v-model="formData.address" :clearable="true"  placeholder="请输入区域" />
             </el-form-item>
             <el-form-item label="邮箱:"  prop="email" >
               <el-input v-model="formData.email" :clearable="true"  placeholder="请输入邮箱" />
@@ -178,7 +178,7 @@
                 <el-descriptions-item label="拼音首字母">
                         {{ formData.clientType }}
                 </el-descriptions-item>
-                <el-descriptions-item label="地址">
+                <el-descriptions-item label="区域">
                         {{ formData.address }}
                 </el-descriptions-item>
                 <el-descriptions-item label="邮箱">

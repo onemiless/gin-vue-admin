@@ -7,4 +7,8 @@ type ServiceGroup struct {
 	CMSXCService
 	ItemTypeService
 	MutiSelectService
+	MdFirstLevelService
+	MdSecondLevelService
+	MdThirdLevelService
+	TecBaseInfoService
 }

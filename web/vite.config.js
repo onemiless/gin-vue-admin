@@ -14,9 +14,9 @@ import fullImportPlugin from './vitePlugin/fullImport/fullImport.js'
 import { svgBuilder } from './vitePlugin/svgIcon/svgIcon.js'
 // @see https://cn.vitejs.dev/config/
 export default ({
-                  command,
-                  mode
-                }) => {
+  command,
+  mode
+}) => {
   const NODE_ENV = mode || 'development'
   const envFiles = [
     `.env.${NODE_ENV}`
@@ -102,17 +102,17 @@ export default ({
 
   if (NODE_ENV === 'development') {
     config.plugins.push(
-        fullImportPlugin()
+      fullImportPlugin()
     )
   } else {
     config.plugins.push(AutoImport({
-          resolvers: [ElementPlusResolver()]
-        }),
-        Components({
-          resolvers: [ElementPlusResolver({
-            importStyle: 'sass'
-          })]
-        }))
+      resolvers: [ElementPlusResolver()]
+    }),
+    Components({
+      resolvers: [ElementPlusResolver({
+        importStyle: 'sass'
+      })]
+    }))
   }
   return config
 }

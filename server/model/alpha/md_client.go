@@ -13,7 +13,7 @@ type MdClient struct {
 	ClientEn   string `json:"clientEn" form:"clientEn" gorm:"column:client_en;comment:英文名称;size:255;"`                          //英文名称
 	ClientDes  string `json:"clientDes" form:"clientDes" gorm:"column:client_des;comment:描述;size:500;"`                         //描述
 	ClientType string `json:"clientType" form:"clientType" gorm:"column:client_first;comment:拼音首字母;size:64;"binding:"required"` //拼音首字母
-	Address    string `json:"address" form:"address" gorm:"column:address;comment:地址;size:500;"`                                //地址
+	Address    string `json:"address" form:"address" gorm:"column:address;comment:区域;size:500;"`                                //地址
 	Email      string `json:"email" form:"email" gorm:"column:email;comment:邮箱;size:255;"`                                      //邮箱
 	Tel        string `json:"tel" form:"tel" gorm:"column:tel;comment:客户电话;size:64;"`                                           //客户电话
 	EnableFlag *int   `json:"enableFlag" form:"enableFlag" gorm:"column:enable_flag;comment:启用;"binding:"required"`             //启用

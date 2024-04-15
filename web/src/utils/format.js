@@ -21,6 +21,12 @@ export const filterDict = (value, options) => {
   const rowLabel = options && options.filter(item => item.value === value)
   return rowLabel && rowLabel[0] && rowLabel[0].label
 }
+// export const filterDictInt = (value, options) => {
+//
+//   const rowLabel = options && options.filter(item => item.value == value)
+//   // console.log(value, options, rowLabel)
+//   return rowLabel && rowLabel[0] && rowLabel[0].label
+// }
 
 export const getDictFunc = async(type) => {
   const dicts = await getDict(type)

@@ -1,24 +1,19 @@
 <template>
   <div>
     <div class="gva-search-box">
-      <el-form ref="elSearchFormRef" :inline="true" :model="searchInfo" class="demo-form-inline" :rules="searchRule"
-        @keyup.enter="onSubmit">
+      <el-form ref="elSearchFormRef" :inline="true" :model="searchInfo" class="demo-form-inline" :rules="searchRule" @keyup.enter="onSubmit">
         <el-form-item label="创建日期" prop="createdAt">
           <template #label>
-            <span>
-              创建日期
-              <el-tooltip content="搜索范围是开始日期（包含）至结束日期（不包含）">
-                <el-icon>
-                  <QuestionFilled />
-                </el-icon>
-              </el-tooltip>
-            </span>
+        <span>
+          创建日期
+          <el-tooltip content="搜索范围是开始日期（包含）至结束日期（不包含）">
+            <el-icon><QuestionFilled /></el-icon>
+          </el-tooltip>
+        </span>
           </template>
-          <el-date-picker v-model="searchInfo.startCreatedAt" type="datetime" placeholder="开始日期"
-            :disabled-date="time => searchInfo.endCreatedAt ? time.getTime() > searchInfo.endCreatedAt.getTime() : false"></el-date-picker>
+          <el-date-picker v-model="searchInfo.startCreatedAt" type="datetime" placeholder="开始日期" :disabled-date="time=> searchInfo.endCreatedAt ? time.getTime() > searchInfo.endCreatedAt.getTime() : false"></el-date-picker>
           —
-          <el-date-picker v-model="searchInfo.endCreatedAt" type="datetime" placeholder="结束日期"
-            :disabled-date="time => searchInfo.startCreatedAt ? time.getTime() < searchInfo.startCreatedAt.getTime() : false"></el-date-picker>
+          <el-date-picker v-model="searchInfo.endCreatedAt" type="datetime" placeholder="结束日期" :disabled-date="time=> searchInfo.startCreatedAt ? time.getTime() < searchInfo.startCreatedAt.getTime() : false"></el-date-picker>
         </el-form-item>
 
         <el-form-item>
@@ -30,118 +25,111 @@
     <div class="gva-table-box">
       <div class="gva-btn-list">
         <el-button type="primary" icon="plus" @click="openDialog">新增</el-button>
-        <el-popover v-model:visible="deleteVisible" :disabled="!multipleSelection.length" placement="top" width="160">
-          <p>确定要删除吗？</p>
-          <div style="text-align: right; margin-top: 8px;">
-            <el-button type="primary" link @click="deleteVisible = false">取消</el-button>
-            <el-button type="primary" @click="onDelete">确定</el-button>
-          </div>
-          <template #reference>
-            <el-button icon="delete" style="margin-left: 10px;" :disabled="!multipleSelection.length"
-              @click="deleteVisible = true">删除</el-button>
-          </template>
-        </el-popover>
+        <el-button icon="delete" style="margin-left: 10px;" :disabled="!multipleSelection.length" @click="onDelete">删除</el-button>
       </div>
-      <el-table ref="multipleTable" style="width: 100%" tooltip-effect="dark" :data="tableData" row-key="ID"
-        @selection-change="handleSelectionChange">
+      <el-table
+          ref="multipleTable"
+          style="width: 100%"
+          tooltip-effect="dark"
+          :data="tableData"
+          row-key="ID"
+          @selection-change="handleSelectionChange"
+      >
         <el-table-column type="selection" width="55" />
 
-        <!-- <el-table-column align="left" label="日期" width="180">
-          <template #default="scope">{{ formatDate(scope.row.CreatedAt) }}</template>
-        </el-table-column> -->
+<!--        <el-table-column align="center" label="日期" width="180">-->
+<!--          <template #default="scope">{{ formatDate(scope.row.CreatedAt) }}</template>-->
+<!--        </el-table-column>-->
 
-        <el-table-column align="center" label="零件类型" prop="typeName" width="240" />
-        <el-table-column align="center" label="上级类型" width="280">
-          <template #default="scope">
-            <el-select v-model="scope.row.typeParent" filterable disabled>
-              <el-option v-if="scope.row.typeParent === 0" :label="'无'" :value="0"></el-option>
-              <el-option v-else v-for="item in selectedOption" :key="item.key" :label="item.label" :value="item.value">
-              </el-option>
+        <el-table-column align="center" label="零件类型" prop="typeName" width="180" />
+        <el-table-column align="center" label="上级类型" prop="typeParent" width="180" >
+          <template  #default="scope">
+            <el-select  v-model="scope.row.typeParent" style="width:100%" :clearable="false"  disabled >
+              <el-option v-for="(item,key) in typeParentOptions" :key="key" :label="item.label" :value="item.value" />
             </el-select>
           </template>
+
         </el-table-column>
 
-
-
-
-        <el-table-column align="center" label="是否基础类型" prop="isBase" width="240">
+        <el-table-column align="center" label="基础类型" prop="isBase" width="180">
           <template #default="scope">
-            {{ filterDict(scope.row.isBase, booleOptions) }}
+            {{ filterDict(scope.row.isBase,booleOptions) }}
           </template>
         </el-table-column>
-        <el-table-column align="center" label="操作" fixed="right" min-width="240">
+        <el-table-column align="left" label="操作" fixed="right" min-width="240">
           <template #default="scope">
-            <el-button type="primary" link class="table-button" @click="getDetails(scope.row)">
-              <el-icon style="margin-right: 5px">
-                <InfoFilled />
-              </el-icon>
-              查看详情
-            </el-button>
-            <el-button type="primary" link icon="edit" class="table-button"
-              @click="updateItemTypeFunc(scope.row)">变更</el-button>
+<!--            <el-button type="primary" link class="table-button" @click="getDetails(scope.row)">-->
+<!--              <el-icon style="margin-right: 5px"><InfoFilled /></el-icon>-->
+<!--              查看详情-->
+<!--            </el-button>-->
+            <el-button type="primary" link icon="edit" class="table-button" @click="updateItemTypeFunc(scope.row)">变更</el-button>
             <el-button type="primary" link icon="delete" @click="deleteRow(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
       <div class="gva-pagination">
-        <el-pagination layout="total, sizes, prev, pager, next, jumper" :current-page="page" :page-size="pageSize"
-          :page-sizes="[10, 30, 50, 100]" :total="total" @current-change="handleCurrentChange"
-          @size-change="handleSizeChange" />
+        <el-pagination
+            layout="total, sizes, prev, pager, next, jumper"
+            :current-page="page"
+            :page-size="pageSize"
+            :page-sizes="[10, 30, 50, 100]"
+            :total="total"
+            @current-change="handleCurrentChange"
+            @size-change="handleSizeChange"
+        />
       </div>
     </div>
-    <el-dialog v-model="dialogFormVisible" :before-close="closeDialog" :title="type === 'create' ? '添加' : '修改'"
-      destroy-on-close>
-      <el-scrollbar height="500px">
-        <el-form :model="formData" label-position="left" ref="elFormRef" :rules="rule" label-width="120px">
-          <el-form-item label="零件类型:" prop="typeName">
-            <el-input v-model="formData.typeName" :clearable="true" placeholder="请输入零件类型" />
-          </el-form-item>
-          <el-form-item label="是否基础类型:" prop="isBase">
-            <el-select v-model="formData.isBase" placeholder="请选择基础类型" style="width:100%" :clearable="false">
-              <el-option v-for="(item, key) in booleOptions" :key="key" :label="item.label" :value="item.value" />
-            </el-select>
-
-          </el-form-item>
-          <el-form-item label="上级类型:" prop="typeParent">
-            <el-select v-model="formData.typeParent" :disabled="formData.isBase === 0 ? false : true" filterable
-              placeholder="请选择" style="width: 240px">
-
-              <!-- <el-option v-for="item in selectedOption" :key="item.key" :label="item.value === 0 ? '无' : item.label"
-                :value="item.value" /> -->
-                <el-option v-if="formData.typeParent === 0" :label="'无'" :value="0"></el-option>
-              <el-option v-else v-for="item in selectedOption"  :key="item.key" :label="item.label" :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-
-
-
-        </el-form>
-      </el-scrollbar>
-      <template #footer>
-        <div class="dialog-footer">
-          <el-button @click="closeDialog">取 消</el-button>
-          <el-button type="primary" @click="enterDialog">确 定</el-button>
+    <el-drawer size="800" v-model="dialogFormVisible" :show-close="false" :before-close="closeDialog">
+      <template #title>
+        <div class="flex justify-between items-center">
+          <span class="text-lg">{{type==='create'?'添加':'修改'}}</span>
+          <div>
+            <el-button type="primary" @click="enterDialog">确 定</el-button>
+            <el-button @click="closeDialog">取 消</el-button>
+          </div>
         </div>
       </template>
-    </el-dialog>
 
-    <el-dialog v-model="detailShow" style="width: 800px" lock-scroll :before-close="closeDetailShow" title="查看详情"
-      destroy-on-close>
-      <el-scrollbar height="550px">
-        <el-descriptions column="1" border>
-          <el-descriptions-item label="零件类型">
-            {{ formData.typeName }}
-          </el-descriptions-item>
-          <el-descriptions-item label="上级类型">
-            {{ formData.typeParent }}
-          </el-descriptions-item>
-          <el-descriptions-item label="基础类型">
-            {{ filterDict(formData.isBase, booleOptions) }}
-          </el-descriptions-item>
-        </el-descriptions>
-      </el-scrollbar>
-    </el-dialog>
+      <el-form :model="formData" label-position="top" ref="elFormRef" :rules="rule" label-width="80px">
+        <el-form-item label="零件类型:"  prop="typeName" >
+          <el-input v-model="formData.typeName" :clearable="true"  placeholder="请输入零件类型" />
+        </el-form-item>
+        <el-form-item label="上级类型:"  prop="typeParent" >
+<!--          <el-input v-model.number="formData.typeParent" :clearable="true" placeholder="请输入上级类型" >-->
+<!--            <template  #default="scope">-->
+              <el-select  v-model="formData.typeParent" placeholder="请选择上级类型" style="width:100%" :clearable="true"   >
+
+                <el-option v-for="(item,key) in typeParentOptions" :key="key" :label="item.label" :value="item.value" />
+              </el-select>
+<!--            </template>-->
+<!--          </el-input>-->
+        </el-form-item>
+        <el-form-item label="基础类型:"  prop="isBase" >
+          <el-select v-model="formData.isBase" placeholder="请选择基础类型" style="width:100%" :clearable="false" >
+            <el-option v-for="(item,key) in booleOptions" :key="key" :label="item.label" :value="item.value" />
+          </el-select>
+        </el-form-item>
+      </el-form>
+    </el-drawer>
+
+<!--    <el-drawer size="800" v-model="detailShow" :before-close="closeDetailShow" title="查看详情" destroy-on-close>-->
+<!--      <template #title>-->
+<!--        <div class="flex justify-between items-center">-->
+<!--          <span class="text-lg">查看详情</span>-->
+<!--        </div>-->
+<!--      </template>-->
+<!--      <el-descriptions :column="1" border>-->
+<!--        <el-descriptions-item label="零件类型">-->
+<!--          {{ formData.typeName }}-->
+<!--        </el-descriptions-item>-->
+<!--        <el-descriptions-item label="上级类型">-->
+<!--          {{ formData.typeParent }}-->
+<!--        </el-descriptions-item>-->
+<!--        <el-descriptions-item label="基础类型">-->
+<!--          {{ filterDict(formData.isBase,booleOptions) }}-->
+<!--        </el-descriptions-item>-->
+<!--      </el-descriptions>-->
+<!--    </el-drawer>-->
   </div>
 </template>
 
@@ -152,8 +140,7 @@ import {
   deleteItemTypeByIds,
   updateItemType,
   findItemType,
-  getItemTypeList,
-  getOptionsFromBackend
+  getItemTypeList, getOptionsFromBackend
 } from '@/api/itemType'
 
 // 全量引入格式化工具 请按需保留
@@ -167,40 +154,38 @@ defineOptions({
 
 // 自动化生成的字典（可能为空）以及字段
 const booleOptions = ref([])
+const typeParentOptions = ref([])
 const formData = ref({
   typeName: '',
   typeParent: 0,
-  isBase: undefined,
+  isBase: '',
 })
-const selectedOption = ref([]);
-// const options = ref([]);
 
 
 // 验证规则
 const rule = reactive({
-  typeName: [{
+  typeName : [{
     required: true,
     message: '',
-    trigger: ['input', 'blur'],
+    trigger: ['input','blur'],
   },
-  {
-    whitespace: true,
-    message: '不能只输入空格',
-    trigger: ['input', 'blur'],
-  }
+    {
+      whitespace: true,
+      message: '不能只输入空格',
+      trigger: ['input', 'blur'],
+    }
   ],
-  isBase: [{
+  isBase : [{
     required: true,
     message: '',
-    trigger: ['input', 'blur'],
+    trigger: ['input','blur'],
   },
   ],
 })
 
 const searchRule = reactive({
   createdAt: [
-    {
-      validator: (rule, value, callback) => {
+    { validator: (rule, value, callback) => {
         if (searchInfo.value.startCreatedAt && !searchInfo.value.endCreatedAt) {
           callback(new Error('请填写结束日期'))
         } else if (!searchInfo.value.startCreatedAt && searchInfo.value.endCreatedAt) {
@@ -210,8 +195,7 @@ const searchRule = reactive({
         } else {
           callback()
         }
-      }, trigger: 'change'
-    }
+      }, trigger: 'change' }
   ],
 })
 
@@ -229,11 +213,12 @@ const searchInfo = ref({})
 const onReset = () => {
   searchInfo.value = {}
   getTableData()
+  getTypeParentOptions()
 }
 
 // 搜索
 const onSubmit = () => {
-  elSearchFormRef.value?.validate(async (valid) => {
+  elSearchFormRef.value?.validate(async(valid) => {
     if (!valid) return
     page.value = 1
     pageSize.value = 10
@@ -254,7 +239,7 @@ const handleCurrentChange = (val) => {
 }
 
 // 查询
-const getTableData = async () => {
+const getTableData = async() => {
   const table = await getItemTypeList({ page: page.value, pageSize: pageSize.value, ...searchInfo.value })
   if (table.code === 0) {
     tableData.value = table.data.list
@@ -262,39 +247,31 @@ const getTableData = async () => {
     page.value = table.data.page
     pageSize.value = table.data.pageSize
   }
-  loadSelectData()
 }
-// 下拉框加载数据
-const loadSelectData = async () => {
-  try {
-    const response = await getOptionsFromBackend(); // 调用后台 API 获取选项
-    // console.log(response)
-    selectedOption.value = combinationObject(response.data.list); // 假设后台返回的数据是一个数组，包含 label 和 value
-    // console.log(response.data)
+//获取typeParentOptions
+const getTypeParentOptions = async() => {
 
-  } catch (error) {
-    console.error('获取数据失败：', error);
-  }
-}
+  const res = await getOptionsFromBackend({ ID: 0 })
+  typeParentOptions.value.push({ label: '无', value: 0 })
+  if (res.code === 0) {
+     res.data.list.map(item => {
+       typeParentOptions.value.push( { label: item.typeName, value: item.ID })
+    })
 
-const combinationObject = (objs) => {
-  var arr = [];
-  for (var i in objs) {
-    let obj = {};
-    // console.log("i",objs[i].ID)
-    obj.label = objs[i].typeName; // i 是属性名，也就是我们常说的 key
-    obj.value = objs[i].ID; // objs[i] 是属性值，也就是我们常说的 value
-    arr.push(obj);
+    // console.log(typeParentOptions.value)
+    // 若typeParentOptions为空，则添加一个选项，value为0，label为无
+    // console.log(typeParentOptions.value)
   }
-  return arr;
+
 }
 
 getTableData()
+getTypeParentOptions()
 
 // ============== 表格控制部分结束 ===============
 
 // 获取需要的字典 可能为空 按需保留
-const setOptions = async () => {
+const setOptions = async () =>{
   booleOptions.value = await getDictFunc('boole')
 }
 
@@ -320,43 +297,44 @@ const deleteRow = (row) => {
   })
 }
 
-
-// 批量删除控制标记
-const deleteVisible = ref(false)
-
 // 多选删除
-const onDelete = async () => {
-  const IDs = []
-  if (multipleSelection.value.length === 0) {
-    ElMessage({
-      type: 'warning',
-      message: '请选择要删除的数据'
-    })
-    return
-  }
-  multipleSelection.value &&
+const onDelete = async() => {
+  ElMessageBox.confirm('确定要删除吗?', '提示', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning'
+  }).then(async() => {
+    const IDs = []
+    if (multipleSelection.value.length === 0) {
+      ElMessage({
+        type: 'warning',
+        message: '请选择要删除的数据'
+      })
+      return
+    }
+    multipleSelection.value &&
     multipleSelection.value.map(item => {
       IDs.push(item.ID)
     })
-  const res = await deleteItemTypeByIds({ IDs })
-  if (res.code === 0) {
-    ElMessage({
-      type: 'success',
-      message: '删除成功'
-    })
-    if (tableData.value.length === IDs.length && page.value > 1) {
-      page.value--
+    const res = await deleteItemTypeByIds({ IDs })
+    if (res.code === 0) {
+      ElMessage({
+        type: 'success',
+        message: '删除成功'
+      })
+      if (tableData.value.length === IDs.length && page.value > 1) {
+        page.value--
+      }
+      getTableData()
     }
-    deleteVisible.value = false
-    getTableData()
-  }
+  })
 }
 
 // 行为控制标记（弹窗内部需要增还是改）
 const type = ref('')
 
 // 更新行
-const updateItemTypeFunc = async (row) => {
+const updateItemTypeFunc = async(row) => {
   const res = await findItemType({ ID: row.ID })
   type.value = 'update'
   if (res.code === 0) {
@@ -421,8 +399,6 @@ const closeDetailShow = () => {
 const openDialog = () => {
   type.value = 'create'
   dialogFormVisible.value = true
-  //下拉框加载数据
-
 }
 
 // 关闭弹窗
@@ -436,9 +412,7 @@ const closeDialog = () => {
 }
 // 弹窗确定
 const enterDialog = async () => {
-  elFormRef.value?.validate(async (valid) => {
-    //下拉框加载数据
-
+  elFormRef.value?.validate( async (valid) => {
     if (!valid) return
     let res
     switch (type.value) {
@@ -465,4 +439,7 @@ const enterDialog = async () => {
 
 </script>
 
-<style></style>
+<style>
+
+</style>
+

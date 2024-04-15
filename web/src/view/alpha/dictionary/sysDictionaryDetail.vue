@@ -360,4 +360,11 @@ watch(() => props.sysDictionaryID, () => {
 </script>
 
 <style>
+.gva-table-box {
+  border-radius: 0.25rem;
+  --tw-bg-opacity: 1;
+  background-color: rgba(247, 250, 252, var(--tw-bg-opacity));
+  padding: 1.5rem;
+  width: calc(100% /2);
+}
 </style>

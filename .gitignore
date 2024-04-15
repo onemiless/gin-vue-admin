@@ -3,6 +3,7 @@
 /web/dist
 /server/cache.db
 /rm_file
+
 .DS_Store
 
 # local env files

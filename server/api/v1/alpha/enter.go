@@ -7,4 +7,8 @@ type ApiGroup struct {
 	CMSXCApi
 	ItemTypeApi
 	MutiSelectApi
+	MdFirstLevelApi
+	MdSecondLevelApi
+	MdThirdLevelApi
+	TecBaseInfoApi
 }
