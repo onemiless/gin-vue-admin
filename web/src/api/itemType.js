@@ -104,3 +104,11 @@ export const getOptionsFromBackend=(params)=>{
     params
   })
 }
+//根据父菜单，获取子菜单
+export const getOptionsFromBackendByParentId=(params)=>{
+  return service({
+    url: '/itemtype/getItemTypeListParent',
+    method: 'get',
+    params
+  })
+}

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="gva-form-box">
-      <el-form :model="formData" ref="elFormRef" label-position="right" :rules="rule" label-width="80px">
+      <el-form :model="formData" ref="elFormRef" label-position="right" :rules="rule" label-width="80%">
         <el-form-item label="分部:" prop="ME002">
            <el-select v-model="formData.ME002" placeholder="请选择分部" style="width:100%" :clearable="true" >
               <el-option v-for="(item,key) in 分部Options" :key="key" :label="item.label" :value="item.value" />

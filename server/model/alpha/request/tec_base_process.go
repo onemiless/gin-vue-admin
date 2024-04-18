@@ -5,10 +5,9 @@ import (
 	"time"
 )
 
-type ItemTypeSearch struct {
+type TecBaseProcessSearch struct {
 	StartCreatedAt *time.Time `json:"startCreatedAt" form:"startCreatedAt"`
 	EndCreatedAt   *time.Time `json:"endCreatedAt" form:"endCreatedAt"`
-	TypeParent     *int       `json:"typeParent" form:"typeParent" ` //上级类型
 
 	request.PageInfo
 }

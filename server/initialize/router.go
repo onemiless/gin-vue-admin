@@ -95,6 +95,7 @@ func Routers() *gin.Engine {
 		alphaRouter.InitMdSecondLevelRouter(PrivateGroup)
 		alphaRouter.InitMdThirdLevelRouter(PrivateGroup)
 		alphaRouter.InitTecBaseInfoRouter(PrivateGroup)
+		alphaRouter.InitTecBaseProcessRouter(PrivateGroup)
 
 	}
 

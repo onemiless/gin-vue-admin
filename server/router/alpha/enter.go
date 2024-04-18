@@ -11,4 +11,5 @@ type RouterGroup struct {
 	MdSecondLevelRouter
 	MdThirdLevelRouter
 	TecBaseInfoRouter
+	TecBaseProcessRouter
 }

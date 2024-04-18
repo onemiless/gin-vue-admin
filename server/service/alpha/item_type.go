@@ -78,9 +78,13 @@ func (itemtypeService *ItemTypeService) GetItemTypeInfoParentList(info alphaReq.
 	db := global.GVA_DB.Model(&alpha.ItemType{})
 	var itemtypes []alpha.ItemType
 	// 如果有条件搜索 下方会自动创建搜索语句
-	if info.StartCreatedAt != nil && info.EndCreatedAt != nil {
-		db = db.Where("type_parent=?", 1)
+	if info.TypeParent != nil {
+		db = db.Where("type_parent=?", info.TypeParent)
+	} else {
+		//if info.StartCreatedAt != nil && info.EndCreatedAt != nil {
+		db = db.Where("type_parent=?", 0)
 	}
+	//}
 	err = db.Count(&total).Error
 	if err != nil {
 		return

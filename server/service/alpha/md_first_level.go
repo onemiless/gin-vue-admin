@@ -20,6 +20,7 @@ func (mdFirstLevelService *MdFirstLevelService) CreateMdFirstLevel(mdFirstLevel 
 
 func (mdFirstLevelService *MdFirstLevelService) checkHasSecondLevel(IDs any) (err error) {
 	var secondLevels []alpha.MdSecondLevel
+	//reflect.TypeOf("")
 
 	err = global.GVA_DB.Model(&secondLevels).Where("firstLevel_id in (?)", IDs).Find(&secondLevels).Error
 	if err != nil {

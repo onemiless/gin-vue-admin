@@ -11,4 +11,5 @@ type ApiGroup struct {
 	MdSecondLevelApi
 	MdThirdLevelApi
 	TecBaseInfoApi
+	TecBaseProcessApi
 }

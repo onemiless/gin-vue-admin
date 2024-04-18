@@ -11,4 +11,5 @@ type ServiceGroup struct {
 	MdSecondLevelService
 	MdThirdLevelService
 	TecBaseInfoService
+	TecBaseProcessService
 }

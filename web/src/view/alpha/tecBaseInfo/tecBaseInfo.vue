@@ -72,9 +72,9 @@
         >
         <el-table-column type="selection" width="55" />
         
-        <el-table-column align="left" label="日期" width="180">
+        <!-- <el-table-column align="left" label="日期" width="180">
             <template #default="scope">{{ formatDate(scope.row.CreatedAt) }}</template>
-        </el-table-column>
+        </el-table-column> -->
         
         <el-table-column align="left" label="分部" prop="ME002" width="120">
             <template #default="scope">
@@ -140,7 +140,7 @@
             />
         </div>
     </div>
-    <el-drawer size="800" v-model="dialogFormVisible" :show-close="false" :before-close="closeDialog">
+    <el-drawer size="80%" v-model="dialogFormVisible" :show-close="false" :before-close="closeDialog"  close-on-click-modal="false">
        <template #title>
               <div class="flex justify-between items-center">
                 <span class="text-lg">{{type==='create'?'添加':'修改'}}</span>
@@ -158,10 +158,21 @@
               </el-select>
             </el-form-item>
             <el-form-item label="零件类型1:"  prop="type" >
-              <el-input v-model.number="formData.type" :clearable="true" placeholder="请输入零件类型1" />
+              <!-- <el-input v-model.number="formData.type" :clearable="true" placeholder="请输入零件类型1" /> -->
+              <el-select v-model="formData.type" placeholder="请选择零件类型1"  
+              @change="getTypeextOptions"
+              style="width:100%" :clearable="true"  >
+              <el-option v-for="(item,key) in typeOptions" :key="key" :label="item.typeName" :value="item.ID" >
+              </el-option>
+           </el-select>
             </el-form-item>
             <el-form-item label="零件类型2:"  prop="typeext" >
-              <el-input v-model.number="formData.typeext" :clearable="true" placeholder="请输入零件类型2" />
+              <!-- <el-input v-model.number="formData.typeext" :clearable="true" placeholder="请输入零件类型2" /> -->
+              <el-select v-model="formData.typeext" placeholder="请选择零件类型2"  
+              style="width:100%" :clearable="true"  >
+              <el-option v-for="(item,key) in typeextOptions" :key="key" :label="item.typeName" :value="item.ID" >
+              </el-option>
+           </el-select>
             </el-form-item>
             <el-form-item label="客户名称:"  prop="MB201" >
               <el-input v-model="formData.MB201" :clearable="true"  placeholder="请输入客户名称" />
@@ -274,8 +285,8 @@
                <span class="text-lg">查看详情</span>
              </div>
          </template>
-        <el-descriptions :column="1" border>
-                <el-descriptions-item label="分部">
+        <el-descriptions :column="1" border >
+                <el-descriptions-item label="分部"  width="80">
                         {{ filterDict(formData.ME002,分部Options) }}
                 </el-descriptions-item>
                 <el-descriptions-item label="零件类型1">
@@ -401,6 +412,7 @@ import {
   getTecBaseInfoList
 } from '@/api/tecBaseInfo'
 
+import { getOptionsFromBackend,getOptionsFromBackendByParentId} from '@/api/itemType'
 // 全量引入格式化工具 请按需保留
 import { getDictFunc, formatDate, formatBoolean, filterDict, ReturnArrImg, onDownloadFile } from '@/utils/format'
 import { ElMessage, ElMessageBox } from 'element-plus'
@@ -414,8 +426,8 @@ defineOptions({
 const 分部Options = ref([])
 const formData = ref({
         ME002: '',
-        type: 0,
-        typeext: 0,
+        type: '',
+        typeext: '',
         MB201: '',
         MB002: '',
         MB202: '',
@@ -565,6 +577,33 @@ const total = ref(0)
 const pageSize = ref(10)
 const tableData = ref([])
 const searchInfo = ref({})
+const typeOptions = ref([])
+const typeextOptions = ref([])
+
+//获取typeOptions
+
+const getTypeOptions = async () => {
+  const res = await getOptionsFromBackend()
+  // console.log(res)
+  if (res.code === 0) {
+    typeOptions.value = res.data.list
+  }
+}
+//获取typeextOptions
+const getTypeextOptions = async (parentid) => {
+  //清除已有的typeextOptions的值
+  typeextOptions.value = []
+  formData.value.typeext = ''
+  // console.log()
+  const param = {
+    typeParent: parentid
+  }
+  const res = await getOptionsFromBackendByParentId(param)
+  // console.log(res)
+  if (res.code === 0) {
+    typeextOptions.value = res.data.list
+  }
+}
 
 // 重置
 const onReset = () => {
@@ -603,6 +642,7 @@ const getTableData = async() => {
     page.value = table.data.page
     pageSize.value = table.data.pageSize
   }
+  getTypeOptions()
 }
 
 getTableData()
@@ -708,6 +748,7 @@ const detailShow = ref(false)
 
 // 打开详情弹窗
 const openDetailShow = () => {
+  
   detailShow.value = true
 }
 
@@ -770,6 +811,7 @@ const closeDetailShow = () => {
 
 // 打开弹窗
 const openDialog = () => {
+   
     type.value = 'create'
     dialogFormVisible.value = true
 }
