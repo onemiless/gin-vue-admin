@@ -4,8 +4,8 @@ import (
 	"errors"
 	"fmt"
 	"github.com/flipped-aurora/gin-vue-admin/server/global"
-	"github.com/flipped-aurora/gin-vue-admin/server/model/common/request"
 	"github.com/flipped-aurora/gin-vue-admin/server/model/system"
+	systemReq "github.com/flipped-aurora/gin-vue-admin/server/model/system/request"
 	"github.com/flipped-aurora/gin-vue-admin/server/utils"
 	"github.com/gofrs/uuid/v5"
 	"gorm.io/gorm"
@@ -158,7 +158,7 @@ func (userService *UserService) ChangePassword(u *system.SysUser, newPassword st
 //@param: info request.PageInfo
 //@return: err error, list interface{}, total int64
 
-func (userService *UserService) GetUserInfoList(info request.PageInfo) (list interface{}, total int64, err error) {
+func (userService *UserService) GetUserInfoList(info systemReq.SysUser) (list interface{}, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	db := global.GVA_DB.Model(&system.SysUser{})
@@ -166,6 +166,14 @@ func (userService *UserService) GetUserInfoList(info request.PageInfo) (list int
 	err = db.Count(&total).Error
 	if err != nil {
 		return
+	}
+	if info.Username != "" {
+
+		db = db.Where("user_name like ?", "%"+info.Username+"%")
+	}
+
+	if info.NickName != "" {
+		db = db.Where("nick_name like ?", "%"+info.NickName+"%")
 	}
 	err = db.Limit(limit).Offset(offset).Preload("Authorities").Preload("Authority").Find(&userList).Error
 	return userList, total, err

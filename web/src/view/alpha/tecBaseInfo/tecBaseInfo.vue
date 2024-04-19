@@ -72,9 +72,9 @@
         >
         <el-table-column type="selection" width="55" />
         
-        <!-- <el-table-column align="left" label="日期" width="180">
+        <el-table-column align="left" label="日期" width="180">
             <template #default="scope">{{ formatDate(scope.row.CreatedAt) }}</template>
-        </el-table-column> -->
+        </el-table-column>
         
         <el-table-column align="left" label="分部" prop="ME002" width="120">
             <template #default="scope">
@@ -175,7 +175,18 @@
            </el-select>
             </el-form-item>
             <el-form-item label="客户名称:"  prop="MB201" >
-              <el-input v-model="formData.MB201" :clearable="true"  placeholder="请输入客户名称" />
+              <!-- <el-input v-model="formData.MB201" :clearable="true"  placeholder="请输入客户名称" /> -->
+                <el-autocomplete
+                    v-model="customer"
+                    :fetch-suggestions="querCustomer"
+                    placeholder="请输入客户名称"
+                    @select="handleSelect"
+                  >
+                    <template #default="{ item }">
+                      <div class="value">{{ item.clientCode }}</div>
+                      <span class="link">{{ item.clientName }}</span>
+                    </template>
+                  </el-autocomplete>
             </el-form-item>
             <el-form-item label="零件名称:"  prop="MB002" >
               <el-input v-model="formData.MB002" :clearable="true"  placeholder="请输入零件名称" />
@@ -579,6 +590,31 @@ const tableData = ref([])
 const searchInfo = ref({})
 const typeOptions = ref([])
 const typeextOptions = ref([])
+const customer = ref([])
+
+//获取客户信息
+const querCustomer = async () => {
+  const param = { enableFlag: 1 }
+  const res = await getMdClientList(param)
+  if (res.code === 0) {
+    customer.value = res.data.list
+  }
+}
+const querySearch = (queryString, cb) => {
+    const results = queryString
+      ? customer.value.filter(createFilter(queryString))
+      : links.value
+    // call callback function to return suggestion objects
+    cb(results)
+  }
+  const createFilter = (queryString) => {
+    return (restaurant) => {
+      return (
+        restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+      )
+    }
+  }
+
 
 //获取typeOptions
 

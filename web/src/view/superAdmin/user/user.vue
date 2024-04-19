@@ -1,4 +1,34 @@
 <template>
+  <div class="gva-search-box">
+    <el-form :inline="true" :model="searchInfo" class="demo-form-inline" >
+<!--      <el-form-item label="创建日期" prop="createdAt">-->
+<!--        <template #label>-->
+<!--        <span>-->
+<!--          创建日期-->
+<!--          <el-tooltip content="搜索范围是开始日期（包含）至结束日期（不包含）">-->
+<!--            <el-icon><QuestionFilled /></el-icon>-->
+<!--          </el-tooltip>-->
+<!--        </span>-->
+<!--        </template>-->
+<!--        <el-date-picker v-model="searchInfo.startCreatedAt" type="datetime" placeholder="开始日期" :disabled-date="time=> searchInfo.endCreatedAt ? time.getTime() > searchInfo.endCreatedAt.getTime() : false"></el-date-picker>-->
+<!--        —-->
+<!--        <el-date-picker v-model="searchInfo.endCreatedAt" type="datetime" placeholder="结束日期" :disabled-date="time=> searchInfo.startCreatedAt ? time.getTime() < searchInfo.startCreatedAt.getTime() : false"></el-date-picker>-->
+<!--      </el-form-item>-->
+
+      <el-form-item label="用户名" prop="nickName">
+        <el-input v-model="searchInfo.nickName" placeholder="请输入用户名"></el-input>
+      </el-form-item>
+
+      <el-form-item label="工号" prop="userName">
+        <el-input v-model="searchInfo.userName" placeholder="请输入用户名"></el-input>
+      </el-form-item>
+
+      <el-form-item>
+        <el-button type="primary" icon="search" @click="searchFunc">查询</el-button>
+        <el-button icon="refresh" @click="onReset">重置</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
   <div>
     <warning-bar title="注：右上角头像下拉可切换角色" />
     <div class="gva-table-box">
@@ -247,7 +277,7 @@ import ChooseImg from "@/components/chooseImg/index.vue";
 import WarningBar from "@/components/warningBar/warningBar.vue";
 import { setUserInfo, resetPassword, syncWecomUser } from "@/api/user.js";
 
-import { nextTick, ref, watch } from "vue";
+import {nextTick, reactive, ref, watch} from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 
 defineOptions({
@@ -277,6 +307,41 @@ const setAuthorityOptions = (AuthorityData, optionsData) => {
     });
 };
 
+const searchRule = reactive({
+  createdAt: [
+    { validator: (rule, value, callback) => {
+        if (searchInfo.value.startCreatedAt && !searchInfo.value.endCreatedAt) {
+          callback(new Error('请填写结束日期'))
+        } else if (!searchInfo.value.startCreatedAt && searchInfo.value.endCreatedAt) {
+          callback(new Error('请填写开始日期'))
+        } else if (searchInfo.value.startCreatedAt && searchInfo.value.endCreatedAt && (searchInfo.value.startCreatedAt.getTime() === searchInfo.value.endCreatedAt.getTime() || searchInfo.value.startCreatedAt.getTime() > searchInfo.value.endCreatedAt.getTime())) {
+          callback(new Error('开始日期应当早于结束日期'))
+        } else {
+          callback()
+        }
+      }, trigger: 'change' }
+  ],
+})
+const searchFunc = async() => {
+  const table = await getUserList({
+    page: page.value,
+    pageSize: pageSize.value,
+    nickName: searchInfo.value.nickName,
+    userName: searchInfo.value.userName,
+  });
+  if (table.code === 0) {
+    tableData.value = table.data.list;
+    total.value = table.data.total;
+    page.value = table.data.page;
+    pageSize.value = table.data.pageSize;
+  }
+}
+const elFormRef = ref()
+const elSearchFormRef = ref()
+const searchInfo = ref({
+  nickName: '',
+  userName: '',
+})
 const page = ref(1);
 const total = ref(0);
 const pageSize = ref(10);

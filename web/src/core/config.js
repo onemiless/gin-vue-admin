@@ -3,9 +3,9 @@
  */
 
 const config = {
-  appName: 'Gin-Vue-Admin',
-  appLogo: 'https://www.gin-vue-admin.com/img/logo.png',
-  showViteLogo: true,
+  appName: 'Alpha',
+  appLogo: 'http://www.alphamagni.com/images/logo.png',
+  showViteLogo: false,
   logs: [],
 }
 
