@@ -11,5 +11,6 @@ type MdThirdLevelSearch struct {
 
 	Name          string `json:"name" form:"name" `
 	SecondLevelId uint   `json:"secondLevelId" form:"secondLevelId" `
+	Query         string `json:"query" form:"query"`
 	request.PageInfo
 }

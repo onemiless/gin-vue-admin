@@ -170,10 +170,6 @@
         {{- end }}
         <el-table-column align="left" label="操作" fixed="right" min-width="240">
             <template #default="scope">
-            <el-button type="primary" link class="table-button" @click="getDetails(scope.row)">
-                <el-icon style="margin-right: 5px"><InfoFilled /></el-icon>
-                查看详情
-            </el-button>
             <el-button type="primary" link icon="edit" class="table-button" @click="update{{.StructName}}Func(scope.row)">变更</el-button>
             <el-button type="primary" link icon="delete" @click="deleteRow(scope.row)">删除</el-button>
             </template>
@@ -191,8 +187,8 @@
             />
         </div>
     </div>
-    <el-drawer size="800" v-model="dialogFormVisible" :show-close="false" :before-close="closeDialog">
-       <template #title>
+    <el-drawer size="80%" v-model="dialogFormVisible" :show-close="false" :before-close="closeDialog">
+       <template #header>
               <div class="flex justify-between items-center">
                 <span class="text-lg">{{"{{"}}type==='create'?'添加':'修改'{{"}}"}}</span>
                 <div>
@@ -202,7 +198,7 @@
               </div>
             </template>
 
-          <el-form :model="formData" label-position="top" ref="elFormRef" :rules="rule" label-width="80px">
+          <el-form :model="formData" label-position="top" ref="elFormRef" :rules="rule" label-width="auto" :inline = "true" >
         {{- range .Fields}}
             <el-form-item label="{{.FieldDesc}}:"  prop="{{.FieldJson}}" >
           {{- if eq .FieldType "bool" }}
@@ -210,7 +206,7 @@
           {{- end }}
           {{- if eq .FieldType "string" }}
           {{- if .DictType}}
-              <el-select v-model="formData.{{ .FieldJson }}" placeholder="请选择{{.FieldDesc}}" style="width:100%" :clearable="{{.Clearable}}" >
+              <el-select v-model="formData.{{ .FieldJson }}" placeholder="请选择{{.FieldDesc}}"  :clearable="{{.Clearable}}" >
                 <el-option v-for="(item,key) in {{ .DictType }}Options" :key="key" :label="item.label" :value="item.value" />
               </el-select>
           {{- else }}
@@ -226,7 +222,7 @@
           {{- end }}
           {{- if eq .FieldType "int" }}
           {{- if .DictType}}
-              <el-select v-model="formData.{{ .FieldJson }}" placeholder="请选择{{.FieldDesc}}" style="width:100%" :clearable="{{.Clearable}}" >
+              <el-select v-model="formData.{{ .FieldJson }}" placeholder="请选择{{.FieldDesc}}"  :clearable="{{.Clearable}}" >
                 <el-option v-for="(item,key) in {{ .DictType }}Options" :key="key" :label="item.label" :value="item.value" />
               </el-select>
           {{- else }}
@@ -234,13 +230,13 @@
           {{- end }}
           {{- end }}
           {{- if eq .FieldType "time.Time" }}
-              <el-date-picker v-model="formData.{{ .FieldJson }}" type="date" style="width:100%" placeholder="选择日期" :clearable="{{.Clearable}}"  />
+              <el-date-picker v-model="formData.{{ .FieldJson }}" type="date"  placeholder="选择日期" :clearable="{{.Clearable}}"  />
           {{- end }}
           {{- if eq .FieldType "float64" }}
-              <el-input-number v-model="formData.{{ .FieldJson }}"  style="width:100%" :precision="2" :clearable="{{.Clearable}}"  />
+              <el-input-number v-model="formData.{{ .FieldJson }}"   :precision="2" :clearable="{{.Clearable}}"  />
           {{- end }}
           {{- if eq .FieldType "enum" }}
-                <el-select v-model="formData.{{ .FieldJson }}" placeholder="请选择{{.FieldDesc}}" style="width:100%" :clearable="{{.Clearable}}" >
+                <el-select v-model="formData.{{ .FieldJson }}" placeholder="请选择{{.FieldDesc}}"  :clearable="{{.Clearable}}" >
                    <el-option v-for="item in [{{.DataTypeLong}}]" :key="item" :label="item" :value="item" />
                 </el-select>
           {{- end }}
@@ -271,51 +267,6 @@
           </el-form>
     </el-drawer>
 
-    <el-drawer size="800" v-model="detailShow" :before-close="closeDetailShow" title="查看详情" destroy-on-close>
-          <template #title>
-             <div class="flex justify-between items-center">
-               <span class="text-lg">查看详情</span>
-             </div>
-         </template>
-        <el-descriptions :column="1" border>
-        {{- range .Fields}}
-                <el-descriptions-item label="{{ .FieldDesc }}">
-                {{- if .DictType}}
-                        {{"{{"}} filterDict(formData.{{.FieldJson}},{{.DictType}}Options) {{"}}"}}
-                {{- else if eq .FieldType "picture" }}
-                        <el-image style="width: 50px; height: 50px" :preview-src-list="ReturnArrImg(formData.{{ .FieldJson }})" :src="getUrl(formData.{{ .FieldJson }})" fit="cover" />
-                {{- else if eq .FieldType "video" }}
-                        <video
-                              style="width: 50px; height: 50px"
-                              muted
-                              preload="metadata"
-                            >
-                            <source :src="getUrl(formData.{{ .FieldJson }}) + '#t=1'">
-                        </video>
-                {{- else if eq .FieldType "pictures" }}
-                        <el-image style="width: 50px; height: 50px; margin-right: 10px" :preview-src-list="ReturnArrImg(formData.{{ .FieldJson }})" :initial-index="index" v-for="(item,index) in formData.{{ .FieldJson }}" :key="index" :src="getUrl(item)" fit="cover" />
-                {{- else if eq .FieldType "file" }}
-                        <div class="fileBtn" v-for="(item,index) in formData.{{ .FieldJson }}" :key="index">
-                          <el-button type="primary" text bg @click="onDownloadFile(item.url)">
-                            <el-icon style="margin-right: 5px"><Download /></el-icon>
-                            {{"{{"}} item.name {{"}}"}}
-                          </el-button>
-                        </div>
-                  {{- else if eq .FieldType "bool" }}
-                    {{"{{"}} formatBoolean(formData.{{.FieldJson}}) {{"}}"}}
-                   {{- else if eq .FieldType "time.Time" }}
-                      {{"{{"}} formatDate(formData.{{.FieldJson}}) {{"}}"}}
-                   {{- else if eq .FieldType "richtext" }}
-                        [富文本内容]
-                   {{- else if eq .FieldType "json" }}
-                        [JSON]
-                   {{- else}}
-                        {{"{{"}} formData.{{.FieldJson}} {{"}}"}}
-                   {{- end }}
-                </el-descriptions-item>
-        {{- end }}
-        </el-descriptions>
-    </el-drawer>
   </div>
 </template>
 
@@ -631,7 +582,7 @@ const dialogFormVisible = ref(false)
 
 
 // 查看详情控制标记
-const detailShow = ref(false)
+// const detailShow = ref(false)
 
 
 // 打开详情弹窗

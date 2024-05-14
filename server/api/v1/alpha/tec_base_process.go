@@ -118,11 +118,23 @@ func (tecBaseProcessApi *TecBaseProcessApi) UpdateTecBaseProcess(c *gin.Context)
 // @Router /tecBaseProcess/findTecBaseProcess [get]
 func (tecBaseProcessApi *TecBaseProcessApi) FindTecBaseProcess(c *gin.Context) {
 	ID := c.Query("ID")
-	if retecBaseProcess, err := tecBaseProcessService.GetTecBaseProcess(ID); err != nil {
-		global.GVA_LOG.Error("查询失败!", zap.Error(err))
-		response.FailWithMessage("查询失败", c)
-	} else {
-		response.OkWithData(gin.H{"retecBaseProcess": retecBaseProcess}, c)
+	ParenId := c.Query("ParentId")
+	if ParenId != "" {
+		if tecBaseProcess, err := tecBaseProcessService.GetTecBaseProcessParentID(ParenId); err != nil {
+			global.GVA_LOG.Error("查询失败!", zap.Error(err))
+			response.FailWithMessage("查询失败", c)
+		} else {
+			response.OkWithData(gin.H{"tecBaseProcess": tecBaseProcess}, c)
+		}
+	}
+	if ID != "" {
+
+		if retecBaseProcess, err := tecBaseProcessService.GetTecBaseProcess(ID); err != nil {
+			global.GVA_LOG.Error("查询失败!", zap.Error(err))
+			response.FailWithMessage("查询失败", c)
+		} else {
+			response.OkWithData(gin.H{"retecBaseProcess": retecBaseProcess}, c)
+		}
 	}
 }
 

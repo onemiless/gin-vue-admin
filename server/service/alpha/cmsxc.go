@@ -53,6 +53,10 @@ func (cmsxcService *CMSXCService) GetCMSXCInfoList(info alphaReq.CMSXCSearch) (l
 	db := global.MustGetGlobalDBByDBName("A1111").Model(&alpha.CMSXC{})
 	var cmsxcs []alpha.CMSXC
 	// 如果有条件搜索 下方会自动创建搜索语句
+	if info.Query != "" {
+		db = db.Where("XC001 LIKE ?", "%"+info.Query+"%").Or("XC002 LIKE ?", "%"+info.Query+"%")
+		//db = db.Where()
+	}
 	err = db.Count(&total).Error
 	if err != nil {
 		return

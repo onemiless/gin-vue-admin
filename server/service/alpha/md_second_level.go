@@ -101,10 +101,14 @@ func (mdSecondLevelService *MdSecondLevelService) GetMdSecondLevelInfoList(info 
 		db = db.Where("firstLevel_id = ?", info.FirstLevelId)
 	}
 	if info.Name != "" {
-		db = db.Where("name LIKE ?", "%"+info.Name+"%")
+		db = db.Or("name LIKE ?", "%"+info.Name+"%")
 	}
 	if info.Remark != "" {
-		db = db.Where("remark LIKE ?", "%"+info.Remark+"%")
+		db = db.Or("remark LIKE ?", "%"+info.Remark+"%")
+	}
+	if info.Query != "" {
+		db = db.Where("name LIKE ?", "%"+info.Query+"%")
+
 	}
 	err = db.Count(&total).Error
 	if err != nil {

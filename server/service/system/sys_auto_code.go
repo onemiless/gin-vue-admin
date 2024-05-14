@@ -555,6 +555,7 @@ func (autoCodeService *AutoCodeService) AutoCreateApi(a *system.AutoCodeStruct) 
 			Method:      "GET",
 		},
 	}
+
 	err = global.GVA_DB.Transaction(func(tx *gorm.DB) error {
 		for _, v := range apiList {
 			var api system.SysApi
@@ -578,6 +579,7 @@ func (autoCodeService *AutoCodeService) AutoCreateMenu(a *system.AutoCodeStruct)
 		return 0, errors.New("存在相同的菜单路由，请关闭自动创建菜单功能")
 	}
 	menu.ParentId = "0"
+	menu.Icon = "aim"
 	menu.Name = a.Abbreviation
 	menu.Path = a.Abbreviation
 	menu.Meta.Title = a.Description

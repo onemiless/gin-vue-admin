@@ -12,4 +12,8 @@ type RouterGroup struct {
 	MdThirdLevelRouter
 	TecBaseInfoRouter
 	TecBaseProcessRouter
+	TecBaseInfoExtRouter
+	QualityBaseInfoRouter
+	CostCollectionRouter
+	ProofingInformationRouter
 }

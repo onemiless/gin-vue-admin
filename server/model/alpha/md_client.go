@@ -8,7 +8,7 @@ import (
 // 客户信息 结构体  MdClient
 type MdClient struct {
 	global.GVA_MODEL
-	ClientCode string `json:"clientCode" form:"clientCode" gorm:"column:client_code;comment:客户编码;size:64;"binding:"required"`   //客户编码
+	ClientCode string `json:"clientCode" form:"clientCode" gorm:"column:client_code;comment:客户编码;size:64;"`                     //客户编码
 	ClientName string `json:"clientName" form:"clientName" gorm:"column:client_name;comment:客户名称;size:255;"binding:"required"`  //客户名称
 	ClientEn   string `json:"clientEn" form:"clientEn" gorm:"column:client_en;comment:英文名称;size:255;"`                          //英文名称
 	ClientDes  string `json:"clientDes" form:"clientDes" gorm:"column:client_des;comment:描述;size:500;"`                         //描述

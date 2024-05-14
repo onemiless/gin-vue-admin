@@ -8,6 +8,6 @@ import (
 type TecBaseProcessSearch struct {
 	StartCreatedAt *time.Time `json:"startCreatedAt" form:"startCreatedAt"`
 	EndCreatedAt   *time.Time `json:"endCreatedAt" form:"endCreatedAt"`
-
+	ParentID       uint       `json:"parentID" form:"parentID" `
 	request.PageInfo
 }

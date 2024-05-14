@@ -1,8 +1,8 @@
 <template>
   <div >
-    <warning-bar
+    <!-- <warning-bar
         title="获取字典且缓存方法已在前端utils/dictionary 已经封装完成 不必自己书写 使用方法查看文件内注释"
-    />
+    /> -->
     <div class="dict-box flex gap-4">
       <div class="w-64 bg-white p-4">
         <div class="flex justify-between items-center">

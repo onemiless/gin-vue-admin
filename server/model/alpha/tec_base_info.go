@@ -28,10 +28,10 @@ type TecBaseInfo struct {
 	WireDiameter        *float64 `json:"wireDiameter" form:"wireDiameter" gorm:"column:wire_diameter;comment:;"`                          //线径
 	PieceWeight         *float64 `json:"pieceWeight" form:"pieceWeight" gorm:"column:piece_weight;comment:;"`                             //单重
 	BET                 *float64 `json:"BET" form:"BET" gorm:"column:BET;comment:;"`                                                      //表面积
-	GraphPaper          *float64 `json:"graphPaper" form:"graphPaper" gorm:"column:graph_paper;comment:;"`                                //图纸
+	GraphPaper          *int     `json:"graphPaper" form:"graphPaper" gorm:"column:graph_paper;comment:;"`                                //图纸
 	GPDateOrVersion     string   `json:"GPDateOrVersion" form:"GPDateOrVersion" gorm:"column:GP_date_or_version;comment:;size:255;"`      //图纸日期或版本
 	GPAudit             string   `json:"GPAudit" form:"GPAudit" gorm:"column:gp_audit;comment:;size:255;"`                                //图纸评审
-	OE                  string   `json:"OE" form:"OE" gorm:"column:OE;comment:;size:255;"`                                                //主机厂
+	OE                  *int     `json:"OE" form:"OE" gorm:"column:OE;comment:;"`                                                         //主机厂
 	OEMStandCode        string   `json:"OEMStandCode" form:"OEMStandCode" gorm:"column:OEM_stand_code;comment:;size:255;"`                //车厂标准代号
 	OEMStand            string   `json:"OEMStand" form:"OEMStand" gorm:"column:OEM_stand;comment:;size:255;"`                             //车厂标准
 	OEMStandardReview   string   `json:"OEMStandardReview" form:"OEMStandardReview" gorm:"column:OEM_standard_review;comment:;size:255;"` //车厂标准评审

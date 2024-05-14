@@ -14,6 +14,8 @@ import auth from '@/directive/auth'
 import { store } from '@/pinia'
 import App from './App.vue'
 import { initDom } from './utils/positionToCode'
+// import VXETable from 'vxe-table'
+// import 'vxe-table/lib/style.css'
 
 initDom()
 /**
@@ -38,5 +40,6 @@ app
   .use(auth)
   .use(router)
   .mount('#app')
+
 
 export default app

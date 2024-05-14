@@ -80,6 +80,7 @@
               </template>
             </el-table-column>
           </el-table>
+        <!-- <User></User> -->
           <div class="gva-pagination">
             <el-pagination :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]" :total="total"
               layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange"
@@ -163,6 +164,7 @@ import {
 } from '@/plugin/organization/api/organization'
 import { getUserList } from '@/api/user.js'
 import { ElMessageBox, ElMessage } from 'element-plus'
+
 export default {
   name: 'Organization',
 }

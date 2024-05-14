@@ -73,6 +73,9 @@ func (tecBaseProcessService *TecBaseProcessService) GetTecBaseProcessInfoList(in
 	if info.StartCreatedAt != nil && info.EndCreatedAt != nil {
 		db = db.Where("created_at BETWEEN ? AND ?", info.StartCreatedAt, info.EndCreatedAt)
 	}
+	if info.ParentID > 0 {
+		db = db.Where("parent_id = ?", info.ParentID)
+	}
 	err = db.Count(&total).Error
 	if err != nil {
 		return
@@ -84,4 +87,10 @@ func (tecBaseProcessService *TecBaseProcessService) GetTecBaseProcessInfoList(in
 
 	err = db.Find(&tecBaseProcesss).Error
 	return tecBaseProcesss, total, err
+}
+
+func (tecBaseProcessService *TecBaseProcessService) GetTecBaseProcessParentID(parentId string) (tecBaseProcess alpha.TecBaseProcess, err error) {
+	err = global.GVA_DB.Where("parent_id = ?", parentId).First(&tecBaseProcess).Error
+	return
+
 }

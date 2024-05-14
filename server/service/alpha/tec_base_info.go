@@ -12,9 +12,15 @@ type TecBaseInfoService struct {
 
 // CreateTecBaseInfo 创建技术部基础信息记录
 // Author [piexlmax](https://github.com/piexlmax)
-func (tecBaseInfoService *TecBaseInfoService) CreateTecBaseInfo(tecBaseInfo *alpha.TecBaseInfo) (err error) {
-	err = global.GVA_DB.Create(tecBaseInfo).Error
-	return err
+func (tecBaseInfoService *TecBaseInfoService) CreateTecBaseInfo(tecBaseInfo *alpha.TecBaseInfo) (uint, error) {
+	//插入数据，获取id
+	result := global.GVA_DB.Create(tecBaseInfo)
+	if result.Error != nil {
+		return 0, result.Error
+	}
+	return tecBaseInfo.ID, nil
+
+	//return err
 }
 
 // DeleteTecBaseInfo 删除技术部基础信息记录
@@ -108,4 +114,9 @@ func (tecBaseInfoService *TecBaseInfoService) GetTecBaseInfoInfoList(info alphaR
 
 	err = db.Find(&tecBaseInfos).Error
 	return tecBaseInfos, total, err
+}
+
+func (tecBaseInfoService *TecBaseInfoService) GetTecBaseInfoByUTN(utn string) (tecBaseInfo alpha.TecBaseInfo, err error) {
+	err = global.GVA_DB.Where("UTN = ?", utn).First(&tecBaseInfo).Error
+	return tecBaseInfo, err
 }

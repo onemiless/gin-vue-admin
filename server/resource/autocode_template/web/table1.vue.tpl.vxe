@@ -1,0 +1,520 @@
+<template>
+  <div>
+  
+    <div class="gva-table-box">
+  
+      <div>
+        <vxe-grid ref='xGrid' v-bind="gridOptions" v-on="gridEvent"></vxe-grid>
+      </div>
+
+
+    </div>
+
+  </div>
+</template>
+
+<script setup>
+import {
+  create{{.StructName}},
+  delete{{.StructName}},
+  delete{{.StructName}}ByIds,
+  update{{.StructName}},
+  find{{.StructName}},
+  get{{.StructName}}List
+} from '@/api/{{.PackageName}}'
+import { onMounted, reactive, ref } from 'vue'
+
+
+{{- if or .HasPic .HasFile}}
+import { getUrl } from '@/utils/image'
+{{- end }}
+{{- if .HasPic }}
+// 图片选择组件
+import SelectImage from '@/components/selectImage/selectImage.vue'
+{{- end }}
+
+{{- if .HasRichText }}
+// 富文本组件
+import RichEdit from '@/components/richtext/rich-edit.vue'
+{{- end }}
+
+
+{{- if .HasFile }}
+// 文件选择组件
+import SelectFile from '@/components/selectFile/selectFile.vue'
+{{- end }}
+
+// 全量引入格式化工具 请按需保留
+import { getDictFunc, formatDate, formatBoolean, filterDict, ReturnArrImg, onDownloadFile } from '@/utils/format'
+import { ElMessage, ElMessageBox } from 'element-plus'
+// import { ref, reactive } from 'vue'
+import { VXETable } from 'vxe-table'
+import XEUtils from 'xe-utils'
+// const serveApiUrl = 'https://api.vxetable.cn/demo'
+
+
+defineOptions({
+    name: '{{.StructName}}'
+})
+
+// 自动化生成的字典（可能为空）以及字段
+    {{- range $index, $element := .DictTypes}}
+const {{ $element }}Options = ref([])
+    {{- end }}
+const formData = ref({
+        {{- range .Fields}}
+        {{- if eq .FieldType "bool" }}
+        {{.FieldJson}}: false,
+        {{- end }}
+        {{- if eq .FieldType "string" }}
+        {{.FieldJson}}: '',
+        {{- end }}
+        {{- if eq .FieldType "richtext" }}
+        {{.FieldJson}}: '',
+        {{- end }}
+        {{- if eq .FieldType "int" }}
+        {{.FieldJson}}: {{- if .DictType }} undefined{{ else }} 0{{- end }},
+        {{- end }}
+        {{- if eq .FieldType "time.Time" }}
+        {{.FieldJson}}: new Date(),
+        {{- end }}
+        {{- if eq .FieldType "float64" }}
+        {{.FieldJson}}: 0,
+        {{- end }}
+        {{- if eq .FieldType "picture" }}
+        {{.FieldJson}}: "",
+        {{- end }}
+        {{- if eq .FieldType "video" }}
+        {{.FieldJson}}: "",
+        {{- end }}
+        {{- if eq .FieldType "pictures" }}
+        {{.FieldJson}}: [],
+        {{- end }}
+        {{- if eq .FieldType "file" }}
+        {{.FieldJson}}: [],
+        {{- end }}
+        {{- if eq .FieldType "json" }}
+        {{.FieldJson}}: {},
+        {{- end }}
+        {{- end }}
+        })
+//vxe
+const xGrid = ref()
+const gridOptions = reactive({
+  border: true,
+  showHeaderOverflow: true,
+  showOverflow: true,
+  keepSource: true,
+  id: 'full_edit_1',
+  height: 600,
+  rowConfig: {
+    keyField: 'id',
+    isHover: true
+  },
+  columnConfig: {
+    resizable: true
+  },
+  customConfig: {
+    storage: true,
+    checkMethod ({ column }) {
+      if (['nickname', 'role'].includes(column.field)) {
+        return false
+      }
+      return true
+    }
+  },
+
+  printConfig: {
+    columns: [
+      {{- range .Fields}}
+      {field: '{{ .FieldJson }}'},
+      {{- end}}
+    ]
+  },
+  sortConfig: {
+    trigger: 'cell',
+        remote: true
+  },
+  filterConfig: {
+    remote: true
+  },
+  pagerConfig: {
+    enabled: true,
+        // currentPage: 1,
+        pageSize: 10,
+        pageSizes: [5, 10, 15, 20, 50]
+  },
+  validConfig: {
+    msgMode: 'full' // 设置为支持显示多个校验消息
+  },
+formConfig: {
+  titleWidth: 100,
+      titleAlign: 'right',
+      items: [
+    {{- range .Fields}}
+    {{- if eq .FieldType "bool" }}
+    { field: '{{.FieldJson}}', title: '{{.FieldDesc}}', span: 8, itemRender: { name: 'VxeSwitch', props: { 'active-text': '是', 'inactive-text': '否' } } },
+    {{- else if eq .FieldType "string" }}
+    { field: '{{.FieldJson}}', title: '{{.FieldDesc}}', span: 8, itemRender: { name: 'VxeInput', props: { placeholder: '请输入{{.FieldDesc}}' } } },
+    {{- else if eq .FieldType "int" }}
+    { field: '{{.FieldJson}}', title: '{{.FieldDesc}}', span: 8, itemRender: { name: 'VxeInput', props: { type: 'number', min: 1, max: 120, placeholder: '请输入{{.FieldDesc}}' } } },
+    {{- else if eq .FieldType "time.Time" }}
+    { field: '{{.FieldJson}}', title: '{{.FieldDesc}}', span: 8, itemRender: { name: 'VxeDatePicker', props: { type: 'datetime', placeholder: '请选择{{.FieldDesc}}' } } },
+    {{- else if eq .FieldType "float64" }}
+    { field: '{{.FieldJson}}', title: '{{.FieldDesc}}', span: 8, itemRender: { name: 'VxeInput', props: { type: 'number', min: 1, max: 120, placeholder: '请输入{{.FieldDesc}}' } } },
+    {{- else if eq .FieldType "richtext" }}
+    { field: '{{.FieldJson}}', title: '{{.FieldDesc}}', span: 8, itemRender: { name: 'RichEdit', props: { placeholder: '请输入{{.FieldDesc}}' } } },
+    {{- else if eq .FieldType "picture" }}
+    { field: '{{.FieldJson}}', title: '{{.FieldDesc}}', span: 8, itemRender: { name: 'SelectImage', props: { placeholder: '请选择{{.FieldDesc}}' } } },
+    {{- else if eq .FieldType "video" }}
+    { field: '{{.FieldJson}}', title: '{{.FieldDesc}}', span: 8, itemRender: { name: 'VxeInput', props: { placeholder: '请输入{{.FieldDesc}}' } } },
+    {{- else if eq .FieldType "pictures" }}
+    { field: '{{.FieldJson}}', title: '{{.FieldDesc}}', span: 8, itemRender: { name: 'SelectImage', props: { multiple: true, placeholder: '请选择{{.FieldDesc}}' } } },
+    {{- else if eq .FieldType "file" }}
+    { field: '{{.FieldJson}}', title: '{{.FieldDesc}}', span: 8, itemRender: { name: 'SelectFile', props: { multiple: true, placeholder: '请选择{{.FieldDesc}}' } } },
+    {{- else if eq .FieldType "json" }}
+    { field: '{{.FieldJson}}', title: '{{.FieldDesc}}', span: 8, itemRender: { name: 'VxeInput', props: { placeholder: '请输入{{.FieldDesc}}' } } },
+    {{- end }}
+    {{- end }}
+    ]
+},
+toolbarConfig: {
+  buttons: [
+    { code: 'insert_actived', name: '新增' },
+    { code: 'delete', name: '直接删除' },
+    { code: 'mark_cancel', name: '删除/取消' },
+    { code: 'save', name: 'app.body.button.save', status: 'success' }
+  ],
+      refresh: true,
+      import: true,
+      export: true,
+      print: true,
+      zoom: true,
+      custom: true // 显示自定义列按钮
+},
+
+checkboxConfig: {
+  labelField: 'id',
+      reserve: true,
+      highlight: true,
+      range: true
+},
+ proxyConfig: {
+    seq: true,
+    sort: true,
+    filter: true,
+    form: true,
+    props: {
+      // 对应响应结果 Promise<{ result: [], page: { total: 100 } }>
+      // result: 'result',
+      // total: 'page.total' // 配置响应结果总页数字段
+      result:'data.list',
+      total: 'data.page.total' // 配置响应结果总页数字段
+
+    },
+    // 只接收Promise，具体实现自由发挥
+    ajax: {
+      // 当点击工具栏查询按钮或者手动提交指令 query或reload 时会被触发
+      query: ({ page, sorts, filters, form }) => {
+        const queryParams = Object.assign({}, form)
+        // 处理排序条件
+        const firstSort = sorts[0]
+        if (firstSort) {
+          queryParams.sort = firstSort.field
+          queryParams.order = firstSort.order
+        }
+        // 处理筛选条件
+        filters.forEach(({ field, values }) => {
+          queryParams[field] = values.join(',')
+        })
+        // return fetch(`${serveApiUrl}/api/pub/page/list/${page.pageSize}/${page.currentPage}?${XEUtils.serialize(queryParams)}`).then(response => response.json())
+        const table =  get{{.StructName}}List({ page: page.value, pageSize: pageSize.value, ...searchInfo.value })
+         if (table.code === 0) {
+          return table;
+          //  tableData.value = table.data.list
+          //  total.value = table.data.total
+          //  page.value = table.data.page
+          //  pageSize.value = table.data.pageSize
+         }
+      },
+      // 当点击工具栏删除按钮或者手动提交指令 delete 时会被触发
+      delete: ({ body }) => {
+        return fetch(`${serveApiUrl}/api/pub/save`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }).then(response => response.json())
+      },
+      // 当点击工具栏保存按钮或者手动提交指令 save 时会被触发
+      save: ({ body }) => {
+        return fetch(`${serveApiUrl}/api/pub/save`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }).then(response => response.json())
+      }
+    }
+  },
+columns: [
+    // { type: 'checkbox', title: 'ID', width: 120 },
+    {{- range .Fields}}
+    {{- if eq .FieldType "bool" }}
+    { field: '{{.FieldJson}}', title: '{{.FieldDesc}}',sortable: true, width: 120, titlePrefix: { message: '{{.FieldDesc}}必须填写！' }
+    ,editRender: { name: 'input', attrs: { placeholder: '请输入{{.FieldDesc}}' } } },
+    {{- else if eq .FieldType "string" }}
+    { field: '{{.FieldJson}}', title: '{{.FieldDesc}}',sortable: true
+     ,editRender: { name: 'input', attrs: { placeholder: '请输入{{.FieldDesc}}' } } },
+    {{- else if eq .FieldType "int" }}
+    { field: '{{.FieldJson}}', title: '{{.FieldDesc}}',sortable: true
+     ,editRender: { name: 'input', attrs: { placeholder: '请输入{{.FieldDesc}}' } } },
+    {{- else if eq .FieldType "time.Time" }}
+    { field: '{{.FieldJson}}', title: '{{.FieldDesc}}',sortable: true
+     ,editRender: { name: 'input', attrs: { placeholder: '请输入{{.FieldDesc}}' } } },
+    {{- else if eq .FieldType "float64" }}
+    { field: '{{.FieldJson}}', title: '{{.FieldDesc}}',sortable: true
+     ,editRender: { name: 'input', attrs: { placeholder: '请输入{{.FieldDesc}}' } } },
+    {{- else if eq .FieldType "richtext" }}
+    { field: '{{.FieldJson}}', title: '{{.FieldDesc}}',sortable: true
+     ,editRender: { name: 'input', attrs: { placeholder: '请输入{{.FieldDesc}}' } } },
+    {{- else if eq .FieldType "picture" }}
+    { field: '{{.FieldJson}}', title: '{{.FieldDesc}}',sortable: true
+     ,editRender: { name: 'input', attrs: { placeholder: '请输入{{.FieldDesc}}' } } },
+    {{- else if eq .FieldType "video" }}
+    { field: '{{.FieldJson}}', title: '{{.FieldDesc}}',sortable: true
+     ,editRender: { name: 'input', attrs: { placeholder: '请输入{{.FieldDesc}}' } } },
+    {{- else if eq .FieldType "pictures" }}
+    { field: '{{.FieldJson}}', title: '{{.FieldDesc}}',sortable: true
+     ,editRender: { name: 'input', attrs: { placeholder: '请输入{{.FieldDesc}}' } } },
+    {{- else if eq .FieldType "file" }}
+    { field: '{{.FieldJson}}', title: '{{.FieldDesc}}',sortable: true
+     ,editRender: { name: 'input', attrs: { placeholder: '请输入{{.FieldDesc}}' } } },
+    {{- else if eq .FieldType "json" }}
+    { field: '{{.FieldJson}}', title: '{{.FieldDesc}}',sortable: true
+     ,editRender: { name: 'input', attrs: { placeholder: '请输入{{.FieldDesc}}' } } },
+    {{- end }}
+    {{- end }}
+    ],
+    
+
+
+// 验证规则
+editRules: {
+    {{- range .Fields }}
+            {{- if eq .Require true }}
+               {{.FieldJson }} : [{
+                   required: true,
+                   message: '{{ .ErrorText }}',
+                   trigger: ['input','blur'],
+               },
+               {{- if eq .FieldType "string" }}
+               {
+                   whitespace: true,
+                   message: '不能只输入空格',
+                   trigger: ['input', 'blur'],
+              }
+              {{- end }}
+              ],
+            {{- end }}
+    {{- end }}
+},
+editConfig: {
+  trigger: 'click',
+      mode: 'row',
+      showStatus: true
+}
+})
+
+const gridEvent = {
+  proxyQuery () {
+   console.log('数据代理查询事件')
+    // elSearchFormRef.value?.validate(async(valid) => {
+    //   if (!valid) return
+    //   page.value = 1
+    //   pageSize.value = 10
+    //   {{- range .Fields}}{{- if eq .FieldType "bool" }}
+    //   if (searchInfo.value.{{.FieldJson}} === ""){
+    //     searchInfo.value.{{.FieldJson}}=null
+    //   }{{ end }}{{ end }}
+    //   getTableData()
+    // })
+  },
+  proxyDelete () {
+    console.log('数据代理删除事件')
+    delete{{.StructName}}Func()
+  },
+  proxySave () {
+    console.log('数据代理保存事件')
+    update{{.StructName}}Func()
+  }
+}
+// onMounted(() => {
+//   getTableData()
+// })
+// 搜索
+// const onSubmit = () => {
+//   elSearchFormRef.value?.validate(async(valid) => {
+//     if (!valid) return
+//     page.value = 1
+//     pageSize.value = 10
+//     {{- range .Fields}}{{- if eq .FieldType "bool" }}
+//     if (searchInfo.value.{{.FieldJson}} === ""){
+//         searchInfo.value.{{.FieldJson}}=null
+//     }{{ end }}{{ end }}
+//     getTableData()
+//   })
+// }
+
+// 分页
+// const handleSizeChange = (val) => {
+//   pageSize.value = val
+//   getTableData()
+// }
+
+// 修改页面容量
+// const handleCurrentChange = (val) => {
+//   page.value = val
+//   getTableData()
+// }
+
+// 查询
+const getTableData = async() => {
+  const table = await get{{.StructName}}List({ page: page.value, pageSize: pageSize.value, ...searchInfo.value })
+  if (table.code === 0) {
+    tableData.value = table.data.list
+    total.value = table.data.total
+    page.value = table.data.page
+    pageSize.value = table.data.pageSize
+  }
+}
+
+// getTableData()
+
+// ============== 表格控制部分结束 ===============
+const page = ref(1)
+const total = ref(0)
+const pageSize = ref(10)
+const tableData = ref([])
+const searchInfo = ref({})
+
+// 获取需要的字典 可能为空 按需保留
+const setOptions = async () =>{
+{{- range $index, $element := .DictTypes }}
+    {{ $element }}Options.value = await getDictFunc('{{$element}}')
+{{- end }}
+}
+
+// 获取需要的字典 可能为空 按需保留
+setOptions()
+
+
+// 多选数据
+const multipleSelection = ref([])
+// 多选
+const handleSelectionChange = (val) => {
+    multipleSelection.value = val
+}
+
+// 删除行
+const deleteRow = (row) => {
+    ElMessageBox.confirm('确定要删除吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+    }).then(() => {
+            delete{{.StructName}}Func(row)
+        })
+    }
+
+// 多选删除
+const onDelete = async() => {
+  ElMessageBox.confirm('确定要删除吗?', '提示', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning'
+  }).then(async() => {
+      const {{.PrimaryField.FieldJson}}s = []
+      if (multipleSelection.value.length === 0) {
+        ElMessage({
+          type: 'warning',
+          message: '请选择要删除的数据'
+        })
+        return
+      }
+      multipleSelection.value &&
+        multipleSelection.value.map(item => {
+          {{.PrimaryField.FieldJson}}s.push(item.{{.PrimaryField.FieldJson}})
+        })
+      const res = await delete{{.StructName}}ByIds({ {{.PrimaryField.FieldJson}}s })
+      if (res.code === 0) {
+        ElMessage({
+          type: 'success',
+          message: '删除成功'
+        })
+        if (tableData.value.length === {{.PrimaryField.FieldJson}}s.length && page.value > 1) {
+          page.value--
+        }
+        getTableData()
+      }
+      })
+    }
+
+// 行为控制标记（弹窗内部需要增还是改）
+const type = ref('')
+
+// 更新行
+const update{{.StructName}}Func = async(row) => {
+    const res = await find{{.StructName}}({ {{.PrimaryField.FieldJson}}: row.{{.PrimaryField.FieldJson}} })
+    type.value = 'update'
+    if (res.code === 0) {
+        formData.value = res.data.re{{.Abbreviation}}
+        dialogFormVisible.value = true
+    }
+}
+
+
+// 删除行
+const delete{{.StructName}}Func = async (row) => {
+    const res = await delete{{.StructName}}({ {{.PrimaryField.FieldJson}}: row.{{.PrimaryField.FieldJson}} })
+    if (res.code === 0) {
+        ElMessage({
+                type: 'success',
+                message: '删除成功'
+            })
+            if (tableData.value.length === 1 && page.value > 1) {
+            page.value--
+        }
+        getTableData()
+    }
+}
+
+// 弹窗控制标记
+const dialogFormVisible = ref(false)
+
+
+// 查看详情控制标记
+const detailShow = ref(false)
+
+
+// 打开详情弹窗
+const openDetailShow = () => {
+  detailShow.value = true
+}
+
+
+
+
+const downloadFile = (url) => {
+    window.open(getUrl(url), '_blank')
+}
+
+</script>
+
+<style>
+{{if .HasFile }}
+.file-list{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.fileBtn{
+  margin-bottom: 10px;
+}
+
+.fileBtn:last-child{
+  margin-bottom: 0;
+}
+{{end}}
+</style>

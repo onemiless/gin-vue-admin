@@ -79,6 +79,9 @@ func (mdThirdLevelService *MdThirdLevelService) GetMdThirdLevelInfoList(info alp
 	if info.Name != "" {
 		db = db.Where("name LIKE ?", "%"+info.Name+"%")
 	}
+	if info.Query != "" {
+		db = db.Or("name LIKE ?", "%"+info.Query+"%").Or("remark LIKE ?", "%"+info.Query+"%")
+	}
 	err = db.Count(&total).Error
 	if err != nil {
 		return

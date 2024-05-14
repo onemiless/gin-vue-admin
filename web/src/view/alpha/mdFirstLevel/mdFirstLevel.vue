@@ -127,7 +127,7 @@
             </el-form-item>
             <el-form-item label="是否启用:"  prop="isEnable" >
               <el-select v-model="formData.isEnable" placeholder="请选择是否启用" style="width:100%" :clearable="true" >
-                <el-option v-for="(item,key) in enableOptions" :key="key" :label="item.label" :value="item.value" />
+                <el-option v-for="(item,key) in enableOptions" :key="key" :label="item.label" :value="item.value"  />
               </el-select>
             </el-form-item>
             <el-form-item label="备注:"  prop="remark" >
@@ -293,6 +293,7 @@ getTableData()
 // 获取需要的字典 可能为空 按需保留
 const setOptions = async () =>{
     enableOptions.value = await getDictFunc('enable')
+    formData.value.isEnable = enableOptions.value[0]?.value
 }
 
 // 获取需要的字典 可能为空 按需保留

@@ -12,7 +12,7 @@ autocode:
     server-api: /api/v1/%s
     server-plug: /plugin/%s
     server-initialize: /initialize
-    root: /Users/mile/Desktop/alpha-mes/go-alpha-vue-mes-main-master
+    root: /home
     web-table: /view
     web: /web/src
     server-service: /service/%s

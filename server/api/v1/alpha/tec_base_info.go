@@ -33,12 +33,12 @@ func (tecBaseInfoApi *TecBaseInfoApi) CreateTecBaseInfo(c *gin.Context) {
 		return
 	}
 	tecBaseInfo.CreatedBy = utils.GetUserID(c)
-
-	if err := tecBaseInfoService.CreateTecBaseInfo(&tecBaseInfo); err != nil {
+	id, err := tecBaseInfoService.CreateTecBaseInfo(&tecBaseInfo)
+	if err != nil {
 		global.GVA_LOG.Error("创建失败!", zap.Error(err))
 		response.FailWithMessage("创建失败", c)
 	} else {
-		response.OkWithMessage("创建成功", c)
+		response.OkWithDetailed(gin.H{"ID": id}, "创建成功", c)
 	}
 }
 
@@ -118,11 +118,23 @@ func (tecBaseInfoApi *TecBaseInfoApi) UpdateTecBaseInfo(c *gin.Context) {
 // @Router /tecBaseInfo/findTecBaseInfo [get]
 func (tecBaseInfoApi *TecBaseInfoApi) FindTecBaseInfo(c *gin.Context) {
 	ID := c.Query("ID")
-	if retecBaseInfo, err := tecBaseInfoService.GetTecBaseInfo(ID); err != nil {
-		global.GVA_LOG.Error("查询失败!", zap.Error(err))
-		response.FailWithMessage("查询失败", c)
-	} else {
-		response.OkWithData(gin.H{"retecBaseInfo": retecBaseInfo}, c)
+	UTN := c.Query("UTN")
+	if UTN != "" {
+		if retecBaseInfo, err := tecBaseInfoService.GetTecBaseInfoByUTN(UTN); err != nil {
+			global.GVA_LOG.Error("查询失败!", zap.Error(err))
+			response.FailWithMessage("查询失败", c)
+		} else {
+			response.OkWithData(gin.H{"retecBaseInfo": retecBaseInfo}, c)
+		}
+		return
+	}
+	if ID != "" {
+		if retecBaseInfo, err := tecBaseInfoService.GetTecBaseInfo(ID); err != nil {
+			global.GVA_LOG.Error("查询失败!", zap.Error(err))
+			response.FailWithMessage("查询失败", c)
+		} else {
+			response.OkWithData(gin.H{"retecBaseInfo": retecBaseInfo}, c)
+		}
 	}
 }
 

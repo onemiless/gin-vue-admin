@@ -96,6 +96,10 @@ func Routers() *gin.Engine {
 		alphaRouter.InitMdThirdLevelRouter(PrivateGroup)
 		alphaRouter.InitTecBaseInfoRouter(PrivateGroup)
 		alphaRouter.InitTecBaseProcessRouter(PrivateGroup)
+		alphaRouter.InitTecBaseInfoExtRouter(PrivateGroup)
+		alphaRouter.InitQualityBaseInfoRouter(PrivateGroup)
+		alphaRouter.InitCostCollectionRouter(PrivateGroup)
+		alphaRouter.InitProofingInformationRouter(PrivateGroup)
 
 	}
 

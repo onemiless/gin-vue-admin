@@ -12,4 +12,8 @@ type ServiceGroup struct {
 	MdThirdLevelService
 	TecBaseInfoService
 	TecBaseProcessService
+	TecBaseInfoExtService
+	QualityBaseInfoService
+	CostCollectionService
+	ProofingInformationService
 }

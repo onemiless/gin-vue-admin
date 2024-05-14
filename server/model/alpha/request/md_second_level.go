@@ -12,5 +12,6 @@ type MdSecondLevelSearch struct {
 	Name         string `json:"name" form:"name" `
 	Remark       string `json:"remark" form:"remark" `
 	FirstLevelId uint   `json:"firstLevelId" form:"firstLevelId" `
+	Query        string `json:"query" form:"query"`
 	request.PageInfo
 }

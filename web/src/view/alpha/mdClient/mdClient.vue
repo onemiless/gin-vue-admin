@@ -252,17 +252,17 @@ const formData = ref({
 
 // 验证规则
 const rule = reactive({
-               clientCode : [{
-                   required: true,
-                   message: '',
-                   trigger: ['input','blur'],
-               },
-               {
-                   whitespace: true,
-                   message: '不能只输入空格',
-                   trigger: ['input', 'blur'],
-              }
-              ],
+              //  clientCode : [{
+              //      required: true,
+              //      message: '',
+              //      trigger: ['input','blur'],
+              //  },
+              //  {
+              //      whitespace: true,
+              //      message: '不能只输入空格',
+              //      trigger: ['input', 'blur'],
+              // }
+              // ],
                clientName : [{
                    required: true,
                    message: '',

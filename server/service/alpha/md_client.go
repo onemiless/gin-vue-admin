@@ -56,6 +56,12 @@ func (mdClientService *MdClientService) GetMdClientInfoList(info alphaReq.MdClie
 	if info.StartCreatedAt != nil && info.EndCreatedAt != nil {
 		db = db.Where("created_at BETWEEN ? AND ?", info.StartCreatedAt, info.EndCreatedAt)
 	}
+	if info.Search != "" {
+		//like
+		db = db.Or("client_code LIKE ?", "%"+info.Search+"%").Or("client_name LIKE ?", "%"+info.Search+"%").Or("client_en LIKE ?", "%"+info.Search+"%")
+
+	}
+
 	err = db.Count(&total).Error
 	if err != nil {
 		return

@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"go.uber.org/zap"
 	"strconv"
 	"strings"
 
@@ -27,6 +28,10 @@ func CasbinHandler() gin.HandlerFunc {
 		e := casbinService.Casbin() // 判断策略中是否存在
 		success, _ := e.Enforce(sub, obj, act)
 		if !success {
+			//打印对应的错误信息对应的参数
+			global.GVA_LOG.Info("权限不足", zap.Any("role", sub), zap.Any("path", obj), zap.Any("act", act),
+				zap.Any("waitUse", waitUse), zap.Any("path", path))
+
 			response.FailWithDetailed(gin.H{}, "权限不足", c)
 			c.Abort()
 			return

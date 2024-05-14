@@ -307,6 +307,7 @@ getTableData()
 // 获取需要的字典 可能为空 按需保留
 const setOptions = async () =>{
     enableOptions.value = await getDictFunc('enable')
+    formData.value.isEnable = enableOptions.value[0]?.value
 }
 
 // 获取需要的字典 可能为空 按需保留
@@ -489,7 +490,7 @@ watch(() => props.id, (val) => {
   // console.log("var",val)
   if(val){
     secondSelectID.value = val
-    
+    formData.value.firstLevelId = val
     getTableDataByFirstLevelId()
   }
 })

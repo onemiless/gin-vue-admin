@@ -6,4 +6,5 @@ import (
 
 type CMSXCSearch struct {
 	request.PageInfo
+	Query string `json:"query" form:"query"`
 }

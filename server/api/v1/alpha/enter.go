@@ -12,4 +12,8 @@ type ApiGroup struct {
 	MdThirdLevelApi
 	TecBaseInfoApi
 	TecBaseProcessApi
+	TecBaseInfoExtApi
+	QualityBaseInfoApi
+	CostCollectionApi
+	ProofingInformationApi
 }

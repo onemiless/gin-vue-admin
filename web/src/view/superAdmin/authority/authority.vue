@@ -253,12 +253,14 @@ const getTableData = async() => {
 getTableData()
 
 const changeRow = (key, value) => {
+  // console.log(key, value)
   activeRow.value[key] = value
 }
 const menus = ref(null)
 const apis = ref(null)
 const datas = ref(null)
 const autoEnter = (activeName, oldActiveName) => {
+  // console.log(activeName, oldActiveName)
   const paneArr = [menus, apis, datas]
   if (oldActiveName) {
     if (paneArr[oldActiveName].value.needConfirm) {
@@ -281,6 +283,7 @@ const copyAuthorityFunc = (row) => {
 const openDrawer = (row) => {
   drawer.value = true
   activeRow.value = row
+  // console.log(activeRow.value)
 }
 // 删除角色
 const deleteAuth = (row) => {
