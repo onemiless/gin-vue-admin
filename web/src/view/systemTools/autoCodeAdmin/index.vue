@@ -181,27 +181,25 @@ const rollbackFunc = async(row, flag) => {
       confirmButtonText: '确定',
       cancelButtonText: '取消',
       type: 'warning'
-    })
-      //   .then(async() => {
-      // ElMessageBox.confirm(`此操作将删除自动创建的文件和api（会删除表！！！）, 请继续确认！！！`, '会删除表', {
-      //   confirmButtonText: '确定',
-      //   cancelButtonText: '取消',
-      //   type: 'warning'
-      // }).then(async() => {
-      //   ElMessageBox.confirm(`此操作将删除自动创建的文件和api（会删除表！！！）, 请继续确认！！！`, '会删除表', {
-      //     confirmButtonText: '确定',
-      //     cancelButtonText: '取消',
-      //     type: 'warning'
-      //   })
-            .then(async() => {
+    }).then(async() => {
+      ElMessageBox.confirm(`此操作将删除自动创建的文件和api（会删除表！！！）, 请继续确认！！！`, '会删除表', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async() => {
+        ElMessageBox.confirm(`此操作将删除自动创建的文件和api（会删除表！！！）, 请继续确认！！！`, '会删除表', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(async() => {
           const res = await rollback({ id: Number(row.ID), deleteTable: flag })
           if (res.code === 0) {
             ElMessage.success('回滚成功')
             getTableData()
           }
         })
-
-
+      })
+    })
   } else {
     ElMessageBox.confirm(`此操作将删除自动创建的文件和api, 是否继续?`, '提示', {
       confirmButtonText: '确定',

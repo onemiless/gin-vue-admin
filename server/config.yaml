@@ -12,7 +12,9 @@ autocode:
     server-api: /api/v1/%s
     server-plug: /plugin/%s
     server-initialize: /initialize
-    root: /home
+    # root 自动适配项目根目录
+    # 请不要手动配置,他会在项目加载的时候识别出根路径
+    root: ""
     web-table: /view
     web: /web/src
     server-service: /service/%s
@@ -199,6 +201,7 @@ system:
     use-multipoint: false
     use-redis: true
     use-mongo: false
+
 tencent-cos:
     bucket: xxxxx-10005608
     region: ap-shanghai
@@ -219,3 +222,4 @@ zap:
     max-age: 0
     show-line: true
     log-in-console: true
+

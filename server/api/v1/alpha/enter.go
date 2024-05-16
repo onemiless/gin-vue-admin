@@ -16,4 +16,5 @@ type ApiGroup struct {
 	QualityBaseInfoApi
 	CostCollectionApi
 	ProofingInformationApi
+	EntryNumberApi
 }

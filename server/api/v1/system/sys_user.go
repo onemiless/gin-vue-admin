@@ -259,34 +259,28 @@ func (b *BaseApi) ChangePassword(c *gin.Context) {
 // @Success   200   {object}  response.Response{data=response.PageResult,msg=string}  "分页获取用户列表,返回包括列表,总数,页码,每页数量"
 // @Router    /user/getUserList [post]
 func (b *BaseApi) GetUserList(c *gin.Context) {
-	//var pageInfo request.PageInfo
-	var sysUser systemReq.SysUser
-	//err := c.ShouldBindJSON(&pageInfo)
-	err := c.ShouldBindJSON(&sysUser)
-
+	var pageInfo request.PageInfo
+	err := c.ShouldBindJSON(&pageInfo)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	//err = utils.Verify(pageInfo, utils.PageInfoVerify)
+	err = utils.Verify(pageInfo, utils.PageInfoVerify)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	//list, total, err := userService.GetUserInfoList(pageInfo)
-	list, total, err := userService.GetUserInfoList(sysUser)
+	list, total, err := userService.GetUserInfoList(pageInfo)
 	if err != nil {
 		global.GVA_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 		return
 	}
 	response.OkWithDetailed(response.PageResult{
-		List:  list,
-		Total: total,
-		//Page:     pageInfo.Page,
-		//PageSize: pageInfo.PageSize,
-		Page:     sysUser.Page,
-		PageSize: sysUser.PageSize,
+		List:     list,
+		Total:    total,
+		Page:     pageInfo.Page,
+		PageSize: pageInfo.PageSize,
 	}, "获取成功", c)
 }
 

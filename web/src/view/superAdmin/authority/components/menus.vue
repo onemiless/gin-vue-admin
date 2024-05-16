@@ -176,7 +176,9 @@ const relation = async() => {
 }
 
 defineExpose({ enterAndNext, needConfirm })
+
 const btnVisible = ref(false)
+
 const btnData = ref([])
 const multipleSelection = ref([])
 const btnTableRef = ref()

@@ -16,4 +16,5 @@ type ServiceGroup struct {
 	QualityBaseInfoService
 	CostCollectionService
 	ProofingInformationService
+	IEntryNumberService
 }

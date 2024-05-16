@@ -14,7 +14,7 @@ type autoCodeMysql struct{}
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (s *autoCodeMysql) GetDB(businessDB string) (data []response.Db, err error) {
 	var entities []response.Db
-	sql := "SELECT SCHEMA_NAME AS [database] FROM INFORMATION_SCHEMA.SCHEMATA;"
+	sql := "SELECT SCHEMA_NAME AS `database` FROM INFORMATION_SCHEMA.SCHEMATA;"
 	if businessDB == "" {
 		err = global.GVA_DB.Raw(sql).Scan(&entities).Error
 	} else {

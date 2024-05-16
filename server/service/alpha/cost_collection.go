@@ -99,7 +99,7 @@ func (costCollectionService *CostCollectionService) GetCostCollectionNumber() (s
 	//获取当天的日期
 	date := time.Now().Format("2006-01-02")
 	//获取当天的最后一条记录
-	err := global.GVA_DB.Last(&costCollection).Where("left(created_at,10) = ?", date).Error
+	err := global.GVA_DB.Where("created_at BETWEEN ? AND ?", date+" 00:00:00", date+" 23:59:59").Last(&costCollection).Error
 	//流水号转为数字后加1，再转换为流水号
 	if err == nil {
 		//字符串转数字

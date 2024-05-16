@@ -385,14 +385,13 @@ const getUTNOptions = async(input) => {
 //获取流水号
 const findNumber = async()=>{
   const res = await findCostCollectionNumber()
-  console.log(res)
+  // console.log(res)
   if (res.code === 0) {
     formData.value.SN  = res.data.number
   }
 
 }
-//流水号
-findNumber()
+
 
 // findCostCollectionNumber()
 // const changeUTNOption = (value)=>{
@@ -633,9 +632,9 @@ const closeDetailShow = () => {
           basketUnit: '',
           prefix: '',
           numberOfPlan: '',
-          dateReciveOfPlan: new Date(),
+          dateReciveOfPlan: null,
           SN: '',
-          dateIssuedOfPlan: new Date(),
+          dateIssuedOfPlan: null,
           mainPlanLine: 0,
           baskets: 0,
           beat: 0,
@@ -649,6 +648,8 @@ const closeDetailShow = () => {
 
 // 打开弹窗
 const openDialog = () => {
+  //获取流水号
+    findNumber()
     type.value = 'create'
     dialogFormVisible.value = true
 }

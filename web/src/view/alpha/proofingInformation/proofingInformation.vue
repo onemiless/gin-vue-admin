@@ -70,7 +70,7 @@
          </el-table-column>
         <el-table-column align="left" label="客户质量判定" prop="customerQualityJudgment" width="120" />
         <el-table-column align="left" label="客户质量说明" prop="customerQualityStatement" width="120" />
-        <el-table-column align="left" label="打样状态" prop="proofingCondition" width="120" />
+        <el-table-column align="left" label="打样状态" prop="ProofingStatus" width="120" />
         <el-table-column align="left" label="交期判断" prop="deliveryJudgment" width="120" />
         <el-table-column align="left" label="操作" fixed="right" min-width="240">
             <template #default="scope">
@@ -103,20 +103,47 @@
             </template>
 
           <el-form :model="formData" label-position="top" ref="elFormRef" :rules="rule" label-width="auto" :inline = "true" >
-            <el-form-item label="父ID:"  prop="parentId" >
-              <el-input v-model.number="formData.parentId" :clearable="true" placeholder="请输入父ID" />
-            </el-form-item>
+            <!-- <el-form-item label="父ID:"  prop="parentId" >
+              <el-input v-model.number="formData.parentId" :clearable="true" disabled />
+            </el-form-item> -->
+            <el-divider content-position="left">基础</el-divider>
             <el-form-item label="唯一追踪号:"  prop="UTN" >
-              <el-input v-model="formData.UTN" :clearable="true"  placeholder="请输入唯一追踪号" />
+              <!-- <el-input v-model.number="formData.UTN" :clearable="true" placeholder="请输入唯一追踪号" /> -->
+              <el-select v-model="formData.UTN" 
+              filterable
+              remote
+              reserve-keyword
+              clearable
+              :remote-method="getUTNOptions"
+              ref="closeSelect"
+              :loading="loading"
+
+               placeholder="请选择唯一追踪号">
+               <el-table :data="UTNOptions" style="width: 100%" @row-click="handleSelectionUTNChange">
+                <!-- <el-table-column prop="ME002" label="分部" width="120"/> -->
+                <el-table-column prop="UTN" label="唯一追踪号" width="120"/>
+                <el-table-column prop="MB002" label="零件名称" width="120"/>
+                <el-table-column prop="MB202" label="客户品号" width="120"/>
+                <el-table-column prop="MB003" label="零件规格" width="120"/>
+              </el-table>
+
+                  <el-option v-show="false"
+                    v-for="item in UTNOptions"
+                    :key="item.value"
+                    :label="item.UTN"
+                    :value="item.UTN">
+
+                  </el-option>
+                </el-select>
             </el-form-item>
             <el-form-item label="客户品号:"  prop="MB202" >
-              <el-input v-model="formData.MB202" :clearable="true"  placeholder="请输入客户品号" />
+              <el-input v-model="formData.MB202" :clearable="true" disabled />
             </el-form-item>
             <el-form-item label="前缀:"  prop="prefix" >
-              <el-input v-model="formData.prefix" :clearable="true"  placeholder="请输入前缀" />
+              <el-input v-model="formData.prefix"   disabled />
             </el-form-item>
             <el-form-item label="打样次数:"  prop="proofingCount" >
-              <el-input v-model.number="formData.proofingCount" :clearable="true" placeholder="请输入打样次数" />
+              <el-input v-model.number="formData.proofingCount" disabled />
             </el-form-item>
             <el-form-item label="打样单号:"  prop="numberOfProofing" >
               <el-input v-model="formData.numberOfProofing" :clearable="true"  placeholder="请输入打样单号" />
@@ -125,7 +152,7 @@
               <el-date-picker v-model="formData.reciveDate" type="date"  placeholder="选择日期" :clearable="true"  />
             </el-form-item>
             <el-form-item label="流水号:"  prop="SN" >
-              <el-input v-model="formData.SN" :clearable="true"  placeholder="请输入流水号" />
+              <el-input v-model="formData.SN" disabled />
             </el-form-item>
             <el-form-item label="预计完成日期:"  prop="estimatedDateOfCompletion" >
               <el-date-picker v-model="formData.estimatedDateOfCompletion" type="date"  placeholder="选择日期" :clearable="true"  />
@@ -188,8 +215,8 @@
             <el-form-item label="客户质量说明:"  prop="customerQualityStatement" >
               <el-input v-model="formData.customerQualityStatement" :clearable="true"  placeholder="请输入客户质量说明" />
             </el-form-item>
-            <el-form-item label="打样状态:"  prop="proofingCondition" >
-              <el-input v-model="formData.proofingCondition" :clearable="true"  placeholder="请输入打样状态" />
+            <el-form-item label="打样状态:"  prop="ProofingStatus" >
+              <el-input v-model="formData.ProofingStatus" :clearable="true"  placeholder="请输入打样状态" />
             </el-form-item>
             <el-form-item label="交期判断:"  prop="deliveryJudgment" >
               <el-input v-model="formData.deliveryJudgment" :clearable="true"  placeholder="请输入交期判断" />
@@ -209,7 +236,8 @@ import {
   findProofingInformation,
   getProofingInformationList
 } from '@/api/proofingInformation'
-
+import {getTecBaseInfoExtList} from '@/api/tecBaseInfoExt'
+import {getEntryNumber } from '@/api/alphatools'
 // 全量引入格式化工具 请按需保留
 import { getDictFunc, formatDate, formatBoolean, filterDict, ReturnArrImg, onDownloadFile } from '@/utils/format'
 import { ElMessage, ElMessageBox } from 'element-plus'
@@ -227,14 +255,14 @@ const formData = ref({
         prefix: '',
         proofingCount: 0,
         numberOfProofing: '',
-        reciveDate: new Date(),
+        reciveDate: null,
         SN: '',
-        estimatedDateOfCompletion: new Date(),
+        estimatedDateOfCompletion: null,
         specialInstructionsForProofing: '',
         goodsReceived: 0,
         incomingUnit: '',
         saltSprayDetermination: '',
-        dateIssued: new Date(),
+        dateIssued: null,
         customerQualityStatement: '',
         proofingCondition: '',
         deliveryJudgment: '',
@@ -326,6 +354,86 @@ const total = ref(0)
 const pageSize = ref(10)
 const tableData = ref([])
 const searchInfo = ref({})
+//唯一追踪号
+const UTNOptions = ref([])
+const loading = ref(false)
+const closeSelect = ref(null)
+
+
+
+const handleSelectionUTNChange = (row)=>{
+   if(row){
+    formData.value.parentId = row.ID;
+    formData.value.MB202= row.MB202
+    formData.value.UTN= row.UTN
+    formData.value.basketUnit = row.MB004
+    //获取打样次数
+    getProofingInformationCount(row.UTN)
+    //prefix 前缀
+     const prefix  = row.ME002
+    switch (prefix)
+      {
+        case '1':
+          formData.value.prefix = 'APP-PP-'
+          break
+        case '2':
+          formData.value.prefix = 'APP-FP-'
+          break
+        case '3':
+          formData.value.prefix = 'APP-CA-'
+          break
+        case '4':
+          formData.value.prefix = 'APP-FSP'
+          break
+      }
+      
+      //获取当天日期
+      const date = new Date()
+      const year = date.getFullYear()
+      const month = date.getMonth() + 1
+      const day = date.getDate()
+      //策划单号
+      formData.value.numberOfProofing = formData.value.prefix+'-'+year+month+day+'-'+formData.value.SN
+          
+    //关闭下拉框
+    closeSelect.value.blur()
+   }
+  
+}
+
+//获取唯一追踪号
+const getUTNOptions = async(input) => {
+  const param = {  query: input ? input : "" };
+  loading.value = true;
+  const res = await getTecBaseInfoExtList(param)
+  // console.log(res)
+  if (res.code === 0) {
+    loading.value = false;
+    UTNOptions.value = res.data.list;
+  }
+
+}
+//获取打样次数
+const getProofingInformationCount = async(UTN) => {
+  const res = await getProofingInformationList({UTN:UTN})
+  // console.log(res)
+  if (res.code === 0) {
+     formData.value.proofingCount = res.data.total+1
+  }else{
+    formData.value.proofingCount = 1
+  }
+}
+//获取流水号
+const getSN = async() => {
+  
+  const res = await getEntryNumber({tableName:"proofing_information"})
+  // console.log(res)
+  if (res.code === 0) {
+     formData.value.SN = res.data.number
+  }
+}
+
+
 
 // 重置
 const onReset = () => {
@@ -511,6 +619,7 @@ const closeDetailShow = () => {
 // 打开弹窗
 const openDialog = () => {
     type.value = 'create'
+    getSN()
     dialogFormVisible.value = true
 }
 

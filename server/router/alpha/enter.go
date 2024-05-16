@@ -16,4 +16,5 @@ type RouterGroup struct {
 	QualityBaseInfoRouter
 	CostCollectionRouter
 	ProofingInformationRouter
+	EntryNumberRouter
 }

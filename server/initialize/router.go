@@ -59,6 +59,7 @@ func Routers() *gin.Engine {
 	{
 		systemRouter.InitBaseRouter(PublicGroup)
 		systemRouter.InitInitRouter(PublicGroup)
+
 	}
 	PrivateGroup := Router.Group(global.GVA_CONFIG.System.RouterPrefix)
 	PrivateGroup.Use(middleware.JWTAuth()).Use(middleware.CasbinHandler())
@@ -82,7 +83,6 @@ func Routers() *gin.Engine {
 
 	}
 	PluginInit(PublicGroup, organization.CreateOrganizationPlug())
-
 	{
 		alphaRouter := router.RouterGroupApp.Alpha
 		alphaRouter.InitMdUnitMeasureRouter(PrivateGroup)
@@ -100,6 +100,8 @@ func Routers() *gin.Engine {
 		alphaRouter.InitQualityBaseInfoRouter(PrivateGroup)
 		alphaRouter.InitCostCollectionRouter(PrivateGroup)
 		alphaRouter.InitProofingInformationRouter(PrivateGroup)
+		//不鉴权
+		alphaRouter.InitEntryNumberRouter(PublicGroup)
 
 	}
 
