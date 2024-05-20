@@ -9,11 +9,11 @@ import service from '@/utils/request'
 // @Param data tablename true "表名称"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"查询成功"}"
 // @Router /costCollection/findCostCollection [get]
-export const getEntryNumber = (params) => {
+export const getEntryNumber = (data) => {
   return service({
     url: '/entryNumber/getEntryNumber',
-    method: 'get',
-    params
+    method: 'post',
+    data
   })
 }
 

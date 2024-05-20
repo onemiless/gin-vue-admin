@@ -1,8 +1,8 @@
 <template>
   <el-menu-item
-      :index="routerInfo.name"
-      class="dark:text-slate-300"
-      :style="{
+    :index="routerInfo.name"
+    class="dark:text-slate-300"
+    :style="{
       height : sideHeight,
     }"
   >

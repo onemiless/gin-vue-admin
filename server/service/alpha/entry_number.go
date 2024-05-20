@@ -2,6 +2,7 @@ package alpha
 
 import (
 	"github.com/flipped-aurora/gin-vue-admin/server/global"
+	"github.com/flipped-aurora/gin-vue-admin/server/model/alpha"
 	"strconv"
 	"time"
 )
@@ -10,12 +11,18 @@ type IEntryNumberService struct {
 }
 
 // 获取流水号
-func (entryNumberService *IEntryNumberService) GetEntryNumber(tableName string) (number string, err error) {
+func (entryNumberService *IEntryNumberService) GetEntryNumber(entryNumber alpha.EntryNumber) (number string, err error) {
 	//err = global.GVA_DB.Create(itemtype).Error
 	date := time.Now().Format("2006-01-02")
 	//根据表名动态查询
-	err = global.GVA_DB.Raw("select count(created_at ) from " + tableName + " where created_at BETWEEN '" + date + " 00:00:00' AND '" + date + " 23:59:59'").Scan(&number).Error
-	if err != nil {
+	if entryNumber.Param == "" {
+		err = global.GVA_DB.Raw("select count(created_at ) from " + entryNumber.TableName + " where created_at BETWEEN '" + date + " 00:00:00' AND '" + date + " 23:59:59'").Scan(&number).Error
+	} else {
+		//if entryNumber.TableName == "cost_collection" {
+		err = global.GVA_DB.Raw("select count(created_at ) from "+entryNumber.TableName+" where "+entryNumber.FiledName+" = ?", entryNumber.Param).Scan(&number).Error
+		//}
+	}
+	if err == nil {
 
 		numberTemp, err := strconv.Atoi(number)
 		if err != nil {

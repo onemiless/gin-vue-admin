@@ -1,14 +1,14 @@
 <template>
   <el-sub-menu
-      ref="subMenu"
-      :index="routerInfo.name"
-      class="gva-sub-menu dark:text-slate-300"
+    ref="subMenu"
+    :index="routerInfo.name"
+    class="gva-sub-menu dark:text-slate-300"
   >
     <template #title>
       <div
-          v-if="!isCollapse"
-          class="flex items-center "
-          :style="{
+        v-if="!isCollapse"
+        class="flex items-center "
+        :style="{
           height : sideHeight,
         }"
       >
@@ -39,7 +39,7 @@ defineOptions({
   name: 'AsyncSubmenu',
 })
 
-defineProps({
+ defineProps({
   routerInfo: {
     default: function() {
       return null

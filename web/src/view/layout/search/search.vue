@@ -1,20 +1,20 @@
 <template>
   <div class="search-component items-center">
     <div
-        class="gvaIcon gvaIcon-refresh"
-        :class="[reload ? 'reloading' : '']"
-        @click="handleReload"
+      class="gvaIcon gvaIcon-refresh"
+      :class="[reload ? 'reloading' : '']"
+      @click="handleReload"
     />
     <Screenfull class="search-icon" />
     <div
-        class="gvaIcon gvaIcon-customer-service"
-        @click="toService"
+      class="gvaIcon gvaIcon-customer-service"
+      @click="toService"
     />
     <el-switch
-        v-model="isDark"
-        :active-action-icon="Moon"
-        :inactive-action-icon="Sunny"
-        @change="handleDarkSwitch"
+      v-model="isDark"
+      :active-action-icon="Moon"
+      :inactive-action-icon="Sunny"
+      @change="handleDarkSwitch"
     />
   </div>
 </template>
@@ -52,7 +52,7 @@ const toService = () => {
 }
 
 const handleDarkSwitch = (e) =>{
-  isDark.value = e
+ isDark.value = e
 }
 
 </script>

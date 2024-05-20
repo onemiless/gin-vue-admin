@@ -20,7 +20,7 @@ func (s *EntryNumberRouter) InitEntryNumberRouter(Router *gin.RouterGroup) {
 	//	mdClientRouter.PUT("updateMdClient", mdClientApi.UpdateMdClient)              // 更新客户信息
 	//}
 	{
-		entryNumberRouterWithoutRecord.GET("getEntryNumber", entryNumberApi.FindEntryNumber) // 根据ID获取客户信息
+		entryNumberRouterWithoutRecord.POST("getEntryNumber", entryNumberApi.FindEntryNumber) // 根据ID获取客户信息
 		//mdClientRouterWithoutRecord.GET("getMdClientList", mdClientApi.GetMdClientList) // 获取客户信息列表
 	}
 }

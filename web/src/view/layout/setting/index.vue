@@ -1,9 +1,9 @@
 <template>
   <el-drawer
-      v-model="drawer"
-      title="系统配置"
-      direction="rtl"
-      :size="width"
+    v-model="drawer"
+    title="系统配置"
+    direction="rtl"
+    :size="width"
   >
     <div class="flex flex-col">
       <div class="mb-8">
@@ -98,12 +98,12 @@ const width = computed(() => {
 })
 
 const colors = [
-  '#EB2F96',
-  '#3b82f6',
-  '#2FEB54',
-  '#EBEB2F',
-  '#EB2F2F',
-  '#2FEBEB',
+    '#EB2F96',
+    '#3b82f6',
+    '#2FEB54',
+    '#EBEB2F',
+    '#EB2F2F',
+    '#2FEBEB',
 ]
 
 const drawer = defineModel('drawer',{

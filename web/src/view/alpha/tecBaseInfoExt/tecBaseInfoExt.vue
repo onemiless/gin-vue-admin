@@ -81,7 +81,7 @@
             </el-option>
           </el-select>
         </el-form-item>
- 
+
         <el-form-item label="零件类型2:" prop="typeext">
           <!-- <el-input v-model.number="formData.typeext" :clearable="true" placeholder="请输入零件类型2" /> -->
           <el-select
@@ -98,7 +98,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-     
+
         <el-form-item label="客户名称:" prop="MB201">
           <!-- <el-input v-model="formData.MB201" :clearable="true"  placeholder="请输入客户名称" /> -->
           <el-select
@@ -134,7 +134,7 @@
           <el-input v-model="searchInfo.MB002" placeholder="搜索条件" />
         </el-form-item>
         <el-form-item label="客户品号" prop="MB202">
-          <el-input v-model="searchInfo.MB202" placeholder="搜索条件"/>
+          <el-input v-model="searchInfo.MB202" placeholder="搜索条件" />
         </el-form-item>
         <el-form-item label="零件规格" prop="MB003">
           <el-input v-model="searchInfo.MB003" placeholder="搜索条件" />
@@ -172,8 +172,6 @@
         @selection-change="handleSelectionChange"
       >
         <el-table-column type="selection" width="55" />
-
-
 
         <el-table-column align="left" label="分部" prop="ME002" width="120">
           <template #default="scope">
@@ -511,7 +509,7 @@
             </el-option>
           </el-select>
         </el-form-item>
- 
+
         <el-form-item label="零件类型2:" prop="typeext">
           <!-- <el-input v-model.number="formData.typeext" :clearable="true" placeholder="请输入零件类型2" /> -->
           <el-select
@@ -528,7 +526,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-     
+
         <el-form-item label="客户名称:" prop="MB201">
           <!-- <el-input v-model="formData.MB201" :clearable="true"  placeholder="请输入客户名称" /> -->
           <el-select
@@ -574,10 +572,8 @@
             v-model="formData.MB202"
             :clearable="true"
             placeholder="请输入客户品号"
- 
           />
         </el-form-item>
-   
 
         <el-form-item label="零件规格:" prop="MB003">
           <el-input
@@ -594,7 +590,7 @@
             placeholder="请输入零件图号"
           />
         </el-form-item>
-      
+
         <el-form-item label="计价单位:" prop="MB004">
           <!-- <el-input v-model="formData.MB004" :clearable="true"  placeholder="请输入计价单位" /> -->
           <el-select
@@ -619,93 +615,89 @@
 
         <el-divider content-position="left">零件属性</el-divider>
         <el-col :span="24">
-        <el-form-item label="材质:" prop="textrue">
-       
-          <el-input
-            v-model="formData.textrue"
-            :clearable="true"
-            placeholder="请输入材质"
-          />
-          
-        </el-form-item>
-        <el-form-item label="硬度/机械等级:" prop="level">
-          
-          <el-input
-            v-model="formData.level"
-            :clearable="true"
-            placeholder="请输入硬度/机械等级"
-          />
-  
-        </el-form-item>
-      </el-col>
+          <el-form-item label="材质:" prop="textrue">
+            <el-input
+              v-model="formData.textrue"
+              :clearable="true"
+              placeholder="请输入材质"
+            />
+          </el-form-item>
+          <el-form-item label="硬度/机械等级:" prop="level">
+            <el-input
+              v-model="formData.level"
+              :clearable="true"
+              placeholder="请输入硬度/机械等级"
+            />
+          </el-form-item>
+        </el-col>
         <el-form-item label="长:" prop="length">
           <el-input-number
             v-model="formData.length"
-            :precision="2"
+            :precision="3"
             :clearable="true"
           />
         </el-form-item>
         <el-form-item label="宽:" prop="width">
           <el-input-number
             v-model="formData.width"
-            :precision="2"
+            :precision="3"
             :clearable="true"
           />
         </el-form-item>
         <el-form-item label="高:" prop="height">
           <el-input-number
             v-model="formData.height"
-            :precision="2"
+            :precision="3"
             :clearable="true"
           />
         </el-form-item>
         <el-form-item label="最大直径:" prop="diameter">
           <el-input-number
             v-model="formData.diameter"
-            :precision="2"
+            :precision="3"
             :clearable="true"
           />
         </el-form-item>
         <el-form-item label="料厚:" prop="thick">
           <el-input-number
             v-model="formData.thick"
-            :precision="2"
+            :precision="3"
             :clearable="true"
           />
         </el-form-item>
         <el-form-item label="线径:" prop="wireDiameter">
           <el-input-number
             v-model="formData.wireDiameter"
-            :precision="2"
+            :precision="3"
             :clearable="true"
           />
         </el-form-item>
         <el-form-item label="单重:" prop="pieceWeight">
           <el-input-number
             v-model="formData.pieceWeight"
-            :precision="2"
+            :precision="3"
             :clearable="true"
           />
         </el-form-item>
         <el-form-item label="表面积:" prop="BET">
           <el-input-number
             v-model="formData.BET"
-            :precision="2"
+            :precision="3"
             :clearable="true"
           />
         </el-form-item>
 
         <el-divider content-position="left">其他</el-divider>
         <el-col :span="8">
-        <el-form-item label="有无图纸:" prop="graphPaper">
-          <!-- <el-input-number v-model="formData.graphPaper"  style="width:100%" :precision="2" :clearable="true"  /> -->
-          <el-switch
-            v-model="formData.graphPaper"
-            :active-value="1"
-            :inactive-value="0"
-          />
-        </el-form-item>
-      </el-col>
+          <el-form-item label="有无图纸:" prop="graphPaper">
+            <!-- <el-input-number v-model="formData.graphPaper"  style="width:100%" :precision="2" :clearable="true"  /> -->
+            <el-switch
+              v-model="formData.graphPaper"
+              :active-value="1"
+              :inactive-value="0"
+            />
+          </el-form-item>
+        </el-col>
         <el-form-item label="图纸日期或版本:" prop="GPDateOrVersion">
           <el-input
             v-model="formData.GPDateOrVersion"
@@ -931,34 +923,37 @@
         <el-form-item label="特殊工序工艺参数:" prop="specialProcessParameters">
           <!-- <el-input v-model.number="formData.specialProcessParameters" :clearable="true" placeholder="请输入特殊工序工艺参数" /> -->
           <el-select
-              v-model="formData.specialProcessParameters"
-              filterable
-              remote
-              reserve-keyword
-              clearable
-              placeholder="请选择特殊工序"
-              :remote-method="querySpecialProcessParameters"
-              :loading="loading"
+            v-model="formData.specialProcessParameters"
+            filterable
+            remote
+            reserve-keyword
+            clearable
+            placeholder="请选择特殊工序"
+            :remote-method="querySpecialProcessParameters"
+            :loading="loading"
+          >
+            <el-option
+              v-for="item in specialProcessParameters"
+              :key="item.ID"
+              :label="item.name"
+              :value="item.ID"
             >
-              <el-option
-                v-for="item in specialProcessParameters"
-                :key="item.ID"
-                :label="item.name"
-                :value="item.ID"
-              >
-                {{ item.name }}
-             
-                <span style="color: var(--el-text-color-secondary); font-size: 12px; padding-left: 30px;">
-                  {{ item.remark }}
-                </span>
-              </el-option>
-            </el-select>
+              {{ item.name }}
 
+              <span
+                style="
+                  color: var(--el-text-color-secondary);
+                  font-size: 12px;
+                  padding-left: 30px;
+                "
+              >
+                {{ item.remark }}
+              </span>
+            </el-option>
+          </el-select>
         </el-form-item>
       </el-form>
     </el-drawer>
-
-
   </div>
 </template>
 
@@ -1010,6 +1005,8 @@ const NumberOfTopcoatsOptions = ref([]);
 const BranchOptions = ref([]);
 const ProcessModeOptions = ref([]);
 const UnoilOptions = ref([]);
+// 行为控制标记（弹窗内部需要增还是改）
+const type = ref("");
 const formData = ref({
   ME002: "",
   type: 0,
@@ -1051,21 +1048,20 @@ const formData = ref({
   specialProcess: 0,
   specialProcessParameters: 0,
 });
-const checkIsHave = async(rule, value, callback)=>{
-
-const table = await getTecBaseInfoExtList({
-  MB201:formData.value.MB201,MB202:formData.value.MB202
-});
-// console.log(table)
-if (table.code === 0) {
-  if (table.data.total>0){
-    callback(new Error(''))
-
+const checkIsHave = async (rule, value, callback) => {
+  if ((type.value == "create")) {
+    const table = await getTecBaseInfoExtList({
+      MB201: formData.value.MB201,
+      MB202: formData.value.MB202,
+    });
+    // console.log(table)
+    if (table.code === 0) {
+      if (table.data.total > 0) {
+        callback(new Error(""));
+      }
+    }
   }
- 
-}
-
-}
+};
 // 验证规则
 const rule = reactive({
   ME002: [
@@ -1113,7 +1109,6 @@ const rule = reactive({
   ],
   MB202: [
     {
-     
       message: "",
       trigger: ["input", "blur"],
     },
@@ -1122,7 +1117,11 @@ const rule = reactive({
       message: "不能只输入空格",
       trigger: ["input", "blur"],
     },
-    {  message: "客户品号重复", asyncValidator: checkIsHave,  trigger:["input", "blur"], }
+    {
+      message: "客户品号重复",
+      asyncValidator: checkIsHave,
+      trigger: ["input", "blur"],
+    },
   ],
   MB003: [
     {
@@ -1231,7 +1230,6 @@ const specialProcessParameters = ref([]);
 
 //检查系统中是否存在相同的客户名称和客户品号
 
-
 //获取客户信息
 const querCustomer = async (input) => {
   // console.log(input.key)
@@ -1246,8 +1244,8 @@ const querCustomer = async (input) => {
 };
 const querySpecialProcessParameters = async (input) => {
   // console.log(input);
-  if (!formData.value.specialProcess){
-    ElMessage.error("请先选择特殊工序")
+  if (!formData.value.specialProcess) {
+    ElMessage.error("请先选择特殊工序");
   }
   if (formData.value.specialProcess) {
     const param = {
@@ -1457,9 +1455,6 @@ const onDelete = async () => {
     }
   });
 };
-
-// 行为控制标记（弹窗内部需要增还是改）
-const type = ref("");
 
 // 更新行
 const updateTecBaseInfoExtFunc = async (row) => {

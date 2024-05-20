@@ -1,14 +1,14 @@
 <template>
   <component
-      :is="menuComponent"
-      v-if="!routerInfo.hidden"
-      :router-info="routerInfo"
+    :is="menuComponent"
+    v-if="!routerInfo.hidden"
+    :router-info="routerInfo"
   >
     <template v-if="routerInfo.children&&routerInfo.children.length">
       <AsideComponent
-          v-for="item in routerInfo.children"
-          :key="item.name"
-          :router-info="item"
+        v-for="item in routerInfo.children"
+        :key="item.name"
+        :router-info="item"
       />
     </template>
   </component>
