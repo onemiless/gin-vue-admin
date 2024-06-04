@@ -61,6 +61,9 @@
         <el-form-item label="单重:" prop="pieceWeight">
           <el-input-number v-model="formData.pieceWeight" :precision="2" :clearable="true"></el-input-number>
        </el-form-item>
+        <el-form-item label="单重:" prop="drawWeight">
+          <el-input-number v-model="formData.drawWeight" :precision="2" :clearable="true"></el-input-number>
+        </el-form-item>
         <el-form-item label="表面积:" prop="BET">
           <el-input-number v-model="formData.BET" :precision="2" :clearable="true"></el-input-number>
        </el-form-item>
@@ -193,6 +196,7 @@ const formData = ref({
             thick: 0,
             wireDiameter: 0,
             pieceWeight: 0,
+            drawWeight: 0,
             BET: 0,
             graphPaper: 0,
             GPDateOrVersion: '',

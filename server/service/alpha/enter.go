@@ -17,4 +17,6 @@ type ServiceGroup struct {
 	CostCollectionService
 	ProofingInformationService
 	IEntryNumberService
+	ProcessFileInformationService
+	TestFileAndImgService
 }

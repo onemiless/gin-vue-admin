@@ -17,4 +17,6 @@ type ApiGroup struct {
 	CostCollectionApi
 	ProofingInformationApi
 	EntryNumberApi
+	ProcessFileInformationApi
+	TestFileAndImgApi
 }

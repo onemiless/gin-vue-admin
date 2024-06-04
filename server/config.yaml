@@ -12,9 +12,7 @@ autocode:
     server-api: /api/v1/%s
     server-plug: /plugin/%s
     server-initialize: /initialize
-    # root 自动适配项目根目录
-    # 请不要手动配置,他会在项目加载的时候识别出根路径
-    root: ""
+    root: /Users/mile/Desktop/alpha-mes/go-alpha-vue-mes-main-master
     web-table: /view
     web: /web/src
     server-service: /service/%s
@@ -88,7 +86,7 @@ jwt:
     signing-key: 856052b7-1d95-4f88-817a-61afc6e8195f
     expires-time: 7d
     buffer-time: 1d
-    issuer: qmPlus
+    issuer: mile-plus
 local:
     path: uploads/file
     store-path: uploads/file
@@ -114,7 +112,7 @@ mssql:
     db-name: gva
     username: sa
     password: Magni.db.2020
-    path: 192.168.100.26
+    path: 192.168.100.25
     engine: ""
     log-mode: error
     max-idle-conns: 10
@@ -127,8 +125,8 @@ mysql:
     config: ""
     db-name: ""
     username: ""
-    password: ''
-    path:
+    password: ""
+    path: ""
     engine: ""
     log-mode: error
     max-idle-conns: 10
@@ -201,7 +199,6 @@ system:
     use-multipoint: false
     use-redis: true
     use-mongo: false
-
 tencent-cos:
     bucket: xxxxx-10005608
     region: ap-shanghai
@@ -214,7 +211,7 @@ wecom:
     app-secret: tpC8hDhxaqMbLbGIeHaauK0voGNvZV-H6pUC2pnBbps
 zap:
     level: info
-    prefix: '[github.com/flipped-aurora/gin-vue-admin/server]'
+    prefix: '[alphames/server]'
     format: console
     director: log
     encode-level: LowercaseColorLevelEncoder
@@ -222,4 +219,3 @@ zap:
     max-age: 0
     show-line: true
     log-in-console: true
-

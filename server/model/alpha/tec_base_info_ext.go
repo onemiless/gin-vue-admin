@@ -27,6 +27,7 @@ type TecBaseInfoExt struct {
 	Thick                    *float64 `json:"thick" form:"thick" gorm:"column:thick;comment:;"`                                                            //料厚
 	WireDiameter             *float64 `json:"wireDiameter" form:"wireDiameter" gorm:"column:wire_diameter;comment:;"`                                      //线径
 	PieceWeight              *float64 `json:"pieceWeight" form:"pieceWeight" gorm:"column:piece_weight;comment:;"`                                         //单重
+	DrawWeight               *float64 `json:"drawWeight" form:"drawWeight" gorm:"column:draw_weight;comment:;"`                                            //单重
 	BET                      *float64 `json:"BET" form:"BET" gorm:"column:BET;comment:;"`                                                                  //表面积
 	GraphPaper               *float64 `json:"graphPaper" form:"graphPaper" gorm:"column:graph_paper;comment:;"`                                            //图纸
 	GPDateOrVersion          string   `json:"GPDateOrVersion" form:"GPDateOrVersion" gorm:"column:GP_date_or_version;comment:;size:255;"`                  //图纸日期或版本

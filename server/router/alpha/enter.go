@@ -17,4 +17,6 @@ type RouterGroup struct {
 	CostCollectionRouter
 	ProofingInformationRouter
 	EntryNumberRouter
+	ProcessFileInformationRouter
+	TestFileAndImgRouter
 }

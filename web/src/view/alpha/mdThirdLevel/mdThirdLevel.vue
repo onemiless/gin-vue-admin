@@ -23,7 +23,9 @@
 <!--            {{ filterDict(scope.row.isEnable,enableOptions) }}-->
 <!--            </template>-->
 <!--        </el-table-column>-->
+<el-table-column align="center" label="分部" prop="branch" width="140" />
         <el-table-column align="center" label="备注" prop="remark" width="140" />
+       
         <el-table-column align="center" label="操作" fixed="right" min-width="100">
           <template #default="scope">
 
@@ -98,9 +100,34 @@
                 <el-option v-for="(item,key) in enableOptions" :key="key" :label="item.label" :value="item.value" />
               </el-select>
             </el-form-item>
+
+            <el-form-item label="客户首字母编码:"  prop="isCustomer" >
+              <el-select v-model="formData.isCustomer" placeholder="请选择是否启用" style="width:100%" :clearable="true" >
+                <el-option v-for="(item,key) in enableOptions" :key="key" :label="item.label" :value="item.value" />
+              </el-select>
+            </el-form-item>
+           
+            <el-form-item label="分部:" prop="branch">
+             
+              <el-select
+                v-model="formData.branch"
+                placeholder="请选择分部"
+                :clearable="true"
+              >
+                <el-option
+                  v-for="(item, key) in BranchOptions"
+                  :key="key"
+                  :label="item.label"
+                  :value="item.value"
+                />
+              </el-select>
+              
+        </el-form-item>
+        <warning-bar title="分部字段仅在填写规则编号时使用" />
             <el-form-item label="备注:"  prop="remark" >
               <el-input v-model="formData.remark" :clearable="true"  placeholder="请输入备注" />
             </el-form-item>
+            <warning-bar title="请在备注中填写编号规则说明" />
           </el-form>
     </el-drawer>
 
@@ -125,6 +152,7 @@ import {Edit} from "@element-plus/icons-vue";
 import {Delete} from "@element-plus/icons-vue";
 import { number } from 'echarts';
 import { getMdSecondLevelList } from '@/api/mdSecondLevel';
+import WarningBar from '@/components/warningBar/warningBar.vue'
 
 
 defineOptions({
@@ -143,7 +171,9 @@ const formData = ref({
         secondLevelId: 0,
         name: '',
         isEnable: '',
+        isCustomer:'',
         remark: '',
+        branch:'',
         })
 
 
@@ -205,6 +235,9 @@ const pageSize = ref(10)
 const tableData = ref([])
 const searchInfo = ref({})
 const secondLevelList = ref([])
+const BranchOptions = ref([]);
+
+
 
 
 //获取secondLevelList数据
@@ -277,6 +310,7 @@ getTableData()
 // 获取需要的字典 可能为空 按需保留
 const setOptions = async () =>{
     enableOptions.value = await getDictFunc('enable')
+    BranchOptions.value = await getDictFunc("Branch");
     formData.value.isEnable = enableOptions.value[0]?.value
     
 }
@@ -399,7 +433,9 @@ const closeDetailShow = () => {
           secondLevelId: 0,
           name: '',
           isEnable: '',
+          isCustomer:'',
           remark: '',
+          branch:'',
           }
 }
 
@@ -419,7 +455,9 @@ const closeDialog = () => {
         secondLevelId: 0,
         name: '',
         isEnable: '',
+        isCustomer:'',
         remark: '',
+        branch:'',
         }
 }
 // 弹窗确定

@@ -257,8 +257,14 @@
         />
         <el-table-column
           align="left"
-          label="单重"
+          label="实体单重"
           prop="pieceWeight"
+          width="120"
+        />
+        <el-table-column
+          align="left"
+          label="图纸单重"
+          prop="drawWeight"
           width="120"
         />
         <el-table-column align="left" label="表面积" prop="BET" width="120" />
@@ -672,9 +678,16 @@
             :clearable="true"
           />
         </el-form-item>
-        <el-form-item label="单重:" prop="pieceWeight">
+        <el-form-item label="实体单重:" prop="pieceWeight">
           <el-input-number
             v-model="formData.pieceWeight"
+            :precision="3"
+            :clearable="true"
+          />
+        </el-form-item>
+        <el-form-item label="图纸单重:" prop="drawWeight">
+          <el-input-number
+            v-model="formData.drawWeight"
             :precision="3"
             :clearable="true"
           />
@@ -1027,6 +1040,7 @@ const formData = ref({
   thick: 0,
   wireDiameter: 0,
   pieceWeight: 0,
+  drawWeight: 0,
   BET: 0,
   graphPaper: 0,
   GPDateOrVersion: "",
@@ -1525,6 +1539,7 @@ const closeDetailShow = () => {
     thick: 0,
     wireDiameter: 0,
     pieceWeight: 0,
+    drawWeight: 0,
     BET: 0,
     graphPaper: 0,
     GPDateOrVersion: "",
@@ -1577,6 +1592,7 @@ const closeDialog = () => {
     thick: 0,
     wireDiameter: 0,
     pieceWeight: 0,
+    drawWeight: 0,
     BET: 0,
     graphPaper: 0,
     GPDateOrVersion: "",

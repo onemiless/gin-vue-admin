@@ -102,6 +102,8 @@ func Routers() *gin.Engine {
 		alphaRouter.InitProofingInformationRouter(PrivateGroup)
 		//不鉴权
 		alphaRouter.InitEntryNumberRouter(PublicGroup)
+		alphaRouter.InitProcessFileInformationRouter(PrivateGroup, PublicGroup)
+		alphaRouter.InitTestFileAndImgRouter(PrivateGroup, PublicGroup)
 
 	}
 
