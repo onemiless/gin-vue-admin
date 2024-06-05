@@ -8,15 +8,15 @@
         <div class="flex justify-between items-center">
           <span class="text font-bold">字典列表</span>
           <el-button
-              type="primary"
-              @click="openDialog"
+            type="primary"
+            @click="openDialog"
           >
             新增
           </el-button>
         </div>
         <el-scrollbar
-            class="mt-4"
-            style="height: calc(100vh - 300px)"
+          class="mt-4"
+          style="height: calc(100vh - 300px)"
         >
           <div
             v-for="dictionary in dictionaryData"

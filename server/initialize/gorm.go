@@ -29,6 +29,7 @@ func Gorm() *gorm.DB {
 }
 
 func RegisterTables() {
+	A1111 := global.GetGlobalDBByDBName("A1111")
 	db := global.GVA_DB
 	err := db.AutoMigrate(
 
@@ -58,4 +59,5 @@ func RegisterTables() {
 		os.Exit(0)
 	}
 	global.GVA_LOG.Info("register table success")
+	A1111.AutoMigrate(alpha.COPMA{})
 }

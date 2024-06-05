@@ -19,4 +19,5 @@ type RouterGroup struct {
 	EntryNumberRouter
 	ProcessFileInformationRouter
 	TestFileAndImgRouter
+	COPMARouter
 }

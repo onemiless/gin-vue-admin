@@ -77,7 +77,7 @@
           prop="hidden"
         >
           <template #default="scope">
-            <span>{{ scope.row.hidden?"隐藏":"显示" }}</span>
+            <span>{{ scope.row.hidden ? "隐藏" : "显示" }}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -266,7 +266,7 @@
         <el-form-item
           label="排序标记"
           prop="sort"
-          style="width:30%"
+          style="width: 30%"
         >
           <el-input
             v-model.number="form.sort"
@@ -275,7 +275,7 @@
         </el-form-item>
         <el-form-item
           prop="meta.activeName"
-          style="width:30%"
+          style="width: 30%"
         >
           <template #label>
             <div>
@@ -298,11 +298,11 @@
         <el-form-item
           label="KeepAlive"
           prop="meta.keepAlive"
-          style="width:30%"
+          style="width: 30%"
         >
           <el-select
             v-model="form.meta.keepAlive"
-            style="width:100%"
+            style="width: 100%"
             placeholder="是否keepAlive缓存页面"
           >
             <el-option
@@ -318,11 +318,11 @@
         <el-form-item
           label="CloseTab"
           prop="meta.closeTab"
-          style="width:30%"
+          style="width: 30%"
         >
           <el-select
             v-model="form.meta.closeTab"
-            style="width:100%"
+            style="width: 100%"
             placeholder="是否自动关闭tab"
           >
             <el-option
@@ -335,7 +335,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item style="width:30%">
+        <el-form-item style="width: 30%">
           <template #label>
             <div>
               <span> 是否为基础页面 </span>
@@ -351,7 +351,7 @@
 
           <el-select
             v-model="form.meta.defaultMenu"
-            style="width:100%"
+            style="width: 100%"
             placeholder="是否为基础页面"
           >
             <el-option

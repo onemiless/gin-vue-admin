@@ -3,6 +3,8 @@
 /web/dist
 /server/cache.db
 /rm_file
+/server/uploads
+
 
 .DS_Store
 

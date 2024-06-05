@@ -80,7 +80,9 @@ func OperationRecord() gin.HandlerFunc {
 			record.Body = "[文件]"
 		} else {
 			if len(body) > bufferSize {
-				record.Body = "[超出记录长度]"
+				//record.Body = "[超出记录长度]"
+				//将字节切片body的前bufferSize个字节转换为字符串，并将其赋值给record.Body。
+				record.Body = string(body[:bufferSize])
 			} else {
 				record.Body = string(body)
 			}
@@ -112,7 +114,8 @@ func OperationRecord() gin.HandlerFunc {
 			strings.Contains(c.Writer.Header().Get("Content-Transfer-Encoding"), "binary") {
 			if len(record.Resp) > bufferSize {
 				// 截断
-				record.Body = "超出记录长度"
+				//record.Body = "超出记录长度"
+				record.Body = string(record.Resp[:bufferSize])
 			}
 		}
 

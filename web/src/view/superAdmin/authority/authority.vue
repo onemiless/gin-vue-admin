@@ -253,7 +253,6 @@ const getTableData = async() => {
 getTableData()
 
 const changeRow = (key, value) => {
-  // console.log(key, value)
   activeRow.value[key] = value
 }
 const menus = ref(null)

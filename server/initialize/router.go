@@ -104,6 +104,7 @@ func Routers() *gin.Engine {
 		alphaRouter.InitEntryNumberRouter(PublicGroup)
 		alphaRouter.InitProcessFileInformationRouter(PrivateGroup, PublicGroup)
 		alphaRouter.InitTestFileAndImgRouter(PrivateGroup, PublicGroup)
+		//alphaRouter.InitCOPMARouter(PrivateGroup, PublicGroup)
 
 	}
 

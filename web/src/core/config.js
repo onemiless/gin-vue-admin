@@ -1,11 +1,12 @@
 /**
  * 网站配置文件
  */
+import chalk from "chalk";
 
 const config = {
   appName: 'Alpha',
   appLogo: 'http://www.alphamagni.com/images/logo.png',
-  showViteLogo: false,
+  showViteLogo: true,
   logs: [],
 }
 

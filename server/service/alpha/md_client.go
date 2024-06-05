@@ -1,6 +1,7 @@
 package alpha
 
 import (
+	"fmt"
 	"github.com/flipped-aurora/gin-vue-admin/server/global"
 	"github.com/flipped-aurora/gin-vue-admin/server/model/alpha"
 	alphaReq "github.com/flipped-aurora/gin-vue-admin/server/model/alpha/request"
@@ -12,7 +13,72 @@ type MdClientService struct {
 // CreateMdClient 创建客户信息记录
 // Author [piexlmax](https://github.com/piexlmax)
 func (mdClientService *MdClientService) CreateMdClient(mdClient *alpha.MdClient) (err error) {
-	err = global.GVA_DB.Create(mdClient).Error
+	copma := COPMAService{}
+	//获取ERP客户信息
+	list, err := copma.GetCOPMAInfoAllList()
+	if err != nil {
+		return err
+	}
+	//获取本地客户信息
+	infoList, err := mdClientService.GetMdClientAllInfoList()
+
+	//insertlist和updatelist
+	//insertList := []alpha.MdClient{}
+	//updateList := []alpha.MdClient{}
+	//
+
+	//比较infoList和list中的数据，多的添加，少的删除，需要更新的更新
+	enableFlag := 1
+	fmt.Println(enableFlag)
+	for _, v := range list {
+		flag := false
+		updateFlag := false
+		if v.MA097 != "1" {
+			enableFlag = 0
+		}
+		for _, v1 := range infoList {
+			if v.MA001 == v1.ClientCode && v.MA002 == v1.ClientName {
+				flag = true
+				break
+			}
+			if v.MA001 == v1.ClientCode && (v.MA002 != v1.ClientName || v.MA003 != v1.ClientDes || v.UDF01 != v1.ClientEn || v.MA102 != v1.ClientType) {
+				updateFlag = true
+				break
+			}
+
+		}
+		if !flag {
+			//添加
+
+			err = global.GVA_DB.Create(&alpha.MdClient{
+				ClientCode: v.MA001,
+				ClientName: v.MA002,
+				ClientType: v.MA102,
+				ClientEn:   v.UDF01,
+				ClientDes:  v.MA003,
+				EnableFlag: &enableFlag,
+			}).Error
+			if err != nil {
+				return err
+			}
+		}
+		if updateFlag {
+			//更新
+			err = mdClientService.UpdateMdClient(alpha.MdClient{
+				ClientCode: v.MA001,
+				ClientName: v.MA002,
+				ClientType: v.MA102,
+				ClientEn:   v.UDF01,
+				ClientDes:  v.MA003,
+				EnableFlag: &enableFlag,
+			})
+			if err != nil {
+				return err
+			}
+		}
+	}
+
+	//err = global.GVA_DB.Create(mdClient).Error
 	return err
 }
 
@@ -73,4 +139,20 @@ func (mdClientService *MdClientService) GetMdClientInfoList(info alphaReq.MdClie
 
 	err = db.Find(&mdClients).Error
 	return mdClients, total, err
+}
+
+// GetMdClientInfoAllList 分页获取客户信息记录
+// Author [piexlmax](https://github.com/piexlmax)
+func (mdClientService *MdClientService) GetMdClientAllInfoList() (list []alpha.MdClient, err error) {
+	fmt.Println("get all copma info ")
+	// 创建db
+	db := global.GVA_DB.Model(&alpha.MdClient{})
+	var mdClients []alpha.MdClient
+
+	if err != nil {
+		return
+	}
+
+	err = db.Find(&mdClients).Error
+	return mdClients, err
 }

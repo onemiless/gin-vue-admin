@@ -26,11 +26,11 @@ var mdClientService = service.ServiceGroupApp.AlphaServiceGroup.MdClientService
 // @Router /mdClient/createMdClient [post]
 func (mdClientApi *MdClientApi) CreateMdClient(c *gin.Context) {
 	var mdClient alpha.MdClient
-	err := c.ShouldBindJSON(&mdClient)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
+	//err := c.ShouldBindJSON(&mdClient)
+	//if err != nil {
+	//	response.FailWithMessage(err.Error(), c)
+	//	return
+	//}
 
 	if err := mdClientService.CreateMdClient(&mdClient); err != nil {
 		global.GVA_LOG.Error("创建失败!", zap.Error(err))

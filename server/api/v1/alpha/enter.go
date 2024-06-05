@@ -19,4 +19,5 @@ type ApiGroup struct {
 	EntryNumberApi
 	ProcessFileInformationApi
 	TestFileAndImgApi
+	COPMAApi
 }

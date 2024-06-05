@@ -19,4 +19,5 @@ type ServiceGroup struct {
 	IEntryNumberService
 	ProcessFileInformationService
 	TestFileAndImgService
+	COPMAService
 }
