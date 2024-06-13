@@ -978,6 +978,7 @@ import {
   updateTecBaseInfoExt,
   findTecBaseInfoExt,
   getTecBaseInfoExtList,
+  checkIsDuplicate
 } from "@/api/tecBaseInfoExt";
 
 import {
@@ -1064,15 +1065,15 @@ const formData = ref({
 });
 const checkIsHave = async (rule, value, callback) => {
   if ((type.value == "create")) {
-    const table = await getTecBaseInfoExtList({
+    const table = await checkIsDuplicate({
       MB201: formData.value.MB201,
       MB202: formData.value.MB202,
     });
-    // console.log(table)
-    if (table.code === 0) {
-      if (table.data.total > 0) {
+    // console.log(table.data)
+    if ( table.data ) {
+      // if (table.data.total > 0) {
         callback(new Error(""));
-      }
+      // }
     }
   }
 };

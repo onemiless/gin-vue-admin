@@ -23,5 +23,6 @@ func (s *TecBaseInfoExtRouter) InitTecBaseInfoExtRouter(Router *gin.RouterGroup)
 	{
 		tecBaseInfoExtRouterWithoutRecord.GET("findTecBaseInfoExt", tecBaseInfoExtApi.FindTecBaseInfoExt)       // 根据ID获取零件基础信息扩展
 		tecBaseInfoExtRouterWithoutRecord.GET("getTecBaseInfoExtList", tecBaseInfoExtApi.GetTecBaseInfoExtList) // 获取零件基础信息扩展列表
+		tecBaseInfoExtRouterWithoutRecord.GET("checkIsDuplicate", tecBaseInfoExtApi.CheckIsDuplicate)           // 检查是否重复
 	}
 }

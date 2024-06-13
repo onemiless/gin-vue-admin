@@ -114,3 +114,33 @@ func (tecBaseInfoExtService *TecBaseInfoExtService) GetTecBaseInfoExtInfoList(in
 	err = db.Find(&tecBaseInfoExts).Error
 	return tecBaseInfoExts, total, err
 }
+
+// CheckIsDuplicate 检查是否有重复录入
+func (tecBaseInfoExtService *TecBaseInfoExtService) CheckIsDuplicate(info alphaReq.TecBaseInfoExtSearch) (result bool, err error) {
+	//limit := info.PageSize
+	//offset := info.PageSize * (info.Page - 1)
+	//// 创建db
+	db := global.GVA_DB.Model(&alpha.TecBaseInfoExt{})
+	//var tecBaseInfoExts []alpha.TecBaseInfoExt
+	// 如果有条件搜索 下方会自动创建搜索语句
+
+	if info.MB201 != "" {
+		db = db.Where("MB201 = ?", info.MB201)
+	}
+
+	if info.MB202 != "" {
+		db = db.Where("MB202 = ?", info.MB202)
+	}
+
+	//if info.OE != nil {
+	//   db = db.Where("OE LIKE ?","%"+info.OE+"%")
+	//}
+	var total int64
+	db.Count(&total)
+
+	if total > 0 {
+		return true, err
+	} else {
+		return false, err
+	}
+}

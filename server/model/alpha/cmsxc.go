@@ -1,8 +1,6 @@
 // 自动生成模板CMSXC
 package alpha
 
-import ()
-
 // 车厂规范信息 结构体  CMSXC
 type CMSXC struct {
 	COMPANY    string   `json:"COMPANY" form:"COMPANY" gorm:"column:COMPANY;comment:;size:10;"`           //COMPANY字段

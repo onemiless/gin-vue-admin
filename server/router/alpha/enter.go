@@ -20,4 +20,5 @@ type RouterGroup struct {
 	ProcessFileInformationRouter
 	TestFileAndImgRouter
 	COPMARouter
+	TecSNRuleRouter
 }

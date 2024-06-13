@@ -16,6 +16,11 @@ export const getEntryNumber = (data) => {
     data
   })
 }
-
-
+export const getSNRule = (data) => {
+  return service({
+    url: '/tecSNRule/findSNRuler',
+    method: 'post',
+    data
+  })
+}
 

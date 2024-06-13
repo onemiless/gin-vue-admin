@@ -6,7 +6,7 @@ type ServiceGroup struct {
 	CMSMEService
 	CMSXCService
 	ItemTypeService
-	MutiSelectService
+	MultiSelectService
 	MdFirstLevelService
 	MdSecondLevelService
 	MdThirdLevelService
@@ -20,4 +20,5 @@ type ServiceGroup struct {
 	ProcessFileInformationService
 	TestFileAndImgService
 	COPMAService
+	TecSNRuleService
 }

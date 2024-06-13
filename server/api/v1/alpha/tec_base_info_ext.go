@@ -154,3 +154,28 @@ func (tecBaseInfoExtApi *TecBaseInfoExtApi) GetTecBaseInfoExtList(c *gin.Context
 		}, "获取成功", c)
 	}
 }
+
+// CheckIsDuplicate 检查是否有重复
+// @Tags TecBaseInfoExt
+// @Summary 检查是否有重复
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data query alphaReq.TecBaseInfoExtSearch true "分页获取零件基础信息扩展列表"
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
+// @Router /tecBaseInfoExt/checkIsDuplicate [post]
+func (tecBaseInfoExtApi *TecBaseInfoExtApi) CheckIsDuplicate(c *gin.Context) {
+	var pageInfo alphaReq.TecBaseInfoExtSearch
+	err := c.ShouldBindQuery(&pageInfo)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	if result, err := tecBaseInfoExtService.CheckIsDuplicate(pageInfo); err != nil {
+		global.GVA_LOG.Error("获取失败!", zap.Error(err))
+		response.FailWithMessage("获取失败", c)
+	} else {
+		response.OkWithDetailed(result, "获取成功", c)
+	}
+
+}

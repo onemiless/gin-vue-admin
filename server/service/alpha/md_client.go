@@ -105,8 +105,8 @@ func (mdClientService *MdClientService) UpdateMdClient(mdClient alpha.MdClient) 
 
 // GetMdClient 根据ID获取客户信息记录
 // Author [piexlmax](https://github.com/piexlmax)
-func (mdClientService *MdClientService) GetMdClient(ID string) (mdClient alpha.MdClient, err error) {
-	err = global.GVA_DB.Where("id = ?", ID).First(&mdClient).Error
+func (mdClientService *MdClientService) GetMdClient(client_code string) (mdClient alpha.MdClient, err error) {
+	err = global.GVA_DB.Where("client_code = ?", client_code).First(&mdClient).Error
 	return
 }
 

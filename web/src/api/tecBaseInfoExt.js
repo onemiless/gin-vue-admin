@@ -95,3 +95,11 @@ export const getTecBaseInfoExtList = (params) => {
     params
   })
 }
+
+export const checkIsDuplicate = (params) =>{
+  return service({
+    url: '/tecBaseInfoExt/checkIsDuplicate',
+    method: 'get',
+    params
+  })
+}

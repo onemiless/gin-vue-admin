@@ -493,9 +493,9 @@ const closeDetailShow = () => {
           }
 }
 const syncERPInfo = async()=>{
-  console.log("async ERP info")
+  // console.log("async ERP info")
   res = await createMdClient(formData.value)
-  console.log("async ERP info:"+res)
+  // console.log("async ERP info:"+res)
     if (res.code === 0) {
         ElMessage({
             type: 'success',

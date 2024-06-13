@@ -13,7 +13,7 @@ import (
 type MutiSelectApi struct {
 }
 
-var mutiSelectService = service.ServiceGroupApp.AlphaServiceGroup.MutiSelectService
+var mutiSelectService = service.ServiceGroupApp.AlphaServiceGroup.MultiSelectService
 
 // CreateMutiSelect 创建多级选择信息
 // @Tags MutiSelect

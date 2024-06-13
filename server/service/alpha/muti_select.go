@@ -6,47 +6,47 @@ import (
 	alphaReq "github.com/flipped-aurora/gin-vue-admin/server/model/alpha/request"
 )
 
-type MutiSelectService struct {
+type MultiSelectService struct {
 }
 
 // CreateMutiSelect 创建多级选择信息记录
 // Author [piexlmax](https://github.com/piexlmax)
-func (mutiSelectService *MutiSelectService) CreateMutiSelect(mutiSelect *alpha.MutiSelect) (err error) {
+func (mutiSelectService *MultiSelectService) CreateMutiSelect(mutiSelect *alpha.MutiSelect) (err error) {
 	err = global.GVA_DB.Create(mutiSelect).Error
 	return err
 }
 
 // DeleteMutiSelect 删除多级选择信息记录
 // Author [piexlmax](https://github.com/piexlmax)
-func (mutiSelectService *MutiSelectService) DeleteMutiSelect(ID string) (err error) {
+func (mutiSelectService *MultiSelectService) DeleteMutiSelect(ID string) (err error) {
 	err = global.GVA_DB.Delete(&alpha.MutiSelect{}, "id = ?", ID).Error
 	return err
 }
 
 // DeleteMutiSelectByIds 批量删除多级选择信息记录
 // Author [piexlmax](https://github.com/piexlmax)
-func (mutiSelectService *MutiSelectService) DeleteMutiSelectByIds(IDs []string) (err error) {
+func (mutiSelectService *MultiSelectService) DeleteMutiSelectByIds(IDs []string) (err error) {
 	err = global.GVA_DB.Delete(&[]alpha.MutiSelect{}, "id in ?", IDs).Error
 	return err
 }
 
 // UpdateMutiSelect 更新多级选择信息记录
 // Author [piexlmax](https://github.com/piexlmax)
-func (mutiSelectService *MutiSelectService) UpdateMutiSelect(mutiSelect alpha.MutiSelect) (err error) {
+func (mutiSelectService *MultiSelectService) UpdateMutiSelect(mutiSelect alpha.MutiSelect) (err error) {
 	err = global.GVA_DB.Save(&mutiSelect).Error
 	return err
 }
 
 // GetMutiSelect 根据ID获取多级选择信息记录
 // Author [piexlmax](https://github.com/piexlmax)
-func (mutiSelectService *MutiSelectService) GetMutiSelect(ID string) (mutiSelect alpha.MutiSelect, err error) {
+func (mutiSelectService *MultiSelectService) GetMutiSelect(ID string) (mutiSelect alpha.MutiSelect, err error) {
 	err = global.GVA_DB.Where("id = ?", ID).First(&mutiSelect).Error
 	return
 }
 
 // GetMutiSelectInfoList 分页获取多级选择信息记录
 // Author [piexlmax](https://github.com/piexlmax)
-func (mutiSelectService *MutiSelectService) GetMutiSelectInfoList(info alphaReq.MutiSelectSearch) (list []alpha.MutiSelect, total int64, err error) {
+func (mutiSelectService *MultiSelectService) GetMutiSelectInfoList(info alphaReq.MutiSelectSearch) (list []alpha.MutiSelect, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	// 创建db

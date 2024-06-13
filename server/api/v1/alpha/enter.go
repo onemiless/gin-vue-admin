@@ -20,4 +20,5 @@ type ApiGroup struct {
 	ProcessFileInformationApi
 	TestFileAndImgApi
 	COPMAApi
+	TecSNRuleApi
 }
