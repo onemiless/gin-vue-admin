@@ -282,7 +282,6 @@ const copyAuthorityFunc = (row) => {
 const openDrawer = (row) => {
   drawer.value = true
   activeRow.value = row
-  // console.log(activeRow.value)
 }
 // 删除角色
 const deleteAuth = (row) => {
