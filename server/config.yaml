@@ -209,13 +209,15 @@ tencent-cos:
 wecom:
     corp-id: ww65b5df9bbacada13
     app-secret: tpC8hDhxaqMbLbGIeHaauK0voGNvZV-H6pUC2pnBbps
+
+# zap logger configuration
 zap:
     level: info
-    prefix: '[alphames/server]'
     format: console
+    prefix: '[alphames/server]'
     director: log
+    show-line: true
     encode-level: LowercaseColorLevelEncoder
     stacktrace-key: stacktrace
-    max-age: 0
-    show-line: true
     log-in-console: true
+    retention-day: -1

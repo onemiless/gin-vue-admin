@@ -21,4 +21,5 @@ type ApiGroup struct {
 	TestFileAndImgApi
 	COPMAApi
 	TecSNRuleApi
+	MassProductionTransferApi
 }

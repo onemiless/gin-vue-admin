@@ -21,4 +21,5 @@ type RouterGroup struct {
 	TestFileAndImgRouter
 	COPMARouter
 	TecSNRuleRouter
+	MassProductionTransferRouter
 }

@@ -21,4 +21,5 @@ type ServiceGroup struct {
 	TestFileAndImgService
 	COPMAService
 	TecSNRuleService
+	MassProductionTransferService
 }

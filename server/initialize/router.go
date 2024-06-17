@@ -105,7 +105,9 @@ func Routers() *gin.Engine {
 		alphaRouter.InitTecSNRuleRouter(PublicGroup)
 		alphaRouter.InitProcessFileInformationRouter(PrivateGroup, PublicGroup)
 		alphaRouter.InitTestFileAndImgRouter(PrivateGroup, PublicGroup)
-		//alphaRouter.InitCOPMARouter(PrivateGroup, PublicGroup)
+		alphaRouter.
+			//alphaRouter.InitCOPMARouter(PrivateGroup, PublicGroup)
+			InitMassProductionTransferRouter(PrivateGroup, PublicGroup)
 
 	}
 
