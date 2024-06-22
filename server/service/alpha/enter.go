@@ -11,7 +11,6 @@ type ServiceGroup struct {
 	MdSecondLevelService
 	MdThirdLevelService
 	TecBaseInfoService
-	TecBaseProcessService
 	TecBaseInfoExtService
 	QualityBaseInfoService
 	CostCollectionService
@@ -22,4 +21,7 @@ type ServiceGroup struct {
 	COPMAService
 	TecSNRuleService
 	MassProductionTransferService
+	EngineeringChangeService
+	PackageRequirementService
+	TecBaseProcessService
 }

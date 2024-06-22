@@ -23,7 +23,7 @@ var tecBaseProcessService = service.ServiceGroupApp.AlphaServiceGroup.TecBasePro
 // @accept application/json
 // @Produce application/json
 // @Param data body alpha.TecBaseProcess true "创建工艺、设备及治具基本信息"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"创建成功"}"
+// @Success 200 {object} response.Response{msg=string} "创建成功"
 // @Router /tecBaseProcess/createTecBaseProcess [post]
 func (tecBaseProcessApi *TecBaseProcessApi) CreateTecBaseProcess(c *gin.Context) {
 	var tecBaseProcess alpha.TecBaseProcess
@@ -49,7 +49,7 @@ func (tecBaseProcessApi *TecBaseProcessApi) CreateTecBaseProcess(c *gin.Context)
 // @accept application/json
 // @Produce application/json
 // @Param data body alpha.TecBaseProcess true "删除工艺、设备及治具基本信息"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
+// @Success 200 {object} response.Response{msg=string} "删除成功"
 // @Router /tecBaseProcess/deleteTecBaseProcess [delete]
 func (tecBaseProcessApi *TecBaseProcessApi) DeleteTecBaseProcess(c *gin.Context) {
 	ID := c.Query("ID")
@@ -68,7 +68,7 @@ func (tecBaseProcessApi *TecBaseProcessApi) DeleteTecBaseProcess(c *gin.Context)
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"批量删除成功"}"
+// @Success 200 {object} response.Response{msg=string} "批量删除成功"
 // @Router /tecBaseProcess/deleteTecBaseProcessByIds [delete]
 func (tecBaseProcessApi *TecBaseProcessApi) DeleteTecBaseProcessByIds(c *gin.Context) {
 	IDs := c.QueryArray("IDs[]")
@@ -88,7 +88,7 @@ func (tecBaseProcessApi *TecBaseProcessApi) DeleteTecBaseProcessByIds(c *gin.Con
 // @accept application/json
 // @Produce application/json
 // @Param data body alpha.TecBaseProcess true "更新工艺、设备及治具基本信息"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"更新成功"}"
+// @Success 200 {object} response.Response{msg=string} "更新成功"
 // @Router /tecBaseProcess/updateTecBaseProcess [put]
 func (tecBaseProcessApi *TecBaseProcessApi) UpdateTecBaseProcess(c *gin.Context) {
 	var tecBaseProcess alpha.TecBaseProcess
@@ -114,27 +114,15 @@ func (tecBaseProcessApi *TecBaseProcessApi) UpdateTecBaseProcess(c *gin.Context)
 // @accept application/json
 // @Produce application/json
 // @Param data query alpha.TecBaseProcess true "用id查询工艺、设备及治具基本信息"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"查询成功"}"
+// @Success 200 {object} response.Response{data=object{retecBaseProcess=alpha.TecBaseProcess},msg=string} "查询成功"
 // @Router /tecBaseProcess/findTecBaseProcess [get]
 func (tecBaseProcessApi *TecBaseProcessApi) FindTecBaseProcess(c *gin.Context) {
 	ID := c.Query("ID")
-	ParenId := c.Query("ParentId")
-	if ParenId != "" {
-		if tecBaseProcess, err := tecBaseProcessService.GetTecBaseProcessParentID(ParenId); err != nil {
-			global.GVA_LOG.Error("查询失败!", zap.Error(err))
-			response.FailWithMessage("查询失败", c)
-		} else {
-			response.OkWithData(gin.H{"tecBaseProcess": tecBaseProcess}, c)
-		}
-	}
-	if ID != "" {
-
-		if retecBaseProcess, err := tecBaseProcessService.GetTecBaseProcess(ID); err != nil {
-			global.GVA_LOG.Error("查询失败!", zap.Error(err))
-			response.FailWithMessage("查询失败", c)
-		} else {
-			response.OkWithData(gin.H{"retecBaseProcess": retecBaseProcess}, c)
-		}
+	if retecBaseProcess, err := tecBaseProcessService.GetTecBaseProcess(ID); err != nil {
+		global.GVA_LOG.Error("查询失败!", zap.Error(err))
+		response.FailWithMessage("查询失败", c)
+	} else {
+		response.OkWithData(retecBaseProcess, c)
 	}
 }
 
@@ -145,7 +133,7 @@ func (tecBaseProcessApi *TecBaseProcessApi) FindTecBaseProcess(c *gin.Context) {
 // @accept application/json
 // @Produce application/json
 // @Param data query alphaReq.TecBaseProcessSearch true "分页获取工艺、设备及治具基本信息列表"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
+// @Success 200 {object} response.Response{data=response.PageResult,msg=string} "获取成功"
 // @Router /tecBaseProcess/getTecBaseProcessList [get]
 func (tecBaseProcessApi *TecBaseProcessApi) GetTecBaseProcessList(c *gin.Context) {
 	var pageInfo alphaReq.TecBaseProcessSearch
@@ -165,4 +153,20 @@ func (tecBaseProcessApi *TecBaseProcessApi) GetTecBaseProcessList(c *gin.Context
 			PageSize: pageInfo.PageSize,
 		}, "获取成功", c)
 	}
+}
+
+// GetTecBaseProcessPublic 不需要鉴权的工艺、设备及治具基本信息接口
+// @Tags TecBaseProcess
+// @Summary 不需要鉴权的工艺、设备及治具基本信息接口
+// @accept application/json
+// @Produce application/json
+// @Param data query alphaReq.TecBaseProcessSearch true "分页获取工艺、设备及治具基本信息列表"
+// @Success 200 {object} response.Response{data=object,msg=string} "获取成功"
+// @Router /tecBaseProcess/getTecBaseProcessPublic [get]
+func (tecBaseProcessApi *TecBaseProcessApi) GetTecBaseProcessPublic(c *gin.Context) {
+	// 此接口不需要鉴权
+	// 示例为返回了一个固定的消息接口，一般本接口用于C端服务，需要自己实现业务逻辑
+	response.OkWithDetailed(gin.H{
+		"info": "不需要鉴权的工艺、设备及治具基本信息接口信息",
+	}, "获取成功", c)
 }

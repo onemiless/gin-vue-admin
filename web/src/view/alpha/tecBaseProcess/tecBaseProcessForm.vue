@@ -5,29 +5,35 @@
         <el-form-item label="主ID:" prop="parenId">
           <el-input v-model.number="formData.parenId" :clearable="true" placeholder="请输入" />
        </el-form-item>
+        <el-form-item label="唯一追踪号:" prop="UTN">
+          <el-input v-model="formData.UTN" :clearable="true"  placeholder="请输入唯一追踪号" />
+       </el-form-item>
+        <el-form-item label="客户品名:" prop="MB202">
+          <el-input v-model="formData.MB202" :clearable="false"  placeholder="请输入客户品名" />
+       </el-form-item>
         <el-form-item label="工艺方式:" prop="processType">
            <el-select v-model="formData.processType" placeholder="请选择工艺方式" style="width:100%" :clearable="true" >
-              <el-option v-for="(item,key) in 工艺方式Options" :key="key" :label="item.label" :value="item.value" />
+              <el-option v-for="(item,key) in ProcessModeOptions" :key="key" :label="item.label" :value="item.value" />
            </el-select>
        </el-form-item>
         <el-form-item label="除油:" prop="unoil">
            <el-select v-model="formData.unoil" placeholder="请选择除油" style="width:100%" :clearable="true" >
-              <el-option v-for="(item,key) in 除油Options" :key="key" :label="item.label" :value="item.value" />
+              <el-option v-for="(item,key) in UnoilOptions" :key="key" :label="item.label" :value="item.value" />
            </el-select>
        </el-form-item>
         <el-form-item label="抛丸:" prop="shotBlasting">
            <el-select v-model="formData.shotBlasting" placeholder="请选择抛丸" style="width:100%" :clearable="true" >
-              <el-option v-for="(item,key) in 抛丸Options" :key="key" :label="item.label" :value="item.value" />
+              <el-option v-for="(item,key) in ShotBlastingOptions" :key="key" :label="item.label" :value="item.value" />
            </el-select>
        </el-form-item>
         <el-form-item label="磷化:" prop="phosphat">
            <el-select v-model="formData.phosphat" placeholder="请选择磷化" style="width:100%" :clearable="true" >
-              <el-option v-for="(item,key) in 磷化Options" :key="key" :label="item.label" :value="item.value" />
+              <el-option v-for="(item,key) in PhosphatingOptions" :key="key" :label="item.label" :value="item.value" />
            </el-select>
        </el-form-item>
         <el-form-item label="电镀:" prop="electroplate">
            <el-select v-model="formData.electroplate" placeholder="请选择电镀" style="width:100%" :clearable="true" >
-              <el-option v-for="(item,key) in 电镀Options" :key="key" :label="item.label" :value="item.value" />
+              <el-option v-for="(item,key) in ElectroplateOptions" :key="key" :label="item.label" :value="item.value" />
            </el-select>
        </el-form-item>
         <el-form-item label="备注:" prop="remark">
@@ -47,7 +53,7 @@ import {
   createTecBaseProcess,
   updateTecBaseProcess,
   findTecBaseProcess
-} from '@/api/tecBaseProcess'
+} from '@/api/alpha/tecBaseProcess'
 
 defineOptions({
     name: 'TecBaseProcessForm'
@@ -63,13 +69,15 @@ const route = useRoute()
 const router = useRouter()
 
 const type = ref('')
-const 工艺方式Options = ref([])
-const 除油Options = ref([])
-const 抛丸Options = ref([])
-const 磷化Options = ref([])
-const 电镀Options = ref([])
+const PhosphatingOptions = ref([])
+const ElectroplateOptions = ref([])
+const ProcessModeOptions = ref([])
+const UnoilOptions = ref([])
+const ShotBlastingOptions = ref([])
 const formData = ref({
             parenId: 0,
+            UTN: '',
+            MB202: '',
             processType: '',
             unoil: '',
             shotBlasting: '',
@@ -79,6 +87,21 @@ const formData = ref({
         })
 // 验证规则
 const rule = reactive({
+               parenId : [{
+                   required: true,
+                   message: '',
+                   trigger: ['input','blur'],
+               }],
+               UTN : [{
+                   required: true,
+                   message: '',
+                   trigger: ['input','blur'],
+               }],
+               MB202 : [{
+                   required: true,
+                   message: '',
+                   trigger: ['input','blur'],
+               }],
 })
 
 const elFormRef = ref()
@@ -95,11 +118,11 @@ const init = async () => {
     } else {
       type.value = 'create'
     }
-    工艺方式Options.value = await getDictFunc('工艺方式')
-    除油Options.value = await getDictFunc('除油')
-    抛丸Options.value = await getDictFunc('抛丸')
-    磷化Options.value = await getDictFunc('磷化')
-    电镀Options.value = await getDictFunc('电镀')
+    PhosphatingOptions.value = await getDictFunc('Phosphating')
+    ElectroplateOptions.value = await getDictFunc('Electroplate')
+    ProcessModeOptions.value = await getDictFunc('ProcessMode')
+    UnoilOptions.value = await getDictFunc('Unoil')
+    ShotBlastingOptions.value = await getDictFunc('ShotBlasting')
 }
 
 init()

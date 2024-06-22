@@ -20,8 +20,8 @@
          <el-input v-model="searchInfo.UTN" placeholder="搜索条件" />
 
         </el-form-item>
-        <el-form-item label="客户品名" prop="MB202">
-         <el-input v-model="searchInfo.MB202" placeholder="搜索条件" />
+        <el-form-item label="包装方案编号" prop="SN">
+         <el-input v-model="searchInfo.SN" placeholder="搜索条件" />
 
         </el-form-item>
 
@@ -57,36 +57,12 @@
         </el-table-column>
         
         <el-table-column align="left" label="唯一追踪号" prop="UTN" width="120" />
-        <el-table-column align="left" label="客户品名" prop="MB202" width="120" />
-        <el-table-column align="left" label="工艺方式" prop="processType" width="120">
-            <template #default="scope">
-            {{ filterDict(scope.row.processType,ProcessModeOptions) }}
-            </template>
-        </el-table-column>
-        <el-table-column align="left" label="除油" prop="unoil" width="120">
-            <template #default="scope">
-            {{ filterDict(scope.row.unoil,UnoilOptions) }}
-            </template>
-        </el-table-column>
-        <el-table-column align="left" label="抛丸" prop="shotBlasting" width="120">
-            <template #default="scope">
-            {{ filterDict(scope.row.shotBlasting,ShotBlastingOptions) }}
-            </template>
-        </el-table-column>
-        <el-table-column align="left" label="磷化" prop="phosphat" width="120">
-            <template #default="scope">
-            {{ filterDict(scope.row.phosphat,PhosphatingOptions) }}
-            </template>
-        </el-table-column>
-        <el-table-column align="left" label="电镀" prop="electroplate" width="120">
-            <template #default="scope">
-            {{ filterDict(scope.row.electroplate,ElectroplateOptions) }}
-            </template>
-        </el-table-column>
-        <el-table-column align="left" label="备注" prop="remark" width="120" />
+        <el-table-column align="left" label="客户品号" prop="MB202" width="120" />
+        <el-table-column align="left" label="包装方案编号" prop="SN" width="120" />
+        <el-table-column align="left" label="包装方式" prop="packageMethod" width="120" />
         <el-table-column align="left" label="操作" fixed="right" min-width="240">
             <template #default="scope">
-            <el-button type="primary" link icon="edit" class="table-button" @click="updateTecBaseProcessFunc(scope.row)">变更</el-button>
+            <el-button type="primary" link icon="edit" class="table-button" @click="updatePackageRequirementFunc(scope.row)">变更</el-button>
             <el-button type="primary" link icon="delete" @click="deleteRow(scope.row)">删除</el-button>
             </template>
         </el-table-column>
@@ -114,7 +90,7 @@
               </div>
             </template>
 
-          <el-form :model="formData" label-position="top" ref="elFormRef" :inline="true" :rules="rule" >
+          <el-form :model="formData" label-position="top" ref="elFormRef" :inline="true"  :rules="rule" >
             <el-divider content-position="left">基础信息</el-divider>
         <el-form-item label="唯一追踪号:" prop="UTN">
           <!-- <el-input v-model.number="formData.UTN" :clearable="true" placeholder="请输入唯一追踪号" /> -->
@@ -154,34 +130,12 @@
         <el-form-item label="客户品号:" prop="MB202">
           <el-input v-model="formData.MB202" :clearable="true" disabled />
         </el-form-item>
-        <el-divider content-position="left">工艺设备及治具信息</el-divider>
-            <el-form-item label="工艺方式:"  prop="processType" >
-              <el-select v-model="formData.processType" placeholder="请选择工艺方式" style="width:180px" :clearable="true" >
-                <el-option v-for="(item,key) in ProcessModeOptions" :key="key" :label="item.label" :value="item.value" />
-              </el-select>
+        <el-divider content-position="left">包装方案信息</el-divider>
+            <el-form-item label="包装方案编号:"  prop="SN" >
+              <el-input v-model="formData.SN" :clearable="true"  placeholder="请输入包装方案编号" />
             </el-form-item>
-            <el-form-item label="除油:"  prop="unoil" >
-              <el-select v-model="formData.unoil" placeholder="请选择除油" style="width:180px" :clearable="true" >
-                <el-option v-for="(item,key) in UnoilOptions" :key="key" :label="item.label" :value="item.value" />
-              </el-select>
-            </el-form-item>
-            <el-form-item label="抛丸:"  prop="shotBlasting" >
-              <el-select v-model="formData.shotBlasting" placeholder="请选择抛丸" style="width:180px" :clearable="true" >
-                <el-option v-for="(item,key) in ShotBlastingOptions" :key="key" :label="item.label" :value="item.value" />
-              </el-select>
-            </el-form-item>
-            <el-form-item label="磷化:"  prop="phosphat" >
-              <el-select v-model="formData.phosphat" placeholder="请选择磷化" style="width:180px" :clearable="true" >
-                <el-option v-for="(item,key) in PhosphatingOptions" :key="key" :label="item.label" :value="item.value" />
-              </el-select>
-            </el-form-item>
-            <el-form-item label="电镀:"  prop="electroplate" >
-              <el-select v-model="formData.electroplate" placeholder="请选择电镀" style="width:180px" :clearable="true" >
-                <el-option v-for="(item,key) in ElectroplateOptions" :key="key" :label="item.label" :value="item.value" />
-              </el-select>
-            </el-form-item>
-            <el-form-item label="备注:"  prop="remark" >
-              <el-input v-model="formData.remark" :clearable="true"  style="width:600px" placeholder="请输入备注" />
+            <el-form-item label="包装方式:"  prop="packageMethod"   >
+              <el-input v-model="formData.packageMethod"  :clearable="true"  placeholder="请输入包装方式" style="width:400px;" />
             </el-form-item>
           </el-form>
     </el-drawer>
@@ -190,43 +144,33 @@
 
 <script setup>
 import {
-  createTecBaseProcess,
-  deleteTecBaseProcess,
-  deleteTecBaseProcessByIds,
-  updateTecBaseProcess,
-  findTecBaseProcess,
-  getTecBaseProcessList
-} from '@/api/alpha/tecBaseProcess'
-
+  createPackageRequirement,
+  deletePackageRequirement,
+  deletePackageRequirementByIds,
+  updatePackageRequirement,
+  findPackageRequirement,
+  getPackageRequirementList
+} from '@/api/alpha/packageRequirement'
+import { getTecBaseInfoExtList } from "@/api/tecBaseInfoExt";
+import { getEntryNumber } from "@/api/alphatools";
 // 全量引入格式化工具 请按需保留
 import { getDictFunc, formatDate, formatBoolean, filterDict ,filterDataSource, ReturnArrImg, onDownloadFile } from '@/utils/format'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { ref, reactive } from 'vue'
 
-import { getTecBaseInfoExtList } from "@/api/tecBaseInfoExt";
-
 defineOptions({
-    name: 'TecBaseProcess'
+    name: 'PackageRequirement'
 })
 
 // 控制更多查询条件显示/隐藏状态
 const showAllQuery = ref(false)
 
 // 自动化生成的字典（可能为空）以及字段
-const PhosphatingOptions = ref([])
-const ElectroplateOptions = ref([])
-const ProcessModeOptions = ref([])
-const UnoilOptions = ref([])
-const ShotBlastingOptions = ref([])
 const formData = ref({
         UTN: '',
         MB202: '',
-        processType: '',
-        unoil: '',
-        shotBlasting: '',
-        phosphat: '',
-        electroplate: '',
-        remark: '',
+        SN: '',
+        packageMethod: '',
         })
 
 
@@ -245,6 +189,28 @@ const rule = reactive({
               }
               ],
                MB202 : [{
+                   required: true,
+                   message: '',
+                   trigger: ['input','blur'],
+               },
+               {
+                   whitespace: true,
+                   message: '不能只输入空格',
+                   trigger: ['input', 'blur'],
+              }
+              ],
+               SN : [{
+                   required: true,
+                   message: '',
+                   trigger: ['input','blur'],
+               },
+               {
+                   whitespace: true,
+                   message: '不能只输入空格',
+                   trigger: ['input', 'blur'],
+              }
+              ],
+               packageMethod : [{
                    required: true,
                    message: '',
                    trigger: ['input','blur'],
@@ -312,6 +278,7 @@ const getUTNOptions = async (input) => {
   }
 };
 
+
 // 重置
 const onReset = () => {
   searchInfo.value = {}
@@ -342,7 +309,7 @@ const handleCurrentChange = (val) => {
 
 // 查询
 const getTableData = async() => {
-  const table = await getTecBaseProcessList({ page: page.value, pageSize: pageSize.value, ...searchInfo.value })
+  const table = await getPackageRequirementList({ page: page.value, pageSize: pageSize.value, ...searchInfo.value })
   if (table.code === 0) {
     tableData.value = table.data.list
     total.value = table.data.total
@@ -357,11 +324,6 @@ getTableData()
 
 // 获取需要的字典 可能为空 按需保留
 const setOptions = async () =>{
-    PhosphatingOptions.value = await getDictFunc('Phosphating')
-    ElectroplateOptions.value = await getDictFunc('Electroplate')
-    ProcessModeOptions.value = await getDictFunc('ProcessMode')
-    UnoilOptions.value = await getDictFunc('Unoil')
-    ShotBlastingOptions.value = await getDictFunc('ShotBlasting')
 }
 
 // 获取需要的字典 可能为空 按需保留
@@ -382,7 +344,7 @@ const deleteRow = (row) => {
         cancelButtonText: '取消',
         type: 'warning'
     }).then(() => {
-            deleteTecBaseProcessFunc(row)
+            deletePackageRequirementFunc(row)
         })
     }
 
@@ -405,7 +367,7 @@ const onDelete = async() => {
         multipleSelection.value.map(item => {
           IDs.push(item.ID)
         })
-      const res = await deleteTecBaseProcessByIds({ IDs })
+      const res = await deletePackageRequirementByIds({ IDs })
       if (res.code === 0) {
         ElMessage({
           type: 'success',
@@ -423,8 +385,8 @@ const onDelete = async() => {
 const type = ref('')
 
 // 更新行
-const updateTecBaseProcessFunc = async(row) => {
-    const res = await findTecBaseProcess({ ID: row.ID })
+const updatePackageRequirementFunc = async(row) => {
+    const res = await findPackageRequirement({ ID: row.ID })
     type.value = 'update'
     if (res.code === 0) {
         formData.value = res.data
@@ -434,8 +396,8 @@ const updateTecBaseProcessFunc = async(row) => {
 
 
 // 删除行
-const deleteTecBaseProcessFunc = async (row) => {
-    const res = await deleteTecBaseProcess({ ID: row.ID })
+const deletePackageRequirementFunc = async (row) => {
+    const res = await deletePackageRequirement({ ID: row.ID })
     if (res.code === 0) {
         ElMessage({
                 type: 'success',
@@ -463,12 +425,8 @@ const closeDialog = () => {
     formData.value = {
         UTN: '',
         MB202: '',
-        processType: '',
-        unoil: '',
-        shotBlasting: '',
-        phosphat: '',
-        electroplate: '',
-        remark: '',
+        SN: '',
+        packageMethod: '',
         }
 }
 // 弹窗确定
@@ -478,13 +436,13 @@ const enterDialog = async () => {
               let res
               switch (type.value) {
                 case 'create':
-                  res = await createTecBaseProcess(formData.value)
+                  res = await createPackageRequirement(formData.value)
                   break
                 case 'update':
-                  res = await updateTecBaseProcess(formData.value)
+                  res = await updatePackageRequirement(formData.value)
                   break
                 default:
-                  res = await createTecBaseProcess(formData.value)
+                  res = await createPackageRequirement(formData.value)
                   break
               }
               if (res.code === 0) {

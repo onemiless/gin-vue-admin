@@ -24,6 +24,25 @@
          <el-input v-model="searchInfo.MB202" placeholder="搜索条件" />
 
         </el-form-item>
+        <el-form-item label="变更单号" prop="SN">
+         <el-input v-model="searchInfo.SN" placeholder="搜索条件" />
+
+        </el-form-item>
+        <el-form-item label="变更日期" prop="changeDate">
+            
+            <template #label>
+            <span>
+              变更日期
+              <el-tooltip content="搜索范围是开始日期（包含）至结束日期（不包含）">
+                <el-icon><QuestionFilled /></el-icon>
+              </el-tooltip>
+            </span>
+          </template>
+            <el-date-picker v-model="searchInfo.startChangeDate" type="datetime" placeholder="开始日期" :disabled-date="time=> searchInfo.endChangeDate ? time.getTime() > searchInfo.endChangeDate.getTime() : false"></el-date-picker>
+            —
+            <el-date-picker v-model="searchInfo.endChangeDate" type="datetime" placeholder="结束日期" :disabled-date="time=> searchInfo.startChangeDate ? time.getTime() < searchInfo.startChangeDate.getTime() : false"></el-date-picker>
+
+        </el-form-item>
 
         <template v-if="showAllQuery">
           <!-- 将需要控制显示状态的查询条件添加到此范围内 -->
@@ -58,35 +77,18 @@
         
         <el-table-column align="left" label="唯一追踪号" prop="UTN" width="120" />
         <el-table-column align="left" label="客户品名" prop="MB202" width="120" />
-        <el-table-column align="left" label="工艺方式" prop="processType" width="120">
-            <template #default="scope">
-            {{ filterDict(scope.row.processType,ProcessModeOptions) }}
-            </template>
-        </el-table-column>
-        <el-table-column align="left" label="除油" prop="unoil" width="120">
-            <template #default="scope">
-            {{ filterDict(scope.row.unoil,UnoilOptions) }}
-            </template>
-        </el-table-column>
-        <el-table-column align="left" label="抛丸" prop="shotBlasting" width="120">
-            <template #default="scope">
-            {{ filterDict(scope.row.shotBlasting,ShotBlastingOptions) }}
-            </template>
-        </el-table-column>
-        <el-table-column align="left" label="磷化" prop="phosphat" width="120">
-            <template #default="scope">
-            {{ filterDict(scope.row.phosphat,PhosphatingOptions) }}
-            </template>
-        </el-table-column>
-        <el-table-column align="left" label="电镀" prop="electroplate" width="120">
-            <template #default="scope">
-            {{ filterDict(scope.row.electroplate,ElectroplateOptions) }}
-            </template>
-        </el-table-column>
-        <el-table-column align="left" label="备注" prop="remark" width="120" />
+        <el-table-column align="left" label="变更单号" prop="SN" width="120" />
+         <el-table-column align="left" label="变更日期" prop="changeDate" width="180">
+            <template #default="scope">{{ formatDate(scope.row.changeDate) }}</template>
+         </el-table-column>
+                      <el-table-column label="变更内容" prop="changeDetail" width="200">
+                         <template #default="scope">
+                            [富文本内容]
+                         </template>
+                      </el-table-column>
         <el-table-column align="left" label="操作" fixed="right" min-width="240">
             <template #default="scope">
-            <el-button type="primary" link icon="edit" class="table-button" @click="updateTecBaseProcessFunc(scope.row)">变更</el-button>
+            <el-button type="primary" link icon="edit" class="table-button" @click="updateEngineeringChangeFunc(scope.row)">变更</el-button>
             <el-button type="primary" link icon="delete" @click="deleteRow(scope.row)">删除</el-button>
             </template>
         </el-table-column>
@@ -103,7 +105,7 @@
             />
         </div>
     </div>
-    <el-drawer destroy-on-close size="80%" v-model="dialogFormVisible" :show-close="false" :before-close="closeDialog">
+    <el-drawer destroy-on-close size="80%" v-model="dialogFormVisible"   :show-close="false" :before-close="closeDialog">
        <template #header>
               <div class="flex justify-between items-center">
                 <span class="text-lg">{{type==='create'?'添加':'修改'}}</span>
@@ -114,7 +116,7 @@
               </div>
             </template>
 
-          <el-form :model="formData" label-position="top" ref="elFormRef" :inline="true" :rules="rule" >
+          <el-form :model="formData" label-position="top" ref="elFormRef"  :inline="true" :rules="rule" label-width="auto">
             <el-divider content-position="left">基础信息</el-divider>
         <el-form-item label="唯一追踪号:" prop="UTN">
           <!-- <el-input v-model.number="formData.UTN" :clearable="true" placeholder="请输入唯一追踪号" /> -->
@@ -154,34 +156,15 @@
         <el-form-item label="客户品号:" prop="MB202">
           <el-input v-model="formData.MB202" :clearable="true" disabled />
         </el-form-item>
-        <el-divider content-position="left">工艺设备及治具信息</el-divider>
-            <el-form-item label="工艺方式:"  prop="processType" >
-              <el-select v-model="formData.processType" placeholder="请选择工艺方式" style="width:180px" :clearable="true" >
-                <el-option v-for="(item,key) in ProcessModeOptions" :key="key" :label="item.label" :value="item.value" />
-              </el-select>
+        <el-divider content-position="left">工程变更信息</el-divider>
+            <el-form-item label="变更单号:"  prop="SN" >
+              <el-input v-model="formData.SN" :clearable="true"  placeholder="请输入变更单号" />
             </el-form-item>
-            <el-form-item label="除油:"  prop="unoil" >
-              <el-select v-model="formData.unoil" placeholder="请选择除油" style="width:180px" :clearable="true" >
-                <el-option v-for="(item,key) in UnoilOptions" :key="key" :label="item.label" :value="item.value" />
-              </el-select>
+            <el-form-item label="变更日期:"  prop="changeDate" >
+              <el-date-picker v-model="formData.changeDate" type="date" style="width:100%" placeholder="选择日期" :clearable="true"  />
             </el-form-item>
-            <el-form-item label="抛丸:"  prop="shotBlasting" >
-              <el-select v-model="formData.shotBlasting" placeholder="请选择抛丸" style="width:180px" :clearable="true" >
-                <el-option v-for="(item,key) in ShotBlastingOptions" :key="key" :label="item.label" :value="item.value" />
-              </el-select>
-            </el-form-item>
-            <el-form-item label="磷化:"  prop="phosphat" >
-              <el-select v-model="formData.phosphat" placeholder="请选择磷化" style="width:180px" :clearable="true" >
-                <el-option v-for="(item,key) in PhosphatingOptions" :key="key" :label="item.label" :value="item.value" />
-              </el-select>
-            </el-form-item>
-            <el-form-item label="电镀:"  prop="electroplate" >
-              <el-select v-model="formData.electroplate" placeholder="请选择电镀" style="width:180px" :clearable="true" >
-                <el-option v-for="(item,key) in ElectroplateOptions" :key="key" :label="item.label" :value="item.value" />
-              </el-select>
-            </el-form-item>
-            <el-form-item label="备注:"  prop="remark" >
-              <el-input v-model="formData.remark" :clearable="true"  style="width:600px" placeholder="请输入备注" />
+            <el-form-item label="变更内容:"  prop="changeDetail" >
+              <RichEdit v-model="formData.changeDetail"/>
             </el-form-item>
           </el-form>
     </el-drawer>
@@ -190,43 +173,37 @@
 
 <script setup>
 import {
-  createTecBaseProcess,
-  deleteTecBaseProcess,
-  deleteTecBaseProcessByIds,
-  updateTecBaseProcess,
-  findTecBaseProcess,
-  getTecBaseProcessList
-} from '@/api/alpha/tecBaseProcess'
+  createEngineeringChange,
+  deleteEngineeringChange,
+  deleteEngineeringChangeByIds,
+  updateEngineeringChange,
+  findEngineeringChange,
+  getEngineeringChangeList
+} from '@/api/alpha/engineeringChange'
+// 富文本组件
+import RichEdit from '@/components/richtext/rich-edit.vue'
+import { getTecBaseInfoExtList } from "@/api/tecBaseInfoExt";
+import { getEntryNumber } from "@/api/alphatools";
 
 // 全量引入格式化工具 请按需保留
 import { getDictFunc, formatDate, formatBoolean, filterDict ,filterDataSource, ReturnArrImg, onDownloadFile } from '@/utils/format'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { ref, reactive } from 'vue'
 
-import { getTecBaseInfoExtList } from "@/api/tecBaseInfoExt";
-
 defineOptions({
-    name: 'TecBaseProcess'
+    name: 'EngineeringChange'
 })
 
 // 控制更多查询条件显示/隐藏状态
 const showAllQuery = ref(false)
 
 // 自动化生成的字典（可能为空）以及字段
-const PhosphatingOptions = ref([])
-const ElectroplateOptions = ref([])
-const ProcessModeOptions = ref([])
-const UnoilOptions = ref([])
-const ShotBlastingOptions = ref([])
 const formData = ref({
         UTN: '',
         MB202: '',
-        processType: '',
-        unoil: '',
-        shotBlasting: '',
-        phosphat: '',
-        electroplate: '',
-        remark: '',
+        SN: '',
+        changeDate: null,
+        changeDetail: '',
         })
 
 
@@ -244,7 +221,7 @@ const rule = reactive({
                    trigger: ['input', 'blur'],
               }
               ],
-               MB202 : [{
+               SN : [{
                    required: true,
                    message: '',
                    trigger: ['input','blur'],
@@ -254,6 +231,18 @@ const rule = reactive({
                    message: '不能只输入空格',
                    trigger: ['input', 'blur'],
               }
+              ],
+               changeDate : [{
+                   required: true,
+                   message: '',
+                   trigger: ['input','blur'],
+               },
+              ],
+               changeDetail : [{
+                   required: true,
+                   message: '',
+                   trigger: ['input','blur'],
+               },
               ],
 })
 
@@ -271,6 +260,17 @@ const searchRule = reactive({
       }
     }, trigger: 'change' }
   ],
+        changeDate : [{ validator: (rule, value, callback) => {
+        if (searchInfo.value.startChangeDate && !searchInfo.value.endChangeDate) {
+          callback(new Error('请填写结束日期'))
+        } else if (!searchInfo.value.startChangeDate && searchInfo.value.endChangeDate) {
+          callback(new Error('请填写开始日期'))
+        } else if (searchInfo.value.startChangeDate && searchInfo.value.endChangeDate && (searchInfo.value.startChangeDate.getTime() === searchInfo.value.endChangeDate.getTime() || searchInfo.value.startChangeDate.getTime() > searchInfo.value.endChangeDate.getTime())) {
+          callback(new Error('开始日期应当早于结束日期'))
+        } else {
+          callback()
+        }
+      }, trigger: 'change' }],
 })
 
 const elFormRef = ref()
@@ -342,7 +342,7 @@ const handleCurrentChange = (val) => {
 
 // 查询
 const getTableData = async() => {
-  const table = await getTecBaseProcessList({ page: page.value, pageSize: pageSize.value, ...searchInfo.value })
+  const table = await getEngineeringChangeList({ page: page.value, pageSize: pageSize.value, ...searchInfo.value })
   if (table.code === 0) {
     tableData.value = table.data.list
     total.value = table.data.total
@@ -357,11 +357,6 @@ getTableData()
 
 // 获取需要的字典 可能为空 按需保留
 const setOptions = async () =>{
-    PhosphatingOptions.value = await getDictFunc('Phosphating')
-    ElectroplateOptions.value = await getDictFunc('Electroplate')
-    ProcessModeOptions.value = await getDictFunc('ProcessMode')
-    UnoilOptions.value = await getDictFunc('Unoil')
-    ShotBlastingOptions.value = await getDictFunc('ShotBlasting')
 }
 
 // 获取需要的字典 可能为空 按需保留
@@ -382,7 +377,7 @@ const deleteRow = (row) => {
         cancelButtonText: '取消',
         type: 'warning'
     }).then(() => {
-            deleteTecBaseProcessFunc(row)
+            deleteEngineeringChangeFunc(row)
         })
     }
 
@@ -405,7 +400,7 @@ const onDelete = async() => {
         multipleSelection.value.map(item => {
           IDs.push(item.ID)
         })
-      const res = await deleteTecBaseProcessByIds({ IDs })
+      const res = await deleteEngineeringChangeByIds({ IDs })
       if (res.code === 0) {
         ElMessage({
           type: 'success',
@@ -423,8 +418,8 @@ const onDelete = async() => {
 const type = ref('')
 
 // 更新行
-const updateTecBaseProcessFunc = async(row) => {
-    const res = await findTecBaseProcess({ ID: row.ID })
+const updateEngineeringChangeFunc = async(row) => {
+    const res = await findEngineeringChange({ ID: row.ID })
     type.value = 'update'
     if (res.code === 0) {
         formData.value = res.data
@@ -434,8 +429,8 @@ const updateTecBaseProcessFunc = async(row) => {
 
 
 // 删除行
-const deleteTecBaseProcessFunc = async (row) => {
-    const res = await deleteTecBaseProcess({ ID: row.ID })
+const deleteEngineeringChangeFunc = async (row) => {
+    const res = await deleteEngineeringChange({ ID: row.ID })
     if (res.code === 0) {
         ElMessage({
                 type: 'success',
@@ -463,12 +458,9 @@ const closeDialog = () => {
     formData.value = {
         UTN: '',
         MB202: '',
-        processType: '',
-        unoil: '',
-        shotBlasting: '',
-        phosphat: '',
-        electroplate: '',
-        remark: '',
+        SN: '',
+        changeDate: null,
+        changeDetail: '',
         }
 }
 // 弹窗确定
@@ -478,13 +470,13 @@ const enterDialog = async () => {
               let res
               switch (type.value) {
                 case 'create':
-                  res = await createTecBaseProcess(formData.value)
+                  res = await createEngineeringChange(formData.value)
                   break
                 case 'update':
-                  res = await updateTecBaseProcess(formData.value)
+                  res = await updateEngineeringChange(formData.value)
                   break
                 default:
-                  res = await createTecBaseProcess(formData.value)
+                  res = await createEngineeringChange(formData.value)
                   break
               }
               if (res.code === 0) {

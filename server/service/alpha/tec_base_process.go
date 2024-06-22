@@ -50,7 +50,7 @@ func (tecBaseProcessService *TecBaseProcessService) DeleteTecBaseProcessByIds(ID
 // UpdateTecBaseProcess 更新工艺、设备及治具基本信息记录
 // Author [piexlmax](https://github.com/piexlmax)
 func (tecBaseProcessService *TecBaseProcessService) UpdateTecBaseProcess(tecBaseProcess alpha.TecBaseProcess) (err error) {
-	err = global.GVA_DB.Save(&tecBaseProcess).Error
+	err = global.GVA_DB.Model(&alpha.TecBaseProcess{}).Where("id = ?", tecBaseProcess.ID).Updates(&tecBaseProcess).Error
 	return err
 }
 
@@ -73,8 +73,11 @@ func (tecBaseProcessService *TecBaseProcessService) GetTecBaseProcessInfoList(in
 	if info.StartCreatedAt != nil && info.EndCreatedAt != nil {
 		db = db.Where("created_at BETWEEN ? AND ?", info.StartCreatedAt, info.EndCreatedAt)
 	}
-	if info.ParentID > 0 {
-		db = db.Where("parent_id = ?", info.ParentID)
+	if info.UTN != "" {
+		db = db.Where("UTN LIKE ?", "%"+info.UTN+"%")
+	}
+	if info.MB202 != "" {
+		db = db.Where("MB202 LIKE ?", "%"+info.MB202+"%")
 	}
 	err = db.Count(&total).Error
 	if err != nil {
@@ -87,10 +90,4 @@ func (tecBaseProcessService *TecBaseProcessService) GetTecBaseProcessInfoList(in
 
 	err = db.Find(&tecBaseProcesss).Error
 	return tecBaseProcesss, total, err
-}
-
-func (tecBaseProcessService *TecBaseProcessService) GetTecBaseProcessParentID(parentId string) (tecBaseProcess alpha.TecBaseProcess, err error) {
-	err = global.GVA_DB.Where("parent_id = ?", parentId).First(&tecBaseProcess).Error
-	return
-
 }

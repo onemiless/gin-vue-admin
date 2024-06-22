@@ -11,7 +11,6 @@ type ApiGroup struct {
 	MdSecondLevelApi
 	MdThirdLevelApi
 	TecBaseInfoApi
-	TecBaseProcessApi
 	TecBaseInfoExtApi
 	QualityBaseInfoApi
 	CostCollectionApi
@@ -22,4 +21,7 @@ type ApiGroup struct {
 	COPMAApi
 	TecSNRuleApi
 	MassProductionTransferApi
+	EngineeringChangeApi
+	PackageRequirementApi
+	TecBaseProcessApi
 }

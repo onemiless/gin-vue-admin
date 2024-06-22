@@ -11,7 +11,6 @@ type RouterGroup struct {
 	MdSecondLevelRouter
 	MdThirdLevelRouter
 	TecBaseInfoRouter
-	TecBaseProcessRouter
 	TecBaseInfoExtRouter
 	QualityBaseInfoRouter
 	CostCollectionRouter
@@ -22,4 +21,7 @@ type RouterGroup struct {
 	COPMARouter
 	TecSNRuleRouter
 	MassProductionTransferRouter
+	EngineeringChangeRouter
+	PackageRequirementRouter
+	TecBaseProcessRouter
 }

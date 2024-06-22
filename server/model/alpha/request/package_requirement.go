@@ -5,11 +5,11 @@ import (
 	"time"
 )
 
-type TecBaseProcessSearch struct {
+type PackageRequirementSearch struct {
 	StartCreatedAt *time.Time `json:"startCreatedAt" form:"startCreatedAt"`
 	EndCreatedAt   *time.Time `json:"endCreatedAt" form:"endCreatedAt"`
 
-	UTN   string `json:"UTN" form:"UTN" `
-	MB202 string `json:"MB202" form:"MB202" `
+	UTN string `json:"UTN" form:"UTN" `
+	SN  string `json:"SN" form:"SN" `
 	request.PageInfo
 }

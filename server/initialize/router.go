@@ -31,8 +31,10 @@ func (fs justFilesFilesystem) Open(name string) (http.File, error) {
 
 	return f, nil
 }
-func Routers() *gin.Engine {
 
+// 初始化总路由
+
+func Routers() *gin.Engine {
 	Router := gin.New()
 	Router.Use(gin.Recovery())
 	if gin.Mode() == gin.DebugMode {
@@ -42,16 +44,24 @@ func Routers() *gin.Engine {
 	InstallPlugin(Router)
 	systemRouter := router.RouterGroupApp.System
 	exampleRouter := router.RouterGroupApp.Example
+	// 如果想要不使用nginx代理前端网页，可以修改 web/.env.production 下的
+	// VUE_APP_BASE_API = /
+	// VUE_APP_BASE_PATH = http://localhost
+	// 然后执行打包命令 npm run build。在打开下面3行注释
+	//Router.Static("/favicon.ico", "./dist/favicon.ico")
+	//Router.Static("/assets", "./dist/assets")   // dist里面的静态资源
+	//Router.StaticFile("/", "./dist/index.html") // 前端网页入口页面
 
 	Router.StaticFS(global.GVA_CONFIG.Local.StorePath, justFilesFilesystem{http.Dir(global.GVA_CONFIG.Local.StorePath)})
 
 	docs.SwaggerInfo.BasePath = global.GVA_CONFIG.System.RouterPrefix
 	Router.GET(global.GVA_CONFIG.System.RouterPrefix+"/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	global.GVA_LOG.Info("register swagger handler")
+	// 方便统一添加路由组前缀 多服务器上线使用
 
 	PublicGroup := Router.Group(global.GVA_CONFIG.System.RouterPrefix)
 	{
-
+		// 健康监测
 		PublicGroup.GET("/health", func(c *gin.Context) {
 			c.JSON(http.StatusOK, "ok")
 		})
@@ -95,7 +105,7 @@ func Routers() *gin.Engine {
 		alphaRouter.InitMdSecondLevelRouter(PrivateGroup)
 		alphaRouter.InitMdThirdLevelRouter(PrivateGroup)
 		alphaRouter.InitTecBaseInfoRouter(PrivateGroup)
-		alphaRouter.InitTecBaseProcessRouter(PrivateGroup)
+
 		alphaRouter.InitTecBaseInfoExtRouter(PrivateGroup)
 		alphaRouter.InitQualityBaseInfoRouter(PrivateGroup)
 		alphaRouter.InitCostCollectionRouter(PrivateGroup)
@@ -106,8 +116,10 @@ func Routers() *gin.Engine {
 		alphaRouter.InitProcessFileInformationRouter(PrivateGroup, PublicGroup)
 		alphaRouter.InitTestFileAndImgRouter(PrivateGroup, PublicGroup)
 		alphaRouter.
-			//alphaRouter.InitCOPMARouter(PrivateGroup, PublicGroup)
 			InitMassProductionTransferRouter(PrivateGroup, PublicGroup)
+		alphaRouter.InitEngineeringChangeRouter(PrivateGroup, PublicGroup)
+		alphaRouter.InitPackageRequirementRouter(PrivateGroup, PublicGroup)
+		alphaRouter.InitTecBaseProcessRouter(PrivateGroup, PublicGroup)
 
 	}
 
