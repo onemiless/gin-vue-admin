@@ -29,7 +29,6 @@ func Gorm() *gorm.DB {
 }
 
 func RegisterTables() {
-
 	db := global.GVA_DB
 	err := db.AutoMigrate(
 
@@ -48,6 +47,7 @@ func RegisterTables() {
 		system.SysAutoCode{},
 		system.SysExportTemplate{},
 		system.Condition{},
+		system.JoinTemplate{},
 
 		example.ExaFile{},
 		example.ExaCustomer{},
@@ -61,6 +61,12 @@ func RegisterTables() {
 		global.GVA_LOG.Error("register table failed", zap.Error(err))
 		os.Exit(0)
 	}
-	global.GVA_LOG.Info("register table success")
 
+	err = bizModel(db)
+
+	if err != nil {
+		global.GVA_LOG.Error("register biz_table failed", zap.Error(err))
+		os.Exit(0)
+	}
+	global.GVA_LOG.Info("register table success")
 }
