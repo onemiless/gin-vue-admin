@@ -305,7 +305,6 @@
             </template>
             <el-checkbox v-model="form.autoMigrate" />
           </el-form-item>
-
         </div>
       </el-form>
     </div>
