@@ -553,7 +553,7 @@
               <el-input-number
                 v-model="formData.length"
                 style="width: 100%"
-                :precision="2"
+                :precision="3"
                 :clearable="true"
               />
             </el-form-item>
@@ -561,7 +561,7 @@
               <el-input-number
                 v-model="formData.width"
                 style="width: 100%"
-                :precision="2"
+                :precision="3"
                 :clearable="true"
               />
             </el-form-item>
@@ -569,7 +569,7 @@
               <el-input-number
                 v-model="formData.height"
                 style="width: 100%"
-                :precision="2"
+                :precision="3"
                 :clearable="true"
               />
             </el-form-item>
@@ -577,7 +577,7 @@
               <el-input-number
                 v-model="formData.diameter"
                 style="width: 100%"
-                :precision="2"
+                :precision="3"
                 :clearable="true"
               />
             </el-form-item>
@@ -585,7 +585,7 @@
               <el-input-number
                 v-model="formData.thick"
                 style="width: 100%"
-                :precision="2"
+                :precision="3"
                 :clearable="true"
               />
             </el-form-item>
@@ -593,7 +593,7 @@
               <el-input-number
                 v-model="formData.wireDiameter"
                 style="width: 100%"
-                :precision="2"
+                :precision="3"
                 :clearable="true"
               />
             </el-form-item>
@@ -601,7 +601,7 @@
               <el-input-number
                 v-model="formData.pieceWeight"
                 style="width: 100%"
-                :precision="2"
+                :precision="3"
                 :clearable="true"
               />
             </el-form-item>
@@ -609,7 +609,7 @@
               <el-input-number
                 v-model="formData.BET"
                 style="width: 100%"
-                :precision="2"
+                :precision="3"
                 :clearable="true"
               />
             </el-form-item>
@@ -619,7 +619,7 @@
                 :active-value="1"
                 :inactive-value="0"
               />
-              <!-- <el-input-number v-model="formData.graphPaper"  style="width:100%" :precision="2" :clearable="true"  /> -->
+              <!-- <el-input-number v-model="formData.graphPaper"  style="width:100%" :precision="3" :clearable="true"  /> -->
             </el-form-item>
             <el-form-item label="图纸日期或版本:" prop="GPDateOrVersion">
               <el-input

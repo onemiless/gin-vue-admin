@@ -24,13 +24,13 @@
           <el-input v-model="formData.versionNumber" :clearable="true"  placeholder="请输入工艺卡版本号" />
        </el-form-item>
         <el-form-item label="工艺卡入篮量:" prop="baskets">
-          <el-input-number v-model="formData.baskets" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.baskets" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="工艺卡节拍:" prop="beat">
-          <el-input-number v-model="formData.beat" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.beat" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="工艺卡产能:" prop="productionCapacity">
-          <el-input-number v-model="formData.productionCapacity" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.productionCapacity" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="PDF编号:" prop="PDFSN">
           <el-input v-model="formData.PDFSN" :clearable="true"  placeholder="请输入PDF编号" />

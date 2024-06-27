@@ -41,31 +41,31 @@
           <el-input v-model="formData.level" :clearable="true"  placeholder="请输入硬度/机械等级" />
        </el-form-item>
         <el-form-item label="长:" prop="length">
-          <el-input-number v-model="formData.length" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.length" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="宽:" prop="width">
-          <el-input-number v-model="formData.width" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.width" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="高:" prop="height">
-          <el-input-number v-model="formData.height" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.height" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="最大直径:" prop="diameter">
-          <el-input-number v-model="formData.diameter" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.diameter" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="料厚:" prop="thick">
-          <el-input-number v-model="formData.thick" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.thick" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="线径:" prop="wireDiameter">
-          <el-input-number v-model="formData.wireDiameter" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.wireDiameter" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="单重:" prop="pieceWeight">
-          <el-input-number v-model="formData.pieceWeight" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.pieceWeight" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="表面积:" prop="BET">
-          <el-input-number v-model="formData.BET" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.BET" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="图纸:" prop="graphPaper">
-          <el-input-number v-model="formData.graphPaper" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.graphPaper" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="图纸日期或版本:" prop="GPDateOrVersion">
           <el-input v-model="formData.GPDateOrVersion" :clearable="true"  placeholder="请输入图纸日期或版本" />

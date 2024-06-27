@@ -24,4 +24,6 @@ type ApiGroup struct {
 	EngineeringChangeApi
 	PackageRequirementApi
 	TecBaseProcessApi
+	ProductLineApi
+	TecBaseCraftsmanshipApi
 }

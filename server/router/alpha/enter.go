@@ -24,4 +24,6 @@ type RouterGroup struct {
 	EngineeringChangeRouter
 	PackageRequirementRouter
 	TecBaseProcessRouter
+	ProductLineRouter
+	TecBaseCraftsmanshipRouter
 }

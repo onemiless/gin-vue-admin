@@ -40,13 +40,13 @@
           <el-input v-model.number="formData.mainPlanLine" :clearable="true" placeholder="请输入" />
        </el-form-item>
         <el-form-item label="入篮量:" prop="baskets">
-          <el-input-number v-model="formData.baskets" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.baskets" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="节拍:" prop="beat">
-          <el-input-number v-model="formData.beat" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.beat" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="小时产能:" prop="productionCapacity">
-          <el-input-number v-model="formData.productionCapacity" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.productionCapacity" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="策划的特殊说明:" prop="remark">
           <el-input v-model="formData.remark" :clearable="true"  placeholder="请输入策划的特殊说明" />

@@ -21,7 +21,7 @@
           <el-input v-model="formData.MODIDATE" :clearable="true" placeholder="请输入" />
        </el-form-item>
         <el-form-item label="FLAG字段:" prop="FLAG">
-          <el-input-number v-model="formData.FLAG" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.FLAG" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="车厂规范编号:" prop="XC001">
           <el-input v-model="formData.XC001" :clearable="true" placeholder="请输入" />
@@ -51,22 +51,22 @@
           <el-input v-model="formData.UDF06" :clearable="true" placeholder="请输入" />
        </el-form-item>
         <el-form-item label="UDF51字段:" prop="UDF51">
-          <el-input-number v-model="formData.UDF51" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.UDF51" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="UDF52字段:" prop="UDF52">
-          <el-input-number v-model="formData.UDF52" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.UDF52" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="UDF53字段:" prop="UDF53">
-          <el-input-number v-model="formData.UDF53" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.UDF53" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="UDF54字段:" prop="UDF54">
-          <el-input-number v-model="formData.UDF54" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.UDF54" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="UDF55字段:" prop="UDF55">
-          <el-input-number v-model="formData.UDF55" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.UDF55" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="UDF56字段:" prop="UDF56">
-          <el-input-number v-model="formData.UDF56" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.UDF56" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="UDF07字段:" prop="UDF07">
           <el-input v-model="formData.UDF07" :clearable="true" placeholder="请输入" />
@@ -87,22 +87,22 @@
           <el-input v-model="formData.UDF12" :clearable="true" placeholder="请输入" />
        </el-form-item>
         <el-form-item label="UDF57字段:" prop="UDF57">
-          <el-input-number v-model="formData.UDF57" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.UDF57" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="UDF58字段:" prop="UDF58">
-          <el-input-number v-model="formData.UDF58" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.UDF58" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="UDF59字段:" prop="UDF59">
-          <el-input-number v-model="formData.UDF59" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.UDF59" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="UDF60字段:" prop="UDF60">
-          <el-input-number v-model="formData.UDF60" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.UDF60" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="UDF61字段:" prop="UDF61">
-          <el-input-number v-model="formData.UDF61" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.UDF61" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="UDF62字段:" prop="UDF62">
-          <el-input-number v-model="formData.UDF62" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.UDF62" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="save">保存</el-button>

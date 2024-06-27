@@ -703,7 +703,7 @@
         <el-divider content-position="left">其他</el-divider>
         <el-col :span="8">
           <el-form-item label="有无图纸:" prop="graphPaper">
-            <!-- <el-input-number v-model="formData.graphPaper"  style="width:100%" :precision="2" :clearable="true"  /> -->
+            <!-- <el-input-number v-model="formData.graphPaper"  style="width:100%" :precision="3" :clearable="true"  /> -->
             <el-switch
               v-model="formData.graphPaper"
               :active-value="1"

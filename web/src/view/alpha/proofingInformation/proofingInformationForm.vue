@@ -58,7 +58,7 @@
         </el-select>
        </el-form-item>
         <el-form-item label="入货量:" prop="goodsReceived">
-          <el-input-number v-model="formData.goodsReceived" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.goodsReceived" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="入货单位:" prop="incomingUnit">
           <el-input v-model="formData.incomingUnit" :clearable="true"  placeholder="请输入入货单位" />

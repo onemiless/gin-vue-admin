@@ -21,7 +21,7 @@
           <el-input v-model="formData.MODIDATE" :clearable="true"  placeholder="请输入MODIDATE字段" />
        </el-form-item>
         <el-form-item label="FLAG字段:" prop="FLAG">
-          <el-input-number v-model="formData.FLAG" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.FLAG" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="MA001字段:" prop="MA001">
           <el-input v-model="formData.MA001" :clearable="true"  placeholder="请输入MA001字段" />
@@ -54,13 +54,13 @@
           <el-input v-model="formData.MA010" :clearable="true"  placeholder="请输入MA010字段" />
        </el-form-item>
         <el-form-item label="MA011字段:" prop="MA011">
-          <el-input-number v-model="formData.MA011" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.MA011" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="MA012字段:" prop="MA012">
-          <el-input-number v-model="formData.MA012" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.MA012" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="MA013字段:" prop="MA013">
-          <el-input-number v-model="formData.MA013" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.MA013" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="MA014字段:" prop="MA014">
           <el-input v-model="formData.MA014" :clearable="true"  placeholder="请输入MA014字段" />
@@ -120,16 +120,16 @@
           <el-input v-model="formData.MA032" :clearable="true"  placeholder="请输入MA032字段" />
        </el-form-item>
         <el-form-item label="MA033字段:" prop="MA033">
-          <el-input-number v-model="formData.MA033" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.MA033" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="MA034字段:" prop="MA034">
-          <el-input-number v-model="formData.MA034" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.MA034" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="MA035字段:" prop="MA035">
           <el-input v-model="formData.MA035" :clearable="true"  placeholder="请输入MA035字段" />
        </el-form-item>
         <el-form-item label="MA036字段:" prop="MA036">
-          <el-input-number v-model="formData.MA036" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.MA036" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="MA037字段:" prop="MA037">
           <el-input v-model="formData.MA037" :clearable="true"  placeholder="请输入MA037字段" />
@@ -153,10 +153,10 @@
           <el-input v-model="formData.MA043" :clearable="true"  placeholder="请输入MA043字段" />
        </el-form-item>
         <el-form-item label="MA044字段:" prop="MA044">
-          <el-input-number v-model="formData.MA044" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.MA044" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="MA045字段:" prop="MA045">
-          <el-input-number v-model="formData.MA045" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.MA045" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="MA046字段:" prop="MA046">
           <el-input v-model="formData.MA046" :clearable="true"  placeholder="请输入MA046字段" />
@@ -198,13 +198,13 @@
           <el-input v-model="formData.MA058" :clearable="true"  placeholder="请输入MA058字段" />
        </el-form-item>
         <el-form-item label="MA059字段:" prop="MA059">
-          <el-input-number v-model="formData.MA059" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.MA059" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="MA060字段:" prop="MA060">
-          <el-input-number v-model="formData.MA060" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.MA060" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="MA061字段:" prop="MA061">
-          <el-input-number v-model="formData.MA061" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.MA061" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="MA062字段:" prop="MA062">
           <el-input v-model="formData.MA062" :clearable="true"  placeholder="请输入MA062字段" />
@@ -222,7 +222,7 @@
           <el-input v-model="formData.MA066" :clearable="true"  placeholder="请输入MA066字段" />
        </el-form-item>
         <el-form-item label="MA067字段:" prop="MA067">
-          <el-input-number v-model="formData.MA067" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.MA067" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="MA068字段:" prop="MA068">
           <el-input v-model="formData.MA068" :clearable="true"  placeholder="请输入MA068字段" />
@@ -291,22 +291,22 @@
           <el-input v-model="formData.MA089" :clearable="true"  placeholder="请输入MA089字段" />
        </el-form-item>
         <el-form-item label="MA090字段:" prop="MA090">
-          <el-input-number v-model="formData.MA090" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.MA090" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="MA091字段:" prop="MA091">
-          <el-input-number v-model="formData.MA091" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.MA091" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="MA092字段:" prop="MA092">
-          <el-input-number v-model="formData.MA092" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.MA092" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="MA093字段:" prop="MA093">
-          <el-input-number v-model="formData.MA093" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.MA093" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="MA094字段:" prop="MA094">
-          <el-input-number v-model="formData.MA094" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.MA094" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="MA095字段:" prop="MA095">
-          <el-input-number v-model="formData.MA095" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.MA095" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="MA096字段:" prop="MA096">
           <el-input v-model="formData.MA096" :clearable="true"  placeholder="请输入MA096字段" />
@@ -324,7 +324,7 @@
           <el-input v-model="formData.MA100" :clearable="true"  placeholder="请输入MA100字段" />
        </el-form-item>
         <el-form-item label="MA101字段:" prop="MA101">
-          <el-input-number v-model="formData.MA101" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.MA101" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="MA102字段:" prop="MA102">
           <el-input v-model="formData.MA102" :clearable="true"  placeholder="请输入MA102字段" />
@@ -333,7 +333,7 @@
           <el-input v-model="formData.MA103" :clearable="true"  placeholder="请输入MA103字段" />
        </el-form-item>
         <el-form-item label="MA104字段:" prop="MA104">
-          <el-input-number v-model="formData.MA104" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.MA104" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="MA105字段:" prop="MA105">
           <el-input v-model="formData.MA105" :clearable="true"  placeholder="请输入MA105字段" />
@@ -348,13 +348,13 @@
           <el-input v-model="formData.MA108" :clearable="true"  placeholder="请输入MA108字段" />
        </el-form-item>
         <el-form-item label="MA109字段:" prop="MA109">
-          <el-input-number v-model="formData.MA109" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.MA109" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="MA110字段:" prop="MA110">
-          <el-input-number v-model="formData.MA110" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.MA110" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="MA111字段:" prop="MA111">
-          <el-input-number v-model="formData.MA111" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.MA111" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="MA112字段:" prop="MA112">
           <el-input v-model="formData.MA112" :clearable="true"  placeholder="请输入MA112字段" />
@@ -390,22 +390,22 @@
           <el-input v-model="formData.UDF06" :clearable="true"  placeholder="请输入UDF06字段" />
        </el-form-item>
         <el-form-item label="UDF51字段:" prop="UDF51">
-          <el-input-number v-model="formData.UDF51" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.UDF51" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="UDF52字段:" prop="UDF52">
-          <el-input-number v-model="formData.UDF52" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.UDF52" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="UDF53字段:" prop="UDF53">
-          <el-input-number v-model="formData.UDF53" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.UDF53" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="UDF54字段:" prop="UDF54">
-          <el-input-number v-model="formData.UDF54" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.UDF54" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="UDF55字段:" prop="UDF55">
-          <el-input-number v-model="formData.UDF55" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.UDF55" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="UDF56字段:" prop="UDF56">
-          <el-input-number v-model="formData.UDF56" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.UDF56" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="UDF07字段:" prop="UDF07">
           <el-input v-model="formData.UDF07" :clearable="true"  placeholder="请输入UDF07字段" />
@@ -426,25 +426,25 @@
           <el-input v-model="formData.UDF12" :clearable="true"  placeholder="请输入UDF12字段" />
        </el-form-item>
         <el-form-item label="UDF57字段:" prop="UDF57">
-          <el-input-number v-model="formData.UDF57" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.UDF57" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="UDF58字段:" prop="UDF58">
-          <el-input-number v-model="formData.UDF58" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.UDF58" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="UDF59字段:" prop="UDF59">
-          <el-input-number v-model="formData.UDF59" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.UDF59" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="UDF60字段:" prop="UDF60">
-          <el-input-number v-model="formData.UDF60" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.UDF60" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="UDF61字段:" prop="UDF61">
-          <el-input-number v-model="formData.UDF61" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.UDF61" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="UDF62字段:" prop="UDF62">
-          <el-input-number v-model="formData.UDF62" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.UDF62" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item label="MA200字段:" prop="MA200">
-          <el-input-number v-model="formData.MA200" :precision="2" :clearable="true"></el-input-number>
+          <el-input-number v-model="formData.MA200" :precision="3" :clearable="true"></el-input-number>
        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="save">保存</el-button>

@@ -24,4 +24,6 @@ type ServiceGroup struct {
 	EngineeringChangeService
 	PackageRequirementService
 	TecBaseProcessService
+	ProductLineService
+	TecBaseCraftsmanshipService
 }

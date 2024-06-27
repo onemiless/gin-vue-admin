@@ -47,7 +47,7 @@
             <el-input v-model.number="searchInfo.end{{.FieldName}}" placeholder="最大值" />
            {{- else}}
              {{- if .DictType}}
-              <el-select v-model="searchInfo.{{.FieldJson}}" placeholder="请选择" style="width:100%" :clearable="true" >
+              <el-select v-model="searchInfo.{{.FieldJson}}" placeholder="请选择"  :clearable="true" >
                <el-option v-for="(item,key) in {{ .DictType }}Options" :key="key" :label="item.label" :value="item.value" />
              </el-select>
                     {{- else}}
@@ -315,7 +315,7 @@
               <el-date-picker v-model="formData.{{ .FieldJson }}" type="date" style="width:100%" placeholder="选择日期" :clearable="{{.Clearable}}"  />
           {{- end }}
           {{- if eq .FieldType "float64" }}
-              <el-input-number v-model="formData.{{ .FieldJson }}"  style="width:100%" :precision="2" :clearable="{{.Clearable}}"  />
+              <el-input-number v-model="formData.{{ .FieldJson }}"  style="width:100%" :precision="3" :clearable="{{.Clearable}}"  />
           {{- end }}
           {{- if eq .FieldType "enum" }}
                 <el-select v-model="formData.{{ .FieldJson }}" placeholder="请选择{{.FieldDesc}}" style="width:100%" :clearable="{{.Clearable}}" >

@@ -14,6 +14,11 @@ func holder(routers ...*gin.RouterGroup) {
 func initBizRouter(routers ...*gin.RouterGroup) {
 	publicGroup := routers[0]
 	privateGroup := routers[1]
+	{
+		alphaRouter := router.RouterGroupApp.Alpha
+		alphaRouter.InitProductLineRouter(privateGroup, publicGroup)
+		alphaRouter.InitTecBaseCraftsmanshipRouter(privateGroup, publicGroup)
+	}
 
 	holder(publicGroup, privateGroup)
 }

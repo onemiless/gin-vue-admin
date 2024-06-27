@@ -31,7 +31,7 @@
           <el-date-picker v-model="formData.{{ .FieldJson }}" type="date" placeholder="选择日期" :clearable="{{.Clearable}}"></el-date-picker>
       {{- end }}
       {{- if eq .FieldType "float64" }}
-          <el-input-number v-model="formData.{{ .FieldJson }}" :precision="2" :clearable="{{.Clearable}}"></el-input-number>
+          <el-input-number v-model="formData.{{ .FieldJson }}" :precision="3" :clearable="{{.Clearable}}"></el-input-number>
       {{- end }}
       {{- if eq .FieldType "enum" }}
         <el-select v-model="formData.{{ .FieldJson }}" placeholder="请选择" style="width:100%" :clearable="{{.Clearable}}">
